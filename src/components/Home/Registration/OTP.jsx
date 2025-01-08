@@ -13,9 +13,7 @@ import {
 import { Loader2, Mail } from "lucide-react";
 import { REGEXP_ONLY_DIGITS_AND_CHARS } from "input-otp";
 
-import otpSlice from "../../../Redux/slices/Student/otp.slice";
 import { useDispatch, useSelector } from "react-redux";
-import { setOTPData } from "../../../Redux/slices/Student/otp.slice";
 
 import {
   InputOTP,
