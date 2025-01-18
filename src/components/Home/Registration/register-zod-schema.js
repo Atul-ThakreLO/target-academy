@@ -58,7 +58,7 @@ export const studentDetailsSchema = z.object({
     .min(1, { message: "Please choose at least one Subject" }),
 });
 
-const MAX_FILE_SIZE = 1 * 1024 * 1024;
+const MAX_FILE_SIZE = 3 * 1024 * 1024;
 const ACCEPTED_FILE_TYPES = [
   "image/jpeg",
   "image/jpg",
@@ -69,7 +69,9 @@ const ACCEPTED_FILE_TYPES = [
 export const profilePictureSchema = z.object({
   avatar: z
     .instanceof(File)
-    .refine((file) => file.size <= MAX_FILE_SIZE, `Max file size is 1MB.`)
+    .refine((file) => {
+      console.log(file);
+      return file.size <= MAX_FILE_SIZE}, `Max file size is 3MB.`)
     .refine(
       (file) => ACCEPTED_FILE_TYPES.includes(file.type),
       "Only .jpg, .jpeg, .png and .webp formats are supported"
@@ -80,7 +82,7 @@ export const profilePictureSchema = z.object({
 // export const profilePictureSchema = z.union([
 //   z
 //     .instanceof(File)
-//     .refine((file) => file.size <= MAX_FILE_SIZE, `Max file size is 5MB.`)
+//     .refine((file) => file.size <= MAX_FILE_SIZE, `Max file size is 1MB.`)
 //     .refine(
 //       (file) => ACCEPTED_FILE_TYPES.includes(file.type),
 //       "Only .jpg, .jpeg, .png and .webp formats are supported"
@@ -88,6 +90,7 @@ export const profilePictureSchema = z.object({
 //   z.null(),
 //   z.undefined(),
 // ]);
+
 // export const profilePictureSchema = z.object({
 //   avatar: z
 //     .instanceof(File)

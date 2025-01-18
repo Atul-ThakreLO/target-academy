@@ -79,6 +79,12 @@ const StudentDetails = () => {
     }
   }, [formData]);
 
+  useEffect(() => {
+    if (Object.keys(errors).length > 0) {
+      updateStatus(formData, stage, setStageStatus);
+    }
+  }, [errors]);
+
   // !!classID && console.log(subjectData[0]);
 
   return (

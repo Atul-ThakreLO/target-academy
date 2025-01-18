@@ -10,10 +10,11 @@ import { useVerifyOTP } from "@/Hooks/use-student";
 import { useRegisterContext } from "../context/register-context-provider";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { otpSchema } from "./register-zod-schema";
+import { updateStatus } from "./updateStatus";
 
 const VerifyOtp = ({ onSubmitMutations }) => {
   //   const [value, setValue] = useState();
-  const { formData } = useRegisterContext();
+  const { formData, stage, setStageStatus } = useRegisterContext();
 
   const {
     handleSubmit,
@@ -54,6 +55,12 @@ const VerifyOtp = ({ onSubmitMutations }) => {
     mutation.error,
     mutation.isSuccess,
   ]);
+
+  useEffect(() => {
+    if (Object.keys(errors).length > 0) {
+      updateStatus("error", stage, setStageStatus);
+    }
+  }, [errors]);
 
   return (
     <form id="form-2" onSubmit={handleSubmit(onSubmit)}>

@@ -65,6 +65,7 @@ export const useSendOTP = () => {
       setStage(1);
     },
     onError: (error) => {
+      updateStatus(formData, stage, setStageStatus);
       toast.error(error?.response?.data);
     },
   });
@@ -81,12 +82,14 @@ export const useVerifyOTP = () => {
       setStage(2);
     },
     onError: (error) => {
+      updateStatus("error", stage, setStageStatus);
       toast.error(error?.response?.data?.message);
     },
   });
 };
 
 export const useRegisterStudent = () => {
+  const navigate = useNavigate();
   const { formData, setStage, stage, setStageStatus } = useRegisterContext();
   return useMutation({
     mutationFn: (data) =>
@@ -98,8 +101,10 @@ export const useRegisterStudent = () => {
     onSuccess: (data) => {
       updateStatus("success", stage, setStageStatus);
       setStage(3);
+      navigate("/student");
     },
     onError: (error) => {
+      updateStatus(formData, stage, setStageStatus);
       toast.error(error?.response?.data.message);
     },
   });

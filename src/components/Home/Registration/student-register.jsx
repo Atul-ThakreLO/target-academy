@@ -25,7 +25,7 @@ const StudentRegister = () => {
     isError: false,
     error: null,
     isSuccess: false,
-    isZodError: false,
+    isZodError: false
   });
 
   const buttonText = ["Send OTP", "Verify OTP", "Save & Next", "Submit"];
@@ -47,22 +47,21 @@ const StudentRegister = () => {
     }
   };
 
-  const handlePrevious = () => {
-    if (stage !== 0) {
-      if (isPrev) {
-        // setCount((prev) => prev - 1);
-        setStage((prev) => prev - 1);
-        setIsPrev(false);
-        setTimeout(() => {
-          setIsPrev(true);
-        }, 1000);
-      }
-    }
-  };
 
-  // const handleNext = () => {
-  //   setCount((prev) => prev + 1);
+// Removed Previous for while
+  // const handlePrevious = () => {
+  //   if (stage !== 0) {
+  //     if (isPrev) {
+  //       // setCount((prev) => prev - 1);
+  //       setStage((prev) => prev - 1);
+  //       setIsPrev(false);
+  //       setTimeout(() => {
+  //         setIsPrev(true);
+  //       }, 1000);
+  //     }
+  //   }
   // };
+
 
   return (
     <div className="flex flex-col justify-center items-center w-full h-full p-10">
@@ -76,20 +75,8 @@ const StudentRegister = () => {
             <CardDescription>Description</CardDescription>
           </CardHeader>
           <CardContent>{getForm()}</CardContent>
-          {/* <CardContent>
-            <VerifyOtp />
-          </CardContent> */}
-          {/* <CardContent>
-            <ProfilePicture />
-          </CardContent> */}
-          {/* <CardContent>
-            <EmailPassword onSubmitMutations={handleMutationState} />
-          </CardContent> */}
-          {/* <CardContent>
-            <StudentDetails />
-          </CardContent> */}
           <CardFooter className="grid grid-cols-2 justify-between">
-            <span
+            {/* <span
               data-enabled={!isPrev}
               className="data-[enabled=true]:cursor-not-allowed select-none"
             >
@@ -103,7 +90,7 @@ const StudentRegister = () => {
                   Previous {stage}
                 </Button>
               )}
-            </span>
+            </span> */}
             <span
               data-enabled={mutationState.isPending || mutationState.isZodError}
               className="data-[enabled=true]:cursor-not-allowed select-none justify-self-end"

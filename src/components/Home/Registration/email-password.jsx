@@ -62,7 +62,6 @@ const EmailPassword = ({ onSubmitMutations }) => {
     if (mutation.isError) {
       setFormData({});
     }
-
     return () => {
       onSubmitMutations({
         isPending: false,
@@ -77,6 +76,12 @@ const EmailPassword = ({ onSubmitMutations }) => {
     mutation.error,
     mutation.isSuccess,
   ]);
+
+  useEffect(() => {
+    if (Object.keys(errors).length > 0) {
+      updateStatus(formData, stage, setStageStatus);
+    }
+  }, [errors]);
   //   useEffect(() => {
   //     if (!!formData.student) {
   //       setStage(1);

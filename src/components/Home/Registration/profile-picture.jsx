@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import { useRegisterContext } from "../context/register-context-provider";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { profilePictureSchema } from "./register-zod-schema";
+import { updateStatus } from "./updateStatus";
 
 const ProfilePicture = ({ onSubmitMutations }) => {
   const [file, setFile] = useState();
@@ -14,7 +15,15 @@ const ProfilePicture = ({ onSubmitMutations }) => {
   const [errorFile, setErrorFile] = useState();
   // const [isZodError, setIsZodError] = useState(false);
 
-  const { formData } = useRegisterContext();
+  const { formData, stage, setStageStatus } = useRegisterContext();
+
+  const MAX_FILE_SIZE = 3 * 1024 * 1024;
+  const ACCEPTED_FILE_TYPES = [
+    "image/jpeg",
+    "image/jpg",
+    "image/png",
+    "image/webp",
+  ];
 
   const mutation = useRegisterStudent();
 
@@ -30,20 +39,20 @@ const ProfilePicture = ({ onSubmitMutations }) => {
       avatar: null,
     },
     resolver: zodResolver(profilePictureSchema),
-    mode: "onChange",
   });
 
   const watchfile = watch("avatar");
 
-  const validateFile = (file) => {
-    try {
-      profilePictureSchema.parse(file);
-    } catch (err) {
-      // console.log(err);
-      setErrorFile(err.errors?.[0]?.message || "Invalid File");
-      handleRemove();
-    }
-  };
+  // const validateFile = (file) => {
+  //   try {
+  //     console.log("validate");
+  //     profilePictureSchema.parse(file);
+  //   } catch (err) {
+  //     // console.log(err);
+  //     setErrorFile(err.errors?.[0]?.message || "Invalid File");
+  //     handleRemove();
+  //   }
+  // };
 
   const handleDragOver = (e) => {
     e.preventDefault();
@@ -57,15 +66,16 @@ const ProfilePicture = ({ onSubmitMutations }) => {
 
   const handleDrop = (e) => {
     e.preventDefault();
-    validateFile(e.dataTransfer.files?.[0]);
     console.log("avatar", e.dataTransfer.files?.[0]);
+    // validateFile(e.dataTransfer.files?.[0]);
     handleFileSelection(e.dataTransfer.files?.[0]);
   };
 
   const handleChange = (e) => {
     // console.log(URL.createObjectURL(e.target.files[0]));
-    validateFile(e.target.files?.[0]);
     console.log(e.target.files?.[0]);
+    // validateFile(e.target.files?.[0]);
+    profilePictureSchema.parse(e.target.files?.[0]);
     handleFileSelection(e.target.files?.[0]);
   };
 
@@ -83,7 +93,7 @@ const ProfilePicture = ({ onSubmitMutations }) => {
   };
 
   const onSubmit = (data) => {
-    validateFile(data.avatar);
+    // console.log(data.avatar);
     mutation.mutate({ ...formData, ...data });
   };
 
@@ -109,6 +119,12 @@ const ProfilePicture = ({ onSubmitMutations }) => {
     mutation.error,
     mutation.isSuccess,
   ]);
+
+  useEffect(() => {
+    if (Object.keys(errors).length > 0) {
+      updateStatus("error", stage, setStageStatus);
+    }
+  }, [errors.avatar]);
 
   return (
     <>
@@ -145,7 +161,7 @@ const ProfilePicture = ({ onSubmitMutations }) => {
                   isDragging
                     ? "border-green-400 bg-green-200/50 scale-105 transition-transform duration-100"
                     : ""
-                }`}
+                } ${errors.avatar ? "border-red-400 bg-red-200/50" : ""}`}
                 onDrop={handleDrop}
                 onDragOver={handleDragOver}
                 onDragLeave={handleDragLeave}
@@ -181,15 +197,15 @@ const ProfilePicture = ({ onSubmitMutations }) => {
             <table className="w-full">
               <thead>
                 <tr>
-                  <th className="border-b-2 border-r-2 border-dashed rounded-xl w-20 px-7">
+                  <th className="border-b-2 border-r-2 border-dashed w-20 px-7">
                     Category
                   </th>
-                  <th className="border-b-2 border-dashed rounded-xl ">Info</th>
+                  <th className="border-b-2 border-dashed">Info</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <th className="border-b-2 border-r-2 border-dashed rounded-xl ">
+                  <th className="border-b-2 border-r-2 border-dashed">
                     Name
                   </th>
                   <td className="border-b-2 border-dashed  px-4 line-clamp-2">
@@ -197,16 +213,28 @@ const ProfilePicture = ({ onSubmitMutations }) => {
                   </td>
                 </tr>
                 <tr>
-                  <th className="border-b-2 border-r-2 border-dashed rounded-xl ">
+                  <th className="border-b-2 border-r-2 border-dashed ">
                     Size
                   </th>
-                  <td className="border-b-2 border-dashed rounded-xl px-4">
+                  <td
+                    className={`border-b-2 border-dashed px-4 ${
+                      fileInfo.size > MAX_FILE_SIZE
+                        ? "text-red-400 bg-red-400/50"
+                        : ""
+                    }`}
+                  >
                     {fileInfo.size}
                   </td>
                 </tr>
                 <tr>
-                  <th className="border-r-2 border-dashed rounded-xl ">Type</th>
-                  <td className="border-dashed rounded-xl px-4">
+                  <th className="border-r-2 border-dashed ">Type</th>
+                  <td
+                    className={`border-dashed px-4 ${
+                      ACCEPTED_FILE_TYPES.includes(fileInfo.type)
+                        ? "text-red-400 bg-red-400/50"
+                        : ""
+                    }`}
+                  >
                     {fileInfo.type}
                   </td>
                 </tr>

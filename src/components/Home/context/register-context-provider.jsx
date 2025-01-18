@@ -11,7 +11,7 @@ const RegisterContext = createContext({
 });
 
 const RegisterContextProvider = ({ children }) => {
-  const [stage, setStage] = useState(0);
+  const [stage, setStage] = useState(3);
   const [formData, setFormData] = useState({
     student: {},
     info: {},
