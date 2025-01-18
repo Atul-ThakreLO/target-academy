@@ -4,6 +4,8 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { useRegisterContext } from "@/components/Home/context/register-context-provider";
 import { updateStatus } from "@/components/Home/Registration/updateStatus";
+import { useDispatch } from "react-redux";
+import { setAuth } from "@/Redux/slices/Student/auth-status-slice";
 
 export const useGetStudentById = (id = 1) => {
   return useQuery({
@@ -22,9 +24,12 @@ export const useGetStudentById = (id = 1) => {
 
 export const useStudentLogin = () => {
   const navigate = useNavigate();
+  
+  const dispatch = useDispatch();
   return useMutation({
     mutationFn: (data) => studentApi.loginStudent("/student/l/login", data),
     onSuccess: (data) => {
+      dispatch(setAuth(true));
       toast.success("Login Success", {
         onOpen: () => {
           navigate("/student");
@@ -90,6 +95,7 @@ export const useVerifyOTP = () => {
 
 export const useRegisterStudent = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { formData, setStage, stage, setStageStatus } = useRegisterContext();
   return useMutation({
     mutationFn: (data) =>
@@ -101,6 +107,7 @@ export const useRegisterStudent = () => {
     onSuccess: (data) => {
       updateStatus("success", stage, setStageStatus);
       setStage(3);
+      dispatch(setAuth(true));
       navigate("/student");
     },
     onError: (error) => {

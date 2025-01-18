@@ -17,6 +17,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import InputField from "@/components/Utils/input-field";
+import { Loader2 } from "lucide-react";
 
 const loginSchema = z.object({
   email: z
@@ -49,7 +50,7 @@ const Login = () => {
   // }
 
   const onSubmit = (data) => {
-    console.log(data);
+    mutation.mutate(data);
   };
 
   return (
@@ -92,9 +93,22 @@ const Login = () => {
               <TransitionNavLink href="/register">
                 <Button variant="outline">Register</Button>
               </TransitionNavLink>
-              <Button type="submit" form="login">
-                Login
-              </Button>
+              <span
+                data-enabled={mutation.isPending}
+                className="data-[enabled=true]:cursor-not-allowed select-none justify-self-end"
+              >
+                <Button
+                  type="submit"
+                  form="login"
+                  disabled={mutation.isPending}
+                >
+                  {mutation.isPending ? (
+                    <Loader2 className="animate-spin" />
+                  ) : (
+                    "Login"
+                  )}
+                </Button>
+              </span>
             </div>
           </CardFooter>
         </Card>
