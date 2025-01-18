@@ -16,7 +16,6 @@ import Login from "@/pages/Home/Login";
 import ProtectedRoute from "@/components/Utils/protected-route";
 import Registration from "@/pages/Home/registration";
 
-
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
@@ -29,7 +28,7 @@ const router = createBrowserRouter(
       <Route
         path="/student"
         element={
-          <ProtectedRoute student>
+          <ProtectedRoute>
             <Student />
           </ProtectedRoute>
         }
