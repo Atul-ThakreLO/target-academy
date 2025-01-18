@@ -7,7 +7,7 @@ import { Calendar } from "@/components/ui/calendar";
 import CardsInstructor from "@/components/Student/MainPage/cards-instructor";
 import CardsQLinks from "@/components/Student/MainPage/cards-qlinks";
 import FlickeringGrid from "@/components/ui/flickering-grid";
-import { useGetStudentById } from "@/Hooks/use-studnt";
+import { useGetStudentById } from "@/Hooks/use-student";
 import { toast, ToastContainer } from "react-toastify";
 
 const MainPage = () => {

@@ -37,7 +37,7 @@ import StudentEdit from "../student-edit";
 import { useTheme } from "@/components/theme-provider";
 import { TransitionLink } from "@/components/Utils/transition-link";
 import { useMutation } from "@tanstack/react-query";
-import { useGetStudentById, useStudentLogout } from "@/Hooks/use-studnt";
+import { useGetStudentById, useStudentLogout } from "@/Hooks/use-student";
 import { useSelector } from "react-redux";
 import nickName from "@/components/Utils/nick-name";
 import { Skeleton } from "@/components/ui/skeleton";

@@ -12,9 +12,10 @@ import Papers from "@/pages/Student/Papers";
 import Profile from "@/pages/Student/Profile";
 import MainPage from "@/pages/Home/MainPage";
 import About from "@/pages/Home/About";
-import Register from "@/pages/Home/Register";
 import Login from "@/pages/Home/Login";
 import ProtectedRoute from "@/components/Utils/protected-route";
+import Registration from "@/pages/Home/registration";
+
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -22,7 +23,7 @@ const router = createBrowserRouter(
       <Route path="/" element={<Home />}>
         <Route index element={<MainPage />} />
         <Route path="about" element={<About />} />
-        <Route path="register" element={<Register />} />
+        <Route path="register" element={<Registration />} />
         <Route path="login" element={<Login />} />
       </Route>
       <Route

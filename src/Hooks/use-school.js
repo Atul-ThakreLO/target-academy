@@ -1,12 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
 import { axiosInstance } from "@/config/axiosConfig";
 
-export default function () {
+export const useGetSchool = () => {
   return useQuery({
-    queryKey: ["class"],
+    queryKey: ["school"],
     queryFn: async () => {
-      const resp = await axiosInstance.get("/class/s/all");
+      const resp = await axiosInstance.get("/school/s/all");
       return resp.data;
     },
   });
-}
+};

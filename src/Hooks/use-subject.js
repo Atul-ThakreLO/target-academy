@@ -1,12 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
 import { axiosInstance } from "@/config/axiosConfig";
 
-export default function (id) {
+export const useGetSubjects = (id) => {
   return useQuery({
-    queryKey: ["subjects"],
+    queryKey: ["subjects", id],
     queryFn: async () => {
       console.log(id);
-
       const resp = await axiosInstance.get("/subject/by/class", {
         params: {
           class_id: id,
@@ -14,5 +13,6 @@ export default function (id) {
       });
       return resp.data;
     },
+    enabled: !!id,
   });
 }

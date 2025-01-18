@@ -14,7 +14,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import Fees from "@/components/Student/Profile.jsx/Fees";
-import { useGetStudentById } from "@/Hooks/use-studnt";
+import { useGetStudentById } from "@/Hooks/use-student";
 import { toast } from "react-toastify";
 import nickName from "@/components/Utils/nick-name";
 import { Skeleton } from "@/components/ui/skeleton";
