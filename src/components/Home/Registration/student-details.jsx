@@ -73,7 +73,7 @@ const StudentDetails = () => {
   };
 
   useEffect(() => {
-    if (!!formData?.info.student_name) {
+    if (!!formData?.info?.student_name) {
       updateStatus(formData, stage, setStageStatus);
       setStage(3);
     }

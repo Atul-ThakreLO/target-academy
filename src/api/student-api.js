@@ -29,7 +29,9 @@ class studentApi {
       }
     } catch (error) {
       console.error(error);
-      toast.error(error.message)
+      if (error.message === "Network Error") {
+        toast.error(error.message);
+      }
       throw error;
     }
   };
