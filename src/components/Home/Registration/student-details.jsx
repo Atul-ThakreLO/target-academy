@@ -224,7 +224,10 @@ const StudentDetails = () => {
                   render={({ field }) =>
                     subjectData?.map((subject) => {
                       return (
-                        <div className="flex items-center space-x-2 my-1">
+                        <div
+                          key={subject.subject_id}
+                          className="flex items-center space-x-2 my-1"
+                        >
                           <Checkbox
                             id={subject.subject_id}
                             checked={field.value.includes(subject.subject_id)}
@@ -232,7 +235,7 @@ const StudentDetails = () => {
                               const updateValue = checked
                                 ? [...field.value, subject.subject_id]
                                 : field.value.filter(
-                                    (id) => id !== field.value
+                                    (id) => id !== subject.subject_id
                                   );
                               field.onChange(updateValue);
                             }}
