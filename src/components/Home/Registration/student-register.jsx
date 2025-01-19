@@ -29,6 +29,8 @@ const StudentRegister = () => {
   });
 
   const buttonText = ["Send OTP", "Verify OTP", "Save & Next", "Submit"];
+  const cardTitle = ["Registration", "Verify OTP", "Personal Details", "Profile Picture"]
+  const cardDescription = ["Email and Password creation", "Check Your Email for OTP", "Fill your Personal Details", "Select Your Profile Picture"]
 
   const handleMutationState = (state) => {
     setMutationState(state);
@@ -71,8 +73,8 @@ const StudentRegister = () => {
       <div>
         <Card className="w-[500px]">
           <CardHeader>
-            <CardTitle>Title</CardTitle>
-            <CardDescription>Description</CardDescription>
+            <CardTitle>{cardTitle[stage]}</CardTitle>
+            <CardDescription>{cardDescription[stage]}</CardDescription>
           </CardHeader>
           <CardContent>{getForm()}</CardContent>
           <CardFooter className="grid grid-cols-2 justify-between">

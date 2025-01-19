@@ -14,7 +14,7 @@ const InputField = ({
   ...props
 }) => {
   return (
-    <>
+    <div>
       {label && (
         <Label htmlFor={id} className={`animate-headShake ${classNameLabel}`}>
           {label}
@@ -32,7 +32,7 @@ const InputField = ({
         {...props}
       />
       {error && <p className="text-red-500">{error.message}</p>}
-    </>
+    </div>
   );
 };
 
