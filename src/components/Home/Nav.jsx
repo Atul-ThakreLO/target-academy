@@ -5,7 +5,7 @@ import { TransitionNavLink } from "../Utils/transition-link";
 
 const Nav = () => {
   return (
-    <div className="pb-16">
+    <div className="pb-16 nav">
       <div className="fixed w-[100%] text-black py-3">
         <nav className="w-[95%] mx-auto flex justify-between items-center">
           <div className="logo">

@@ -1,14 +1,13 @@
 import useStudentAuth from "@/Hooks/use-student-auth";
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import StudentSkelleton from "../Student/student-skelleton";
 
-const ProtectedRoute = ({ children, student }) => {
-  if (student) {
+const ProtectedRoute = ({ children }) => {
     const navigate = useNavigate();
     const { isAuthenticated, isLoading } = useStudentAuth();
 
-    React.useEffect(() => {
+    useEffect(() => {
       if (!isLoading && !isAuthenticated) {
         navigate("/login");
       }
@@ -21,8 +20,6 @@ const ProtectedRoute = ({ children, student }) => {
         </div>
       );
     }
-  }
-
   return children;
 };
 

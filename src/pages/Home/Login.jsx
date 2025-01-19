@@ -12,18 +12,46 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { TransitionNavLink } from "@/components/Utils/transition-link";
-import { useStudentLogin } from "@/Hooks/use-studnt";
+import { useStudentLogin } from "@/Hooks/use-student";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import InputField from "@/components/Utils/input-field";
+import { Loader2 } from "lucide-react";
+
+const loginSchema = z.object({
+  email: z
+    .string()
+    .min(1, { message: "Email cannot be Empty" })
+    .email({ message: "Invalid Email" }),
+  password: z.string().min(1, { message: "Password cannot be empty" }),
+});
 
 const Login = () => {
   const mutation = useStudentLogin();
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+  } = useForm({
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+    resolver: zodResolver(loginSchema),
+  });
 
-  function handleSubmit(e) {
-    e.preventDefault();
-    const formData = new FormData(e.target);
-    const data = Object.fromEntries(formData.entries());
-    console.log(data);
+  // function handleSubmit(e) {
+  //   e.preventDefault();
+  //   const formData = new FormData(e.target);
+  //   const data = Object.fromEntries(formData.entries());
+  //   console.log(data);
+  //   mutation.mutate(data);
+  // }
+
+  const onSubmit = (data) => {
     mutation.mutate(data);
-  }
+  };
 
   return (
     <>
@@ -36,38 +64,52 @@ const Login = () => {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit(onSubmit)} id="login">
               <div className="grid w-full items-center gap-4">
-                <div className="flex flex-col space-y-1.5">
-                  <Label htmlFor="email">Email</Label>
-                  <Input
-                    name="email"
-                    id="email"
-                    type="email"
-                    placeholder="Email"
-                  />
-                </div>
-                <div className="flex flex-col space-y-1.5">
-                  <Label htmlFor="password">Password</Label>
-                  <Input
-                    name="password"
-                    id="password"
-                    type="password"
-                    placeholder="Password"
-                    autoComplete={"password"}
-                  />
-                </div>
+                <InputField
+                  label={"Email"}
+                  type={"text"}
+                  id={"email"}
+                  name={"email"}
+                  register={register}
+                  error={errors.email}
+                />
+                <InputField
+                  label={"Password"}
+                  type={"password"}
+                  id={"password"}
+                  name={"password"}
+                  register={register}
+                  error={errors.password}
+                  autoComplete={"password"}
+                />
               </div>
-              <div className="mt-4 flex justify-end">
-                <Button type="submit">Login</Button>
-              </div>
+              <div className="mt-4 flex justify-end"></div>
             </form>
           </CardContent>
-          <CardFooter className="flex justify-between">
-            <p>Don't Have Account?</p>
-            <TransitionNavLink href="/register">
-              <Button variant="outline">Register</Button>
-            </TransitionNavLink>
+          <CardFooter className="flex-col">
+            <p className="w-full">Don't Have Account?</p>
+            <div className="flex justify-between w-full mt-2">
+              <TransitionNavLink href="/register">
+                <Button variant="outline">Register</Button>
+              </TransitionNavLink>
+              <span
+                data-enabled={mutation.isPending}
+                className="data-[enabled=true]:cursor-not-allowed select-none justify-self-end"
+              >
+                <Button
+                  type="submit"
+                  form="login"
+                  disabled={mutation.isPending}
+                >
+                  {mutation.isPending ? (
+                    <Loader2 className="animate-spin" />
+                  ) : (
+                    "Login"
+                  )}
+                </Button>
+              </span>
+            </div>
           </CardFooter>
         </Card>
       </div>

@@ -19,7 +19,7 @@ const useStudentAuth = () => {
       return data;
     },
     enabled: !isAuthenticated,
-    retry: 2,
+    retry: 1,
   });
 
   return { isAuthenticated, isLoading, isError };
