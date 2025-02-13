@@ -1,28 +1,52 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 
-import { Link, NavLink } from "react-router-dom";
-import { TransitionNavLink } from "../Utils/transition-link";
+import { Link, NavLink, useInRouterContext } from "react-router-dom";
+import { TransitionLink, TransitionNavLink } from "../Utils/transition-link";
+import { Button } from "../ui/button";
+import { Target } from "lucide-react";
 
-const Nav = () => {
+const Nav = ({ scroller }) => {
+  const [shrink, setShrink] = useState(false);
+
+  useEffect(() => {
+    if (scroller > 50) {
+      setShrink(true);
+    } else {
+      setShrink(false);
+    }
+  }, [scroller]);
+
   return (
-    <div className="pb-16 nav">
-      <div className="fixed w-[100%] text-black py-3">
-        <nav className="w-[95%] mx-auto flex justify-between items-center">
-          <div className="logo">
-            <h1 className="text-5xl">Logo</h1>
-          </div>
-          <ul className="flex gap-20 pr-20 text-muted-foreground">
-            <li>
-              <TransitionNavLink href="/">Home</TransitionNavLink>
+    <div className="pb-20 nav">
+      <div className="fixed w-full text-black pt-3 z-30">
+        <nav
+          className={`w-[78%] mx-auto flex justify-between items-center px-10 py-4 duration-200 -translate-x-1 ${
+            shrink
+              ? "bg-background rounded-lg outline-[#c9c9c9] outline outline-[0.1px] shadow-lg"
+              : ""
+          }`}
+        >
+          <ul className="flex gap-20 text-muted-foreground items-center justify-between w-full">
+            <li className="logo flex items-center text-foreground font-semibold">
+              <h1 className="text-4xl">Target</h1>
+              <Target size={40} className="-mt-5" />
             </li>
-            <li>
+            <li className="flex gap-20">
+              <TransitionNavLink href="/">Home</TransitionNavLink>
+
+              <TransitionNavLink href="/results">Results</TransitionNavLink>
+
+              <TransitionNavLink href="/career">Career</TransitionNavLink>
+
               <TransitionNavLink href="/about">About</TransitionNavLink>
             </li>
-            <li>
-              <TransitionNavLink href="/register">Register</TransitionNavLink>
-            </li>
-            <li>
-              <TransitionNavLink href="/login">Login</TransitionNavLink>
+            <li className="flex gap-2">
+              <TransitionLink href="/login">
+                <Button variant="outline">Login</Button>
+              </TransitionLink>
+              <TransitionLink href="/register">
+                <Button>Register</Button>
+              </TransitionLink>
             </li>
           </ul>
         </nav>

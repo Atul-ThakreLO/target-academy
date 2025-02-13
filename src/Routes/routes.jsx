@@ -5,16 +5,31 @@ import {
 } from "react-router-dom";
 import Home from "@/layouts/Home";
 import Student from "@/layouts/Student";
-import ST_MainPage from "@/pages/Student/MainPage";
-import Marks from "@/pages/Student/Marks";
-import Notes from "@/pages/Student/Notes";
-import Papers from "@/pages/Student/Papers";
-import Profile from "@/pages/Student/Profile";
-import MainPage from "@/pages/Home/MainPage";
-import About from "@/pages/Home/About";
-import Login from "@/pages/Home/Login";
+import ST_MainPage from "@/pages/Student/main-page";
+import Marks from "@/pages/Student/marks";
+import Notes from "@/pages/Student/notes";
+import Papers from "@/pages/Student/papers";
+import Profile from "@/pages/Student/profile";
+import MainPage from "@/pages/Home/main-page";
+import About from "@/pages/Home/about";
+import Login from "@/pages/Home/login";
 import ProtectedRoute from "@/components/Utils/protected-route";
 import Registration from "@/pages/Home/registration";
+import Results from "@/pages/Home/results";
+import Career from "@/pages/Home/career";
+import Staff from "@/layouts/Staff";
+import Dashboard from "@/pages/Staff/dashboard";
+import NotesStaff from "@/pages/Staff/notes-staff";
+import PapersStaff from "@/pages/Staff/papers-staff";
+import AssignmentsStaff from "@/pages/Staff/assignments-staff";
+import Transactions from "@/pages/Staff/transactions";
+import Result from "@/pages/Staff/result";
+import ControlPanel from "@/pages/Staff/control-panel";
+import Staffs from "@/pages/Staff/staffs";
+import Students from "@/pages/Staff/students";
+import Tests from "@/pages/Staff/Tests";
+import TestMarks from "@/pages/Staff/test-marks";
+import EventNotice from "@/pages/Staff/event-notice";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -24,6 +39,8 @@ const router = createBrowserRouter(
         <Route path="about" element={<About />} />
         <Route path="register" element={<Registration />} />
         <Route path="login" element={<Login />} />
+        <Route path="results" element={<Results />} />
+        <Route path="career" element={<Career />} />
       </Route>
       <Route
         path="/student"
@@ -40,6 +57,20 @@ const router = createBrowserRouter(
         <Route path="papers" element={<Papers />} />
         <Route path="profile" element={<Profile />} />
         <Route path="about" element={<About />} />
+      </Route>
+      <Route path="/staff" element={<Staff />}>
+        <Route index element={<Dashboard />} />
+        <Route path="notes" element={<NotesStaff />} />
+        <Route path="papers" element={<PapersStaff />} />
+        <Route path="tests" element={<Tests />} />
+        <Route path="tests/marks/:id" element={<TestMarks />} />
+        <Route path="assignments" element={<AssignmentsStaff />} />
+        <Route path="transactions" element={<Transactions />} />
+        <Route path="result" element={<Result />} />
+        <Route path="control-panel" element={<ControlPanel />} />
+        <Route path="event-notice" element={<EventNotice />} />
+        <Route path="staff" element={<Staffs />} />
+        <Route path="students" element={<Students />} />
       </Route>
     </>
   )

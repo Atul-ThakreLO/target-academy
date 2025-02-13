@@ -1,4 +1,4 @@
-import { setAuth } from "@/Redux/slices/Student/auth-status-slice";
+import { setAuth, setStudentId } from "@/Redux/slices/Student/auth-status-slice";
 import { useQuery } from "@tanstack/react-query";
 import { useDispatch, useSelector } from "react-redux";
 import studentApi from "../api/student-api";
@@ -13,7 +13,9 @@ const useStudentAuth = () => {
       console.log("Checking token");
       const data = await studentApi.validateStudentToken("/student/auth");
       if (data?.data.message === "Token verified") {
-        console.log("Token verified");
+        // console.log("Token verified");
+        // console.log(data.data.student_id);
+        dispatch(setStudentId(data.data?.student_id));
         dispatch(setAuth(true));
       }
       return data;

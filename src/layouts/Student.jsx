@@ -1,4 +1,4 @@
-import SideBar from "@/components/Student/SideBar";
+// import SideBar from "@/components/Student/SideBar";
 import {
   SidebarInset,
   SidebarProvider,
@@ -9,15 +9,18 @@ import { Outlet } from "react-router-dom";
 import "../App.css";
 import { VelocityScroll } from "@/components/ui/marquee-text";
 import { Separator } from "@/components/ui/separator";
-import { ToastContainer } from "react-toastify";
+import SideBar from "@/components/Utils/Sidebar/sidebar";
+import SideBarUserItem from "@/components/Student/Sidebar/sidebar-user-item";
+import { sideBarLinks } from "@/constants/sidebar-student-links";
 
 const Student = () => {
+
   return (
     <div>
       <SidebarProvider>
-        <SideBar />
+        <SideBar links={sideBarLinks} user={<SideBarUserItem />} />
         <SidebarInset className="overflow-hidden">
-          <div className=" mb-7 overflow-hidden">
+          <div className="pb-7 overflow-hidden">
             <div className="fixed z-50 flex w-[100%] bg-background px-2 border-b">
               <SidebarTrigger />
               <Separator orientation="vertical" className="mx-2 h-7" />

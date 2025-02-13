@@ -1,18 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-
 const authStudentSlice = createSlice({
-    name: "authStudent",
-    initialState: { student: {}, isAuthenticated: false },
-    reducers: {
-        setStudent: (state, action) => {
-            state.student = action.payload;
-        },
-        setAuth: (state, action) => {
-            state.isAuthenticated = action.payload;
-        },
-    }
-})
+  name: "authStudent",
+  initialState: { student_id: "", isAuthenticated: false },
+  reducers: {
+    setStudentId: (state, action) => {
+      state.student_id = action.payload;
+    },
+    setAuth: (state, action) => {
+      state.isAuthenticated = action.payload;
+    },
+  },
+});
 
-export const { setStudent, setAuth } = authStudentSlice.actions;
+export const { setStudentId, setAuth } = authStudentSlice.actions;
 export default authStudentSlice.reducer;

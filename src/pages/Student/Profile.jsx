@@ -21,9 +21,6 @@ import { Skeleton } from "@/components/ui/skeleton";
 import InfoCard, {
   InfoCardSkelleton,
 } from "@/components/Student/Profile.jsx/info-card";
-import { sub } from "date-fns";
-import { useDispatch } from "react-redux";
-import { setStudentInfo } from "@/Redux/slices/Student/student-info-slice";
 
 const Profile = () => {
   // const dispatch = useDispatch();

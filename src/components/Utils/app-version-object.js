@@ -16,4 +16,16 @@ export const APP_VERSION = [
     description:
       "Integrated RHF(React-Hook-Form) for better hyandling of forms, and used Zod validation for proper validation and Error messages and in last stage of rgistration i.e in Profile photo selection we introduced drag and drop feature",
   },
+  {
+    version: "2.0.0",
+    launchDate: "14-02-2025",
+    changes: [],
+    description: "Added Home Page Structure",
+  },
+  {
+    version: "3.0.0",
+    launchDate: "14-02-2025",
+    changes: [],
+    description: "Added Staff Page Sturcture",
+  },
 ];
