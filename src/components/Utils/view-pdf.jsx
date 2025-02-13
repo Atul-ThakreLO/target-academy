@@ -19,7 +19,7 @@ const ViewPdf = ({ mobile, width }) => {
       <Document file={pdf} onLoadSuccess={loadSuccess}>
         {Array.from({ length: pages }, (_, i) => {
           return (
-            <div className="w-full">
+            <div className="w-full" key={i}>
               <div className="relative w-min mx-auto">
                 <Page
                   pageNumber={i + 1}

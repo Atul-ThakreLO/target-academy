@@ -12,16 +12,11 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import React from "react";
-import User from "./Sidebar/user";
+import User from "./Sidebar/sidebar-user-item";
 import { useLocation } from "react-router-dom";
-import {
-  BookCopy,
-  Gauge,
-  Home,
-  NotepadText,
-  Target,
-} from "lucide-react";
+import { BookCopy, Gauge, Home, NotepadText, Target } from "lucide-react";
 import { TransitionLink } from "../Utils/transition-link";
+import SidebarItems from "../Utils/Sidebar/sidebar-items";
 
 const SideBar = () => {
   const { pathname } = useLocation();
@@ -50,21 +45,7 @@ const SideBar = () => {
         <SidebarGroup title="Main">
           <SidebarGroupLabel>Links</SidebarGroupLabel>
           <SidebarMenu>
-            <SidebarMenuItem title="Home">
-              <TransitionLink href="/student">
-                <SidebarMenuButton
-                  className="py-5"
-                  isActive={pathname === "/student" ? "true" : "false"}
-                  onClick={() => setOpenMobile(false)}
-                >
-                  <div className="text-base flex gap-2 items-center">
-                    <Home size={22} />
-                    Home
-                  </div>
-                </SidebarMenuButton>
-              </TransitionLink>
-            </SidebarMenuItem>
-            <SidebarSeparator />
+            <SidebarItems title={"Home"} icon={<Home/>} path={"/student"} />
             <SidebarMenuItem title="Notes">
               <TransitionLink href="/student/notes">
                 <SidebarMenuButton

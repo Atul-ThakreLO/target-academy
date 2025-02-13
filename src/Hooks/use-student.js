@@ -4,32 +4,31 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { useRegisterContext } from "@/components/Home/context/register-context-provider";
 import { updateStatus } from "@/components/Home/Registration/updateStatus";
-import { useDispatch } from "react-redux";
-import { setAuth } from "@/Redux/slices/Student/auth-status-slice";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  setAuth,
+  setStudentId,
+} from "@/Redux/slices/Student/auth-status-slice";
 
 export const useGetStudentById = (id = 1) => {
+  const { student_id } = useSelector((state) => state.authStudent);
   return useQuery({
-    queryKey: ["student", id],
+    queryKey: ["student", student_id],
     queryFn: () =>
-      studentApi.getStudent("/student/0c95be1b-cb5e-4774-9322-3b3d15cba7c7"),
-    onSuccess: (data) => {
-      console.log(data);
-    },
-    onError: (error) => {
-      toast.error(error?.response?.data?.message);
-    },
+      studentApi.getStudent("/student"),
     retry: 2,
   });
 };
 
 export const useStudentLogin = () => {
   const navigate = useNavigate();
-  
+
   const dispatch = useDispatch();
   return useMutation({
     mutationFn: (data) => studentApi.loginStudent("/student/l/login", data),
     onSuccess: (data) => {
       dispatch(setAuth(true));
+      dispatch(setStudentId(data.data?.response.student_id));
       toast.success("Login Success", {
         onOpen: () => {
           navigate("/student");
