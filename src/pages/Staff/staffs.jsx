@@ -1,13 +1,9 @@
-import EditDialog from "@/components/Staff/Profile/Edit Profile/edit-dialog";
 import FilterStaff from "@/components/Staff/Staff/filter-staff";
 import StaffTable from "@/components/Staff/Staff/staff-table";
-import { Button } from "@/components/ui/button";
-import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { useSidebar } from "@/components/ui/sidebar";
 import { useGetAllStaff } from "@/Hooks/use-staff";
-import { useQueryClient } from "@tanstack/react-query";
-import { Filter, Search } from "lucide-react";
+import { Search } from "lucide-react";
 import React, { useEffect, useState } from "react";
 
 const Staffs = () => {

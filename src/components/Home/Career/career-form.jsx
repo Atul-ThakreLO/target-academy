@@ -1,6 +1,5 @@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import SelectField from "@/components/Utils/Form-Fields/select-field";
 import InputField from "@/components/Utils/input-field";
 import { useApplyJob } from "@/Hooks/use-job";
 import {

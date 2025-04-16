@@ -1,24 +1,12 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
 import { Separator } from "@/components/ui/separator";
 import {
-  SheetClose,
   SheetContent,
-  SheetDescription,
   SheetFooter,
-  SheetHeader,
-  SheetTitle,
 } from "@/components/ui/sheet";
 import nickName from "@/components/Utils/nick-name";
-import { Edit, GraduationCap, Mail, Phone, Trash } from "lucide-react";
+import { GraduationCap, Mail, Phone, Trash } from "lucide-react";
 import React from "react";
 import EditDialog from "./Edit Profile/edit-dialog";
 import EditDpDialog from "./Edit Profile/edit-dp-dialog";

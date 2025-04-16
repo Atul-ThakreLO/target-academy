@@ -1,5 +1,4 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { axiosInstance } from "@/config/axiosConfig";
 import api_methods from "../api/secondary-api";
 import { toast } from "react-toastify";
 

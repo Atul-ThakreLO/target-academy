@@ -15,13 +15,11 @@ import { useGetClass } from "@/Hooks/use-class";
 import SelectField from "@/components/Utils/Form-Fields/select-field";
 import { useForm } from "react-hook-form";
 import { useGetSubjectsByClass } from "@/Hooks/use-subject";
-import { useUpdateNotes } from "@/Hooks/use-notes";
 import InputField from "@/components/Utils/input-field";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { EditNotesPapersSchema } from "@/Zod Schema/Staff/secondary-schema";
 import {
   useGetTestPaperByClass,
-  useGetTestPapers,
 } from "@/Hooks/use-test-paper";
 
 const EditNotesPapers = ({ data, mutation, defaultValues }) => {

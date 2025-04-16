@@ -1,17 +1,4 @@
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Minus, Plus } from "lucide-react";
 import React, { useEffect, useState } from "react";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import SubjectCards from "./subject-cards";
 import { useGetSubjectsAll } from "@/Hooks/use-subject";
 

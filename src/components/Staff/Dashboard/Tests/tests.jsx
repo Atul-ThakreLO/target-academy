@@ -10,7 +10,7 @@ import {
 import { TransitionLink } from "@/components/Utils/transition-link";
 import { useGetRecentTestPapers } from "@/Hooks/use-test-paper";
 import { Link, Loader2 } from "lucide-react";
-import React, { useEffect } from "react";
+import React from "react";
 
 const Tests = () => {
   const { data, isLoading, isSuccess } = useGetRecentTestPapers();

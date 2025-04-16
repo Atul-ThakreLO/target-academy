@@ -1,22 +1,17 @@
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import {
   Table,
   TableBody,
-  TableCell,
-  TableFooter,
   TableHead,
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import InputField from "@/components/Utils/input-field";
 import useTable from "@/components/Utils/Table/useTable";
 import { useDeleteManyResult, useGetStudents } from "@/Hooks/use-result";
 import { setSelectedID } from "@/Redux/slices/secondary/result/result-id-slice";
 import { Loader2, Search, Trash } from "lucide-react";
 import React, { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import MarksCell from "./marks-row";
 import { useSidebar } from "@/components/ui/sidebar";

@@ -1,10 +1,7 @@
-import { Calendar } from "@/components/ui/calendar";
 import { TransitionLink } from "@/components/Utils/transition-link";
-import { Edit, Link, Trash } from "lucide-react";
+import { Link } from "lucide-react";
 import React, { useState } from "react";
 import NoticeSwiper from "./notice-swiper";
-import { Button } from "@/components/ui/button";
-import EditNotice from "../Edit Notice/edit-notice";
 
 const NoticeBoard = ({ display }) => {
   const [date, setDate] = useState(new Date());

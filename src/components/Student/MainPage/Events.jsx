@@ -4,12 +4,10 @@ import {
   TableBody,
   TableCaption,
   TableCell,
-  TableFooter,
   TableHead,
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Scroll } from "lucide-react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
 const Events = () => {

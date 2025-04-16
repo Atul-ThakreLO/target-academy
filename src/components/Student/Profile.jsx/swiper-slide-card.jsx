@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import { SwiperSlide } from "swiper/react";
 
 const SwiperSlideCard = ({ subjects, plan_no, plan }) => {
   const [subjectWisePlan, setSubjectWisePlan] = React.useState(1);

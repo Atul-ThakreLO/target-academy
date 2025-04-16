@@ -1,12 +1,8 @@
 import AddAssignments from "@/components/Staff/Assignments/Add-Assignments/add-assignments";
-import Assignments from "@/components/Staff/Assignments/Assignments";
 import AssignmentTable from "@/components/Staff/Assignments/Table/assignment-table";
 import { Button } from "@/components/ui/button";
-import { useGetAssignments } from "@/Hooks/use-assignment";
-import { setAssignmentData } from "@/Redux/slices/secondary/assignment/assignment-data-slice";
 import { Minus, Plus } from "lucide-react";
-import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { useState } from "react";
 
 const AssignmentsStaff = () => {
   const [add, setAdd] = useState(false);

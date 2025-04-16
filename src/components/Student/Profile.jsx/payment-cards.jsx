@@ -6,7 +6,6 @@ import "swiper/css/effect-cards";
 import { EffectCards, Navigation } from "swiper/modules";
 import "swiper/css/navigation";
 import { MoveLeft, MoveRight } from "lucide-react";
-import { set } from "react-hook-form";
 import SwiperSlideCard from "./swiper-slide-card";
 
 const PaymentCards = ({ cardPlanValue, isActive, subjects }) => {

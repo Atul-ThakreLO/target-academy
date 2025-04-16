@@ -13,7 +13,6 @@ import Profile from "@/pages/Student/profile";
 import MainPage from "@/pages/Home/main-page";
 import About from "@/pages/Home/about";
 import Login from "@/pages/Home/login";
-import ProtectedRoute from "@/components/Utils/protected-route";
 import Registration from "@/pages/Home/registration";
 import Results from "@/pages/Home/results";
 import Career from "@/pages/Home/career";

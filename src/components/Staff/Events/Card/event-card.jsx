@@ -2,10 +2,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
 import {
   AlarmClock,
-  BookCheck,
   Calendar,
-  CalendarRange,
-  Clock,
   Edit,
   Trash,
 } from "lucide-react";

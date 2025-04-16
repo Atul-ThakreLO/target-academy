@@ -2,17 +2,12 @@ import React, { useState } from "react";
 import {
   Card,
   CardContent,
-  CardDescription,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
 import { FileText, Star } from "lucide-react";
 import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
+  Dialog
 } from "@/components/ui/dialog";
 import { DialogTrigger } from "@radix-ui/react-dialog";
 import PdfPreview from "@/components/Utils/PDF/pdf-preview";

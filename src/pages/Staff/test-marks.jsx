@@ -2,26 +2,17 @@ import LoaderCard from "@/components/Staff/Tests/Add-Test/Loader-card";
 import AddPaper from "@/components/Staff/Tests/Marks/add-paper";
 import MarksListTable from "@/components/Staff/Tests/Marks/Table/marks-list-table";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
-import { Label } from "@/components/ui/label";
 import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
   SelectSeparator,
-  SelectTrigger,
-  SelectValue,
 } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
 import nickName from "@/components/Utils/nick-name";
 import PdfPreview from "@/components/Utils/PDF/pdf-preview";
 import { TransitionLink } from "@/components/Utils/transition-link";
 import { useGetTestPapersByID } from "@/Hooks/use-test-paper";
-import { ChevronRight, FileText, Loader, Upload } from "lucide-react";
-import React, { useEffect } from "react";
+import { ChevronRight, FileText } from "lucide-react";
+import React from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 

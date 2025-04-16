@@ -1,7 +1,7 @@
 import Chart from "@/components/Student/Marks/Chart";
 import MarksTable from "@/components/Student/Marks/Marks-table";
-import React, { useEffect } from "react";
-import { ScrollBar, ScrollArea } from "@/components/ui/scroll-area";
+import React from "react";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { useGetMarksForStudent } from "@/Hooks/use-marks";
 import { Loader2 } from "lucide-react";
 

@@ -1,17 +1,13 @@
 import React, { useEffect, useState } from "react";
 import TsetListTable from "./tset-list-table";
 import { Input } from "@/components/ui/input";
-import { Filter, Search, Trash } from "lucide-react";
+import { Search, Trash } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogTrigger } from "@/components/ui/dialog";
-import FilterPapers from "../../Papers/Filter/filter-papers";
 import { useGetTestPapers } from "@/Hooks/use-test-paper";
 import FilterNotes from "../../Notes/filter-notes";
 import { useSelector } from "react-redux";
 import { setTestsFilterData } from "@/Redux/slices/secondary/test-papers/tests-filter-data-slice";
-import { useDeleteManyNotes } from "@/Hooks/use-notes";
 import { useQueryClient } from "@tanstack/react-query";
-import { setSelectedID } from "@/Redux/slices/secondary/test-papers/test-papers-id-slice";
 
 const TestList = () => {
   const [searchedData, setSearchedData] = useState(null);

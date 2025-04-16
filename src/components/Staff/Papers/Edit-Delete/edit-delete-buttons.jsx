@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import EditNotesPapers from "../../Notes-Papers-Utils/edit-notes-papers";
 import { useDeletePaper, useUpdatePaper } from "@/Hooks/use-papers";
 import DeleteNotesPapers from "../../Notes-Papers-Utils/delete-notes-papers";

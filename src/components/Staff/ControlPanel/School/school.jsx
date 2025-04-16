@@ -2,8 +2,6 @@ import React, { useEffect, useState } from "react";
 import SchoolCard, { SchoolCardSkeleton } from "./school-card";
 import { Button } from "@/components/ui/button";
 import { Loader, Minus, Plus } from "lucide-react";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
 import { useAddSchool, useGetSchool } from "@/Hooks/use-school";
 import DataNotFound from "@/components/Utils/Assets/data-not-found";
 import { useForm } from "react-hook-form";

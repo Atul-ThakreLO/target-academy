@@ -11,7 +11,7 @@ import {
 import useTable from "@/components/Utils/Table/useTable";
 import { TransitionLink } from "@/components/Utils/transition-link";
 import { setSelectedID } from "@/Redux/slices/secondary/test-papers/test-papers-id-slice";
-import React, { useEffect } from "react";
+import React from "react";
 import { useSelector } from "react-redux";
 
 const TsetListTable = ({ rows, more }) => {

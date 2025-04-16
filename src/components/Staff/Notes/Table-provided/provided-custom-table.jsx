@@ -8,11 +8,9 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import PdfPreview from "@/components/Utils/PDF/pdf-preview";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Checkbox } from "@/components/ui/checkbox";
-import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
-import { useDispatch, useSelector } from "react-redux";
-import { setNotesID } from "@/Redux/slices/secondary/notes/notes-data-slice";
+import { useSelector } from "react-redux";
 import useTable from "@/components/Utils/Table/useTable";
 import { setSelectedID } from "@/Redux/slices/secondary/notes/provided-selected-id-slice";
 import { useSidebar } from "@/components/ui/sidebar";

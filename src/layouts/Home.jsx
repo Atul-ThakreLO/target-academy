@@ -1,8 +1,6 @@
 import Nav from "@/components/Home/Nav";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import React, { useEffect, useRef, useState } from "react";
 import { Outlet } from "react-router-dom";
-import { ToastContainer } from "react-toastify";
 
 const Home = () => {
   let navHeight;

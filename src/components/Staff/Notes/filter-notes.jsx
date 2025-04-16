@@ -13,9 +13,9 @@ import { useGetClass } from "@/Hooks/use-class";
 import { useGetSubjectsByClass } from "@/Hooks/use-subject";
 import { DialogTrigger } from "@radix-ui/react-dialog";
 import { Filter, Loader, RefreshCcwDot } from "lucide-react";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 const FilterNotes = ({ open, setOpen, isRefetching, provided, setFilterData }) => {
   const [classID, setClassID] = useState(null);

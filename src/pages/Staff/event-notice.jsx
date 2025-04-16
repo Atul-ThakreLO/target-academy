@@ -1,8 +1,6 @@
 import Event from "@/components/Staff/Events/event";
 import Notices from "@/components/Staff/Notices/notices";
-import { Button } from "@/components/ui/button";
-import { Minus, Plus } from "lucide-react";
-import React, { useState } from "react";
+import React from "react";
 
 const EventNotice = () => {
   return (

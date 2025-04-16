@@ -1,16 +1,10 @@
 import SectionHeader from "@/components/Utils/MainPage/section-header";
-import { Contact2, Flame, Mail, MapPin, Phone } from "lucide-react";
+import { Flame, Mail, MapPin, Phone } from "lucide-react";
 import React from "react";
 
 const Contact = () => {
   return (
     <div className="w-full border pl-2 pb-2 pt-10 rounded-xl">
-      {/* <ScetionHeader
-        icon={<Contact />}
-        title={"contact"}
-        heading={"Contact Us!"}
-        description={"Contact us to get more about Target Academy of Science"}
-      /> */}
       <SectionHeader
         icon={<Flame />}
         title={"Contact"}

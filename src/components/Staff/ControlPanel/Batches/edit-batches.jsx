@@ -7,19 +7,14 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import SelectField from "@/components/Utils/Form-Fields/select-field";
 import InputField from "@/components/Utils/input-field";
 import {
   useAddBatch,
-  useBatchDelete,
-  useBatchUpdate,
   useGetBatchByClass,
 } from "@/Hooks/use-batch";
-import { CircleCheckBig, CircleOff, Edit, Loader, Trash } from "lucide-react";
+import {  Edit, Loader } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import EditForm from "./edit-form";
-import { isPending } from "@reduxjs/toolkit";
 import BatchNameCard from "./batch-name-card";
 
 const EditBatches = ({ id }) => {

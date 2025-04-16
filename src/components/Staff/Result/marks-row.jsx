@@ -4,8 +4,8 @@ import { Input } from "@/components/ui/input";
 import { TableCell, TableRow } from "@/components/ui/table";
 import InputField from "@/components/Utils/input-field";
 import { useAddStudentResult, useDeleteResult } from "@/Hooks/use-result";
-import { Edit, Loader2, Trash, X } from "lucide-react";
-import React, { useEffect, useState } from "react";
+import { Edit, Loader2, Trash } from "lucide-react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import EditMarks from "./edit-marks";
 

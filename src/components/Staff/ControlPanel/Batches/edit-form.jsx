@@ -1,8 +1,8 @@
 import { Button } from "@/components/ui/button";
 import InputField from "@/components/Utils/input-field";
 import { useBatchUpdate } from "@/Hooks/use-batch";
-import { Edit, Loader, Save, X } from "lucide-react";
-import React, { useEffect, useRef } from "react";
+import { Loader, Save, X } from "lucide-react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 
 const EditForm = ({ data, setEdit }) => {

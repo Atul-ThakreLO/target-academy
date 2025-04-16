@@ -14,13 +14,8 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import Fees from "@/components/Student/Profile.jsx/Fees";
-import { useGetStudentById } from "@/Hooks/use-student";
-import { toast } from "react-toastify";
 import nickName from "@/components/Utils/nick-name";
-import { Skeleton } from "@/components/ui/skeleton";
-import InfoCard, {
-  InfoCardSkelleton,
-} from "@/components/Student/Profile.jsx/info-card";
+import InfoCard from "@/components/Student/Profile.jsx/info-card";
 import { useSelector } from "react-redux";
 
 const Profile = () => {

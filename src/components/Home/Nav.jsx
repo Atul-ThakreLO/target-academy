@@ -1,6 +1,4 @@
 import React, { useEffect, useRef, useState } from "react";
-
-import { Link, NavLink, useInRouterContext } from "react-router-dom";
 import { TransitionLink, TransitionNavLink } from "../Utils/transition-link";
 import { Button } from "../ui/button";
 import { Target } from "lucide-react";

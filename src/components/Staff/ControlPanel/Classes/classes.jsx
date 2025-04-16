@@ -1,6 +1,4 @@
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Loader, Minus, Plus } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import ClassCard, { ClassCardSkeleton } from "./class-card";
@@ -8,7 +6,7 @@ import { useAddClass, useGetClass } from "@/Hooks/use-class";
 import InputField from "@/components/Utils/input-field";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ClassSchema, SchoolSchema } from "@/Zod Schema/Staff/secondary-schema";
+import { ClassSchema } from "@/Zod Schema/Staff/secondary-schema";
 
 const Classes = () => {
   const [add, setAdd] = useState(false);

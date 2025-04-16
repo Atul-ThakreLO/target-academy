@@ -8,10 +8,9 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import PdfPreview from "@/components/Utils/PDF/pdf-preview";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Checkbox } from "@/components/ui/checkbox";
-import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import useTable from "@/components/Utils/Table/useTable";
 import { TransitionLink } from "@/components/Utils/transition-link";
 import { useSidebar } from "@/components/ui/sidebar";

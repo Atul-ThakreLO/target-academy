@@ -1,5 +1,5 @@
 import { TransitionLink } from "@/components/Utils/transition-link";
-import { Link, User } from "lucide-react";
+import { Link } from "lucide-react";
 import React from "react";
 
 const CountCard = ({ icon, title, count, href }) => {

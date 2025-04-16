@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { X, Upload, AlertCircle } from "lucide-react";
+import { X, Upload } from "lucide-react";
 // import { Alert, AlertDescription } from "@/components/ui/alert";
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB

@@ -1,4 +1,3 @@
-import Batches from "@/components/Staff/ControlPanel/Batches/batches";
 import Classes from "@/components/Staff/ControlPanel/Classes/classes";
 import Job from "@/components/Staff/ControlPanel/Jobs/job";
 import School from "@/components/Staff/ControlPanel/School/school";

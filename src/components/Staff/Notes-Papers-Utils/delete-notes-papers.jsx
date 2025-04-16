@@ -1,5 +1,4 @@
 import { Button } from "@/components/ui/button";
-import { useDeleteNotes } from "@/Hooks/use-notes";
 import { Loader, Trash } from "lucide-react";
 import React from "react";
 

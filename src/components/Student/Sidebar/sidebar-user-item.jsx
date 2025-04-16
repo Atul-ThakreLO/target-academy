@@ -20,7 +20,7 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import React, { useState } from "react";
+import React from "react";
 import {
   ChevronsUpDown,
   CircleAlert,
@@ -32,8 +32,6 @@ import {
   User2,
   Wrench,
 } from "lucide-react";
-import StudentEdit from "../student-edit";
-
 import { useTheme } from "@/components/theme-provider";
 import { TransitionLink } from "@/components/Utils/transition-link";
 import { useStudentLogout } from "@/Hooks/use-student";

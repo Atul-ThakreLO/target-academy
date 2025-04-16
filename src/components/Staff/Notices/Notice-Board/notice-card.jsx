@@ -1,10 +1,9 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import React, { useRef, useState } from "react";
+import React from "react";
 import EditNotice from "../Edit Notice/edit-notice";
 import { Button } from "@/components/ui/button";
 import { Loader2, Trash } from "lucide-react";
 import nickName from "@/components/Utils/nick-name";
-import { useDeleteAssignment } from "@/Hooks/use-assignment";
 import { useDeleteNotice } from "@/Hooks/use-notice";
 
 const NoticeCard = ({ data }) => {

@@ -11,7 +11,6 @@ import SelectField from "@/components/Utils/Form-Fields/select-field";
 import InputField from "@/components/Utils/input-field";
 import {
   useAddSubjects,
-  useGetSubjectsAll,
   useGetSubjectsByClass,
   useSubjectDelete,
 } from "@/Hooks/use-subject";

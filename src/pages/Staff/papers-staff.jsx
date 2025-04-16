@@ -1,5 +1,4 @@
 import AddNotesPapers from "@/components/Staff/Notes-Papers-Utils/add-note-papers";
-import AddPapers from "@/components/Staff/Papers/Add-Papers/add-papers";
 import PapersTable from "@/components/Staff/Papers/Papers-Table/papers-list";
 import { Button } from "@/components/ui/button";
 import { useAddPaper } from "@/Hooks/use-papers";

@@ -1,7 +1,4 @@
-import { Button } from "@/components/ui/button";
-import React, { useEffect, useState } from "react";
-import EditNotes from "./More Options/edit-notes";
-import ActiveToogle from "./More Options/active-toogle";
+import React from "react";
 import DeleteNotes from "./More Options/delete-notes";
 import EditNotesPapers from "../../Notes-Papers-Utils/edit-notes-papers";
 import { useUpdateNotes } from "@/Hooks/use-notes";

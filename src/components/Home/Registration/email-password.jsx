@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { useForm } from "react-hook-form";
 import { useRegisterContext } from "../context/register-context-provider";
 import { updateStatus } from "./updateStatus";

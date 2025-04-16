@@ -3,13 +3,12 @@ import { Input } from "@/components/ui/input";
 import {
   Table,
   TableBody,
-  TableCell,
   TableHead,
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useAddMarksByTest, useGetMarks } from "@/Hooks/use-marks";
-import { Edit, Loader, Save, Search } from "lucide-react";
+import {  useGetMarks } from "@/Hooks/use-marks";
+import { Loader, Search } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import MarksRow from "./marks-row";

@@ -1,7 +1,6 @@
 import PdfPreview from "@/components/Student/Notes-Papers/pdf-preview";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
-import { Separator } from "@/components/ui/separator";
 import { useAcceptJobLetter } from "@/Hooks/use-job";
 import { BriefcaseBusiness, FileUser, Loader, Mail } from "lucide-react";
 import React from "react";

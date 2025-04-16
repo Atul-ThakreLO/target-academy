@@ -1,9 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetTrigger } from "@/components/ui/sheet";
-import { Edit, MapPin, Trash } from "lucide-react";
+import { MapPin, Trash } from "lucide-react";
 import React, { useState } from "react";
 import JobSheet from "./job-sheet";
-import { Dialog } from "@/components/ui/dialog";
 import JobEditForm from "./job-edit-form";
 import { useDeleteJob } from "@/Hooks/use-job";
 

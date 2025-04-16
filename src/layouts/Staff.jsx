@@ -5,10 +5,8 @@ import {
 } from "@/components/ui/sidebar";
 import SideBar from "@/components/Utils/Sidebar/sidebar";
 import React, { useEffect } from "react";
-import SideBarUserItem from "@/components/Student/Sidebar/sidebar-user-item";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Outlet } from "react-router-dom";
-import { VelocityScroll } from "@/components/ui/marquee-text";
 import { sideBarLinks } from "@/constants/sidebar-staff-links";
 import SidebarStaffUser from "@/components/Staff/SideBar/sidebar-staff-user";
 import ProtectedRoutes from "@/lib/Auth/Staff/ProtectedRoutes";

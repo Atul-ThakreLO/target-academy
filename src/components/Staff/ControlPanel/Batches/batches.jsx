@@ -1,19 +1,5 @@
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Minus, Plus } from "lucide-react";
 import React, { useState } from "react";
-import BatchCard from "./batch-card";
 import BatchCarousel from "./batch-carousel";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 
 const Batches = () => {
   const [add, setAdd] = useState(false);

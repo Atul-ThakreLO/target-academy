@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { Edit, Image, Trash } from "lucide-react";
+import { Image, Trash } from "lucide-react";
 import React, { useEffect } from "react";
 import SchoolEditDialog from "./school-edit-dialog";
 import { useDeleteSchool } from "@/Hooks/use-school";

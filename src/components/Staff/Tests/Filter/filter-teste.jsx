@@ -11,13 +11,11 @@ import SelectField from "@/components/Utils/Form-Fields/select-field";
 import { useGetBatchByClass } from "@/Hooks/use-batch";
 import { useGetClass } from "@/Hooks/use-class";
 import { useGetSubjectsByClass } from "@/Hooks/use-subject";
-import { setNotesFilterData } from "@/Redux/slices/secondary/notes/notes-filter-data-slice";
 import { DialogTrigger } from "@radix-ui/react-dialog";
-import { useQueryClient } from "@tanstack/react-query";
 import { Filter, Loader, RefreshCcwDot } from "lucide-react";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 const FilterTests = ({ open, setOpen, isRefetching, provided, setFilterData }) => {
   const [classID, setClassID] = useState(null);

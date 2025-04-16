@@ -1,6 +1,4 @@
-import checkConnection from "@/components/Utils/check-connection";
 import axios from "axios";
-import { toast } from "react-toastify";
 
 export const axiosInstance = axios.create({
   baseURL: "http://localhost:3000/",

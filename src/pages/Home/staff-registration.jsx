@@ -2,7 +2,7 @@ import RegistrationCard from "@/components/Home/Staff-Registration/registration-
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Target } from "lucide-react";
 import React from "react";
-import { useLocation, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 const StaffRegistration = () => {
   const { name, token, job_id  } = useParams();

@@ -2,19 +2,9 @@ import React, { useEffect, useState } from "react";
 import { FileText, Loader, Upload, X } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { useGetClass } from "@/Hooks/use-class";
 import SelectField from "@/components/Utils/Form-Fields/select-field";
 import { useForm } from "react-hook-form";
-import { useGetSchool } from "@/Hooks/use-school";
 import { zodResolver } from "@hookform/resolvers/zod";
 import InputField from "@/components/Utils/input-field";
 import { useGetSubjectsByClass } from "@/Hooks/use-subject";
@@ -22,7 +12,6 @@ import { NotesSchema } from "@/Zod Schema/Staff/secondary-schema";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import PdfPreview from "@/components/Utils/PDF/pdf-preview";
 import { Separator } from "@/components/ui/separator";
-import { useAddNotes } from "@/Hooks/use-notes";
 
 const AddNotesPapers = ({ type, add, mutation }) => {
   const [classID, setClassID] = useState("");

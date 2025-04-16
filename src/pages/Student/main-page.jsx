@@ -2,17 +2,11 @@ import React, { useEffect, useState } from "react";
 import "../../App.css";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import Notices from "@/components/Student/MainPage/Notices";
-import Events from "@/components/Student/MainPage/Events";
-import { Calendar } from "@/components/ui/calendar";
 import CardsInstructor from "@/components/Student/MainPage/cards-instructor";
 import CardsQLinks from "@/components/Student/MainPage/cards-qlinks";
 import FlickeringGrid from "@/components/ui/flickering-grid";
-import { useDispatch, useSelector } from "react-redux";
-import { setStudent } from "@/Redux/slices/Student/student-slice";
-import { useGetStudentById } from "@/Hooks/use-student";
-import { Skeleton } from "@/components/ui/skeleton";
+import { useSelector } from "react-redux";
 import { greetingsFn } from "@/components/Utils/greetings";
-import { toast } from "react-toastify";
 
 const MainPage = () => {
   const [date, setDate] = useState(new Date());

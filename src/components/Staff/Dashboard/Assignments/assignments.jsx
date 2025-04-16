@@ -9,7 +9,7 @@ import {
 import ProgressBar from "./progress-bar";
 import { TransitionLink } from "@/components/Utils/transition-link";
 import { Link, Loader2 } from "lucide-react";
-import React, { useEffect } from "react";
+import React from "react";
 import { useGetRecentAssignments } from "@/Hooks/use-assignment";
 
 const Assignments = () => {

@@ -1,20 +1,9 @@
 import FilterStudent from "@/components/Staff/Students/filter-student";
 import StudentsTable from "@/components/Staff/Students/students-table";
-import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { useSidebar } from "@/components/ui/sidebar";
 import { useGetStudents } from "@/Hooks/use-student";
-import { Filter, Search } from "lucide-react";
+import { Search } from "lucide-react";
 import React, { useEffect, useState } from "react";
 
 const Students = () => {

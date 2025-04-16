@@ -1,14 +1,8 @@
-import { Separator } from "@/components/ui/separator";
 import React from "react";
-import InputField from "@/components/Utils/input-field";
-import SelectField from "@/components/Utils/Form-Fields/select-field";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { registrationSchema } from "@/Zod Schema/Staff/registration.-schema";
-import { Button } from "@/components/ui/button";
 import { useStaffRegistration } from "@/Hooks/use-staff";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import FormStaff from "./Forms/form-staff";
 
 const RegistrationCard = ({ job_id }) => {

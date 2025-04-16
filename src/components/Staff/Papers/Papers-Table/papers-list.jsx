@@ -1,12 +1,8 @@
-import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Filter, Loader, Search, Trash } from "lucide-react";
+import { Loader, Search, Trash } from "lucide-react";
 import React, { useEffect, useState } from "react";
 // import CustomTable from "@/components/Utils/Table/custom-table";
-import FilterPapers from "../Filter/filter-papers";
-import EditDeleteDdown from "../Edit-Delete/edit-delete-ddown";
-import CustomTable from "../../Notes/Table-All/custom-table";
 import { useDeleteManyPaper, useGetPapers } from "@/Hooks/use-papers";
 import FilterNotes from "../../Notes/filter-notes";
 import { setPapersFilterData } from "@/Redux/slices/secondary/papers/papers-filter-data-slice";
