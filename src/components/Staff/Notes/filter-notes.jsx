@@ -1,88 +1,140 @@
 import { Button } from "@/components/ui/button";
 import {
+  Dialog,
   DialogContent,
   DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import React from "react";
+import SelectField from "@/components/Utils/Form-Fields/select-field";
+import { useGetBatchByClass } from "@/Hooks/use-batch";
+import { useGetClass } from "@/Hooks/use-class";
+import { useGetSubjectsByClass } from "@/Hooks/use-subject";
+import { DialogTrigger } from "@radix-ui/react-dialog";
+import { Filter, Loader, RefreshCcwDot } from "lucide-react";
+import React, { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
 
-const FilterNotes = () => {
+const FilterNotes = ({ open, setOpen, isRefetching, provided, setFilterData }) => {
+  const [classID, setClassID] = useState(null);
+  const { data: classData, isLoading: classLoading } = useGetClass();
+  const { data: batchData, isLoading: batchLoading } = useGetBatchByClass(
+    classID,
+    provided
+  );
+  const { data: subjectData, isLoading: subjectLoading } =
+    useGetSubjectsByClass(classID);
+  const {
+    control,
+    handleSubmit,
+    formState: { errors, dirtyFields },
+    reset,
+  } = useForm({
+    defaultValues: {
+      class_id: "",
+      subject_id: "",
+      batch_id: "",
+    },
+  });
+
+  const setClassValue = (val) => {
+    setClassID(val);
+  };
+
+  const dispatch = useDispatch();
+
+  const onSubmit = (data) => {
+    const keys = Object.keys(data);
+    keys.forEach((key) => {
+      if (data[key] === "") delete data[key];
+    });
+    console.log(data);
+    dispatch(setFilterData(data));
+  };
+
+  const handleReset = () => {
+    reset();
+    setClassID(null);
+    dispatch(setFilterData(null));
+  };
+
   return (
-    <DialogContent className="sm:max-w-[425px]">
-      <DialogHeader>
-        <DialogTitle>Filter</DialogTitle>
-        <DialogDescription>
-          Apply Filter to get specific Notes
-        </DialogDescription>
-      </DialogHeader>
-      <div>
-        <div>
-          <Label>Class</Label>
-          <Select>
-            <SelectTrigger className="w-full mt-2">
-              <SelectValue placeholder="Select a Class" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectGroup>
-                <SelectLabel>Class</SelectLabel>
-                <SelectItem value="8th">8th</SelectItem>
-                <SelectItem value="9th">9th</SelectItem>
-                <SelectItem value="10th">10th</SelectItem>
-                <SelectItem value="11th">11th</SelectItem>
-                <SelectItem value="12th">12th</SelectItem>
-              </SelectGroup>
-            </SelectContent>
-          </Select>
-        </div>
-        <div>
-          <Label>Subjects</Label>
-          <Select>
-            <SelectTrigger className="w-full mt-2">
-              <SelectValue placeholder="Select a Subject" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectGroup>
-                <SelectLabel>subject</SelectLabel>
-                <SelectItem value="Chemistry">Chemistry</SelectItem>
-                <SelectItem value="Physics">Physics</SelectItem>
-                <SelectItem value="Maths">Maths</SelectItem>
-              </SelectGroup>
-            </SelectContent>
-          </Select>
-        </div>
-        <div>
-          <Label>Posted By</Label>
-          <Select>
-            <SelectTrigger className="w-full mt-2">
-              <SelectValue placeholder="Select a Teacher" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectGroup>
-                <SelectLabel>Teacher</SelectLabel>
-                <SelectItem value="Chemistry">Teacher-1</SelectItem>
-                <SelectItem value="Physics">Teacher-2</SelectItem>
-                <SelectItem value="Maths">Teacher-3</SelectItem>
-              </SelectGroup>
-            </SelectContent>
-          </Select>
-        </div>
-      </div>
-      <DialogFooter>
-        <Button type="submit">Apply Filter</Button>
-      </DialogFooter>
-    </DialogContent>
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger asChild>
+        <Button variant="outline" type="button">
+          <Filter size={18} />
+          <span className="">Filter Notes</span>
+        </Button>
+      </DialogTrigger>
+      <DialogContent className="sm:max-w-[425px]">
+        <DialogHeader>
+          <DialogTitle>Filter</DialogTitle>
+          <DialogDescription>
+            Apply Filter to get specific Notes
+          </DialogDescription>
+        </DialogHeader>
+        <form id="filter-notes" onSubmit={handleSubmit(onSubmit)}>
+          <div>
+            <SelectField
+              control={control}
+              name={"class_id"}
+              placeholder={"Class"}
+              selectItems={classData?.data}
+              label={"Class"}
+              error={errors.class_id}
+              setValue={setClassValue}
+              isLoading={classLoading}
+            />
+          </div>
+          {classID && (
+            <div>
+              <SelectField
+                control={control}
+                name={"subject_id"}
+                placeholder={"Subjects"}
+                selectItems={subjectData?.data}
+                label={"Subject"}
+                error={errors.subject_id}
+                isLoading={subjectLoading}
+              />
+            </div>
+          )}
+          {classID && provided && (
+            <div>
+              <SelectField
+                control={control}
+                name={"batch_id"}
+                placeholder={"Batches"}
+                selectItems={batchData?.data}
+                label={"Batches"}
+                error={errors.batch_id}
+                isLoading={batchLoading}
+              />
+            </div>
+          )}
+        </form>
+        <DialogFooter>
+          <Button
+            type="button"
+            variant="outline"
+            onClick={handleReset}
+            disabled={isRefetching}
+          >
+            <RefreshCcwDot />
+            Clear Filter
+          </Button>
+          <Button type="submit" form="filter-notes" disabled={isRefetching}>
+            {isRefetching ? (
+              <Loader className="animate-spin" />
+            ) : (
+              "Apply Filter"
+            )}
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   );
 };
 

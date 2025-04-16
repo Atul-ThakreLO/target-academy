@@ -9,16 +9,16 @@ import React from "react";
 const ControlPanel = () => {
   return (
     <div className="relative py-6 lg:gap-10 lg:py-8 xl:grid xl:grid-cols-[1fr_300px]">
-      <main className="mx-auto w-full min-w-0 max-w-4xl pl-3">
+      <main className="mx-auto w-full min-w-0 max-w-4xl">
         <div id="schools">
           <School />
         </div>
         <div id="classes" className="mt-20">
           <Classes />
         </div>
-        <div  id="batches" className="mt-20">
+        {/* <div  id="batches" className="mt-20">
           <Batches />
-        </div>
+        </div> */}
         <div id="subjects" className="mt-20">
           <Subjects />
         </div>

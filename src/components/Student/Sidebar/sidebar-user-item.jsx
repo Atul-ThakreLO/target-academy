@@ -36,7 +36,7 @@ import StudentEdit from "../student-edit";
 
 import { useTheme } from "@/components/theme-provider";
 import { TransitionLink } from "@/components/Utils/transition-link";
-import {  useStudentLogout } from "@/Hooks/use-student";
+import { useStudentLogout } from "@/Hooks/use-student";
 import { useSelector } from "react-redux";
 import nickName from "@/components/Utils/nick-name";
 
@@ -44,7 +44,8 @@ const SideBarUserItem = () => {
   const { isMobile } = useSidebar();
   const { setTheme, theme } = useTheme();
 
-  const { StudentInfo } = useSelector((state) => state.studenData);
+  // const { StudentInfo } = useSelector((state) => state.studenData);
+  const { student } = useSelector((state) => state.authStudent);
 
   function changeTheme(theme) {
     setTheme(theme);
@@ -65,11 +66,12 @@ const SideBarUserItem = () => {
               <SidebarMenuButton size="lg" className="py-6">
                 <Avatar className="h-8 w-8 rounded-lg">
                   <AvatarImage
-                    src={StudentInfo?.avtar_url}
-                    alt={StudentInfo?.public_id}
+                    src={student?.StudentInfo?.avtar_url}
+                    alt={student?.StudentInfo?.public_id}
+                    className="object-cover"
                   />
                   <AvatarFallback>
-                    {nickName(StudentInfo?.student_name)}
+                    {nickName(student?.StudentInfo?.student_name)}
                   </AvatarFallback>
                 </Avatar>
 
@@ -86,11 +88,12 @@ const SideBarUserItem = () => {
                 <div className="flex items-center">
                   <Avatar className="h-8 w-8 rounded-lg">
                     <AvatarImage
-                      src={StudentInfo?.avtar_url}
-                      alt={StudentInfo?.public_id}
+                      src={student?.StudentInfo?.avtar_url}
+                      alt={student?.StudentInfo?.public_id}
+                      className="object-cover"
                     />
                     <AvatarFallback>
-                      {nickName(StudentInfo?.student_name)}
+                      {nickName(student?.StudentInfo?.student_name)}
                     </AvatarFallback>
                   </Avatar>
                   <div className="p-1 pl-3 rounded-lg whitespace-nowrap">

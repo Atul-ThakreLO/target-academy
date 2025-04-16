@@ -1,16 +1,12 @@
-import AddNotes from "@/components/Staff/Notes/add-notes";
-// import NotesTable from "@/components/Staff/Notes/demo-tabel";
-import NotesTable from "@/components/Staff/Notes/Table-All/notes-table";
 import ProvideNotes from "@/components/Staff/Notes/provide-notes";
 import { Button } from "@/components/ui/button";
-import { Filter, Minus, Plus, Search, Trash } from "lucide-react";
+import { Minus, Plus } from "lucide-react";
 import React, { useState } from "react";
-import FilterNotes from "@/components/Staff/Notes/filter-notes";
 import Tabs from "@/components/Utils/Tabs/tabs";
-import NotesTableProvided from "@/components/Staff/Notes/Table-provided/notes-table-provided";
 import AddNotesPapers from "@/components/Staff/Notes-Papers-Utils/add-note-papers";
-import CustomTable from "@/components/Utils/Table/custom-table";
-import EditDeleteDdown from "@/components/Staff/Notes/Table-All/edit-delete-ddown";
+import NotesProvided from "@/components/Staff/Notes/Table-provided/notes-provided";
+import NotesAll from "@/components/Staff/Notes/Table-All/notes-all";
+import { useAddNotes } from "@/Hooks/use-notes";
 
 const NotesStaff = () => {
   const [add, setAdd] = useState(false);
@@ -43,6 +39,8 @@ const NotesStaff = () => {
       date: "01-02-2025",
     },
   ];
+
+  const mutation = useAddNotes();
 
   const updateTab = (value) => {
     setTableTab(value);
@@ -98,7 +96,7 @@ const NotesStaff = () => {
             } overflow-hidden border-b`}
           >
             {/* <AddNotes /> */}
-            <AddNotesPapers type={"notes"} />
+            <AddNotesPapers type={"notes"} add={add} mutation={mutation} />
           </div>
           <div
             className={`${
@@ -115,9 +113,9 @@ const NotesStaff = () => {
           <Tabs tab_1={"All"} tab_2={"Provided"} value={updateTab} />
         </div>
         {tableTab === "All" ? (
-              <NotesTable />
+              <NotesAll />
         ) : (
-              <NotesTableProvided />
+              <NotesProvided />
         )}
       </div>
     </div>

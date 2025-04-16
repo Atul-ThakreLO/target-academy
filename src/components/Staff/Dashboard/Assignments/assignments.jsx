@@ -8,10 +8,18 @@ import {
 } from "@/components/ui/table";
 import ProgressBar from "./progress-bar";
 import { TransitionLink } from "@/components/Utils/transition-link";
-import { Link } from "lucide-react";
-import React from "react";
+import { Link, Loader2 } from "lucide-react";
+import React, { useEffect } from "react";
+import { useGetRecentAssignments } from "@/Hooks/use-assignment";
 
 const Assignments = () => {
+  const { data, isLoading, isSuccess } = useGetRecentAssignments(5);
+  // useEffect(() => {
+  //   if (isSuccess) {
+  //     console.log(data.data);
+  //   }
+  // }, [data, isLoading, isSuccess]);
+
   return (
     <div className="border rounded-xl p-4">
       <div className="flex justify-between items-center">
@@ -31,27 +39,26 @@ const Assignments = () => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            <TableRow>
-              <TableCell >Assignment-1</TableCell>
-              <TableCell className="text-center">43</TableCell>
-              <TableCell className="text-center">80</TableCell>
-              <TableCell><ProgressBar prog={100}/></TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell >Assignment-1</TableCell>
-              <TableCell className="text-center">43</TableCell>
-              <TableCell className="text-center">80</TableCell>
-              <TableCell><ProgressBar prog={99}/></TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell >Assignment-1</TableCell>
-              <TableCell className="text-center">43</TableCell>
-              <TableCell className="text-center">80</TableCell>
-              <TableCell><ProgressBar prog={1}/></TableCell>
-            </TableRow>
+            {isLoading ? (
+              <Loader2 className="animate-spin" />
+            ) : (
+              data?.data?.map((assi) => (
+                <TableRow>
+                  <TableCell className="text-nowrap">{assi?.title}</TableCell>
+                  <TableCell className="text-center">
+                    {assi?._count?.completedAssignment}
+                  </TableCell>
+                  <TableCell className="text-center">
+                    {assi?.batch?._count?.students}
+                  </TableCell>
+                  <TableCell>
+                    <ProgressBar prog={100} />
+                  </TableCell>
+                </TableRow>
+              ))
+            )}
           </TableBody>
         </Table>
-        
       </div>
     </div>
   );

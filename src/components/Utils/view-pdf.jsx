@@ -7,7 +7,7 @@ pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   import.meta.url
 ).toString();
 
-const ViewPdf = ({ mobile, width }) => {
+const ViewPdf = ({ url, mobile, width }) => {
   const [pages, setPages] = useState(1);
 
   function loadSuccess({ numPages }) {
@@ -16,7 +16,7 @@ const ViewPdf = ({ mobile, width }) => {
 
   return (
     <div>
-      <Document file={pdf} onLoadSuccess={loadSuccess}>
+      <Document file={url || pdf} onLoadSuccess={loadSuccess}>
         {Array.from({ length: pages }, (_, i) => {
           return (
             <div className="w-full" key={i}>

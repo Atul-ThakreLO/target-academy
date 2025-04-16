@@ -8,8 +8,10 @@ import {
 } from "@/components/ui/table";
 import React from "react";
 import TableProfile from "@/components/Utils/Staff-Main/table-profile";
+import { Loader2 } from "lucide-react";
 
-const StudentsTable = () => {
+const StudentsTable = ({ data }) => {
+  console.log(data);
   return (
     <Table>
       <TableHeader>
@@ -23,72 +25,42 @@ const StudentsTable = () => {
         </TableRow>
       </TableHeader>
       <TableBody>
-        <TableRow>
-          <TableCell>
-            <TableProfile
-              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTHDRlp-KGr_M94k_oor4Odjn2UzbAS7n1YoA&s"
-              name={"Student Name"}
-              email={"abcd@gmail.com"}
-            />
-          </TableCell>
-          <TableCell className="text-center">1234567890</TableCell>
-          <TableCell className="text-center">12th</TableCell>
-          <TableCell className="text-center">
-            Chemistry, Physics, Maths, Biology
-          </TableCell>
-          <TableCell className="text-center">Ashok Vidyalaya</TableCell>
-          <TableCell>
-            <div className="w-max mx-auto">
-              <span className="px-3 py-1 bg-blue-400/40 rounded-sm">
-                Batch-1
-              </span>
-            </div>
-          </TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell>
-            <TableProfile
-              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTHDRlp-KGr_M94k_oor4Odjn2UzbAS7n1YoA&s"
-              name={"Student Name"}
-              email={"abcd@gmail.com"}
-            />
-          </TableCell>
-          <TableCell className="text-center">1234567890</TableCell>
-          <TableCell className="text-center">12th</TableCell>
-          <TableCell className="text-center">
-            Chemistry, Physics, Maths, Biology
-          </TableCell>
-          <TableCell className="text-center">Ashok Vidyalaya</TableCell>
-          <TableCell>
-            <div className="w-max mx-auto">
-              <span className="px-3 py-1 bg-blue-400/40 rounded-sm">
-                Batch-1
-              </span>
-            </div>
-          </TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell>
-            <TableProfile
-              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTHDRlp-KGr_M94k_oor4Odjn2UzbAS7n1YoA&s"
-              name={"Student Name"}
-              email={"abcd@gmail.com"}
-            />
-          </TableCell>
-          <TableCell className="text-center">1234567890</TableCell>
-          <TableCell className="text-center">12th</TableCell>
-          <TableCell className="text-center">
-            Chemistry, Physics, Maths, Biology
-          </TableCell>
-          <TableCell className="text-center">Ashok Vidyalaya</TableCell>
-          <TableCell>
-            <div className="w-max mx-auto">
-              <span className="px-3 py-1 bg-blue-400/40 rounded-sm">
-                Batch-1
-              </span>
-            </div>
-          </TableCell>
-        </TableRow>
+        {!data ? (
+          <Loader2 />
+        ) : (
+          data.map((student) => (
+            <TableRow>
+              <TableCell>
+                <TableProfile
+                  src={student.StudentInfo.avtar_url}
+                  name={student.StudentInfo.student_name}
+                  email={student.email}
+                />
+              </TableCell>
+              <TableCell className="text-center text-nowrap">
+                {student.StudentInfo.mobile}
+              </TableCell>
+              <TableCell className="text-center text-nowrap">
+                {student.StudentInfo.class.name}
+              </TableCell>
+              <TableCell className="text-center">
+                {student.StudentSubjects.map((subject) => (
+                  <p>{subject.subject.name}</p>
+                ))}
+              </TableCell>
+              <TableCell className="text-center text-nowrap">
+                {student.StudentInfo.school.name}
+              </TableCell>
+              <TableCell>
+                <div className="w-max mx-auto">
+                  <span className="px-3 py-1 bg-blue-400/40 rounded-sm">
+                    {student.StudentInfo.batches?.name ? student.StudentInfo.batches?.name : "Not Updated"}
+                  </span>
+                </div>
+              </TableCell>
+            </TableRow>
+          ))
+        )}
       </TableBody>
     </Table>
   );

@@ -19,7 +19,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 
 const SideBar = ({ links, user }) => {
   return (
-    <Sidebar variant="inset" collapsible="icon">
+    <Sidebar variant="inset" collapsible="icon" className="student wala">
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem title="Home">

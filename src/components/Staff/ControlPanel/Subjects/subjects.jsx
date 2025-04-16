@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Minus, Plus } from "lucide-react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Select,
   SelectContent,
@@ -13,9 +13,18 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import SubjectCards from "./subject-cards";
+import { useGetSubjectsAll } from "@/Hooks/use-subject";
 
 const Subjects = () => {
   const [add, setAdd] = useState(false);
+
+  const { data, isFetched, isLoading } = useGetSubjectsAll();
+
+  useEffect(() => {
+    if (isFetched) {
+      console.log(data);
+    }
+  }, [isFetched]);
 
   return (
     <>
@@ -24,7 +33,7 @@ const Subjects = () => {
           Subjects
         </h6>
         {/* <p className="text-gray-500 mt-1">Add or Provide Notes</p> */}
-        {add ? (
+        {/* {add ? (
           <Button
             variant="outline"
             onClick={() => setAdd((prev) => !prev)}
@@ -36,9 +45,9 @@ const Subjects = () => {
           <Button variant="outline" onClick={() => setAdd((prev) => !prev)}>
             <Plus /> Add New
           </Button>
-        )}
+        )} */}
       </div>
-      <div
+      {/* <div
         className={`flex justify-between items-center ${
           add ? "h-24" : "h-0"
         } duration-300 overflow-hidden border-b mt-5 px-2`}
@@ -75,12 +84,28 @@ const Subjects = () => {
             <Plus /> Add New
           </Button>
         </div>
-      </div>
+      </div> */}
       <div className="w-full grid grid-cols-[repeat(auto-fill,_minmax(170px,_1fr))] gap-5 mt-5">
-        <SubjectCards name={"8th"} subjects={["Maths", "Science", "English"]} />
+        {isLoading
+          ? "loading"
+          : data.data.map((data) => (
+              <SubjectCards
+                classId={data.id}
+                name={data.name}
+                subjects={data.Subjects}
+                key={data.id}
+              />
+            ))}
+        {/* <SubjectCards name={"8th"} subjects={["Maths", "Science", "English"]} />
         <SubjectCards name={"9th"} subjects={["Maths", "Science", "English"]} />
-        <SubjectCards name={"10th"} subjects={["Maths", "Science", "English"]} />
-        <SubjectCards name={"11th-12th"} subjects={["Maths", "Chemistry", "Physics", "Biology"]} />
+        <SubjectCards
+          name={"10th"}
+          subjects={["Maths", "Science", "English"]}
+        />
+        <SubjectCards
+          name={"11th-12th"}
+          subjects={["Maths", "Chemistry", "Physics", "Biology"]}
+        /> */}
       </div>
     </>
   );

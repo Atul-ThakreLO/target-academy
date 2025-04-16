@@ -1,10 +1,12 @@
 import { Button } from "@/components/ui/button";
 import {
+  Dialog,
   DialogContent,
   DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
+  DialogTrigger,
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import {
@@ -16,76 +18,127 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import React from "react";
+import SelectField from "@/components/Utils/Form-Fields/select-field";
+import { useGetBatchByClass } from "@/Hooks/use-batch";
+import { useGetClass } from "@/Hooks/use-class";
+import { useGetSchool } from "@/Hooks/use-school";
+import { Filter, Loader2, RefreshCcwDot } from "lucide-react";
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
 
-const FilterStudent = () => {
+const FilterStudent = ({ isRefetching, setFilterData }) => {
+  const [classID, setClassID] = useState(null);
+  const { data: classData, isLoading: classLoading } = useGetClass();
+  const { data: schoolData, isLoading: schoolLoading } = useGetSchool();
+  const { data: batchData, isLoading: batchLoading } =
+    useGetBatchByClass(classID);
+  const {
+    control,
+    handleSubmit,
+    formState: { errors, dirtyFields },
+    reset,
+  } = useForm({
+    defaultValues: {
+      class_id: "",
+      subject_id: "",
+      batch_id: "",
+    },
+  });
+
+  const setClassValue = (val) => {
+    setClassID(val);
+  };
+
+  const onSubmit = (data) => {
+    const keys = Object.keys(data);
+    keys.forEach((key) => {
+      if (data[key] === "") delete data[key];
+    });
+    console.log(data);
+    setFilterData(data);
+  };
+
+  const handleReset = () => {
+    reset();
+    setClassID(null);
+    setFilterData(null);
+  };
+
   return (
-    <DialogContent className="sm:max-w-[425px]">
-      <DialogHeader>
-        <DialogTitle>Filter</DialogTitle>
-        <DialogDescription>
-          Apply Filter to get specific students
-        </DialogDescription>
-      </DialogHeader>
-      <div>
-        <div>
-          <Label>Class</Label>
-          <Select>
-            <SelectTrigger className="w-full">
-              <SelectValue placeholder="Select a Class" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectGroup>
-                <SelectLabel>Class</SelectLabel>
-                <SelectItem value="8th">8th</SelectItem>
-                <SelectItem value="9th">9th</SelectItem>
-                <SelectItem value="10th">10th</SelectItem>
-                <SelectItem value="11th">11th</SelectItem>
-                <SelectItem value="12th">12th</SelectItem>
-              </SelectGroup>
-            </SelectContent>
-          </Select>
-        </div>
-        <div>
-          <Label>Batch</Label>
-          <Select>
-            <SelectTrigger className="w-full">
-              <SelectValue placeholder="Select a Batch" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectGroup>
-                <SelectLabel>Batch</SelectLabel>
-                <SelectItem value="Batch-1">Batch-1</SelectItem>
-                <SelectItem value="Batch-2">Batch-2</SelectItem>
-                <SelectItem value="Batch-3">Batch-3</SelectItem>
-              </SelectGroup>
-            </SelectContent>
-          </Select>
-        </div>
-        <div>
-          <Label>School</Label>
-          <Select>
-            <SelectTrigger className="w-full">
-              <SelectValue placeholder="Select a School" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectGroup>
-                <SelectLabel>School</SelectLabel>
-                <SelectItem value="Ashok Vidylaya">Ashok Vidylaya</SelectItem>
-                <SelectItem value="Jivan Vikas Vidyalaya">
-                  Jivan Vikas Vidyalaya
-                </SelectItem>
-                <SelectItem value="Sanskar">Sanskar</SelectItem>
-                <SelectItem value="Nutan college">Nutan college</SelectItem>
-              </SelectGroup>
-            </SelectContent>
-          </Select>
-        </div>
-      </div>
-      <DialogFooter>
-        <Button type="submit">Apply Filter</Button>
-      </DialogFooter>
-    </DialogContent>
+    <Dialog
+    // open={open} onOpenChange={setOpen}
+    >
+      <DialogTrigger asChild>
+        <Button variant="outline" type="button">
+          <Filter size={18} />
+          <span className="">Filter Notes</span>
+        </Button>
+      </DialogTrigger>
+      <DialogContent className="sm:max-w-[425px]">
+        <DialogHeader>
+          <DialogTitle>Filter</DialogTitle>
+          <DialogDescription>
+            Apply Filter to get specific Notes
+          </DialogDescription>
+        </DialogHeader>
+        <form id="filter-notes" onSubmit={handleSubmit(onSubmit)}>
+          <div>
+            <SelectField
+              control={control}
+              name={"class_id"}
+              placeholder={"Class"}
+              selectItems={classData?.data}
+              label={"Class"}
+              error={errors.class_id}
+              setValue={setClassValue}
+              isLoading={classLoading}
+            />
+          </div>
+          <div>
+            <SelectField
+              control={control}
+              name={"school_id"}
+              placeholder={"School"}
+              selectItems={schoolData?.data}
+              label={"School"}
+              error={errors.school_id}
+              isLoading={schoolLoading}
+            />
+          </div>
+          {classID && (
+            <div>
+              <SelectField
+                control={control}
+                name={"batch_id"}
+                placeholder={"Batches"}
+                selectItems={batchData?.data}
+                label={"Batches"}
+                error={errors.batch_id}
+                isLoading={batchLoading}
+              />
+            </div>
+          )}
+        </form>
+        <DialogFooter>
+          <Button
+            type="button"
+            variant="outline"
+            onClick={handleReset}
+            disabled={isRefetching}
+          >
+            <RefreshCcwDot />
+            Clear Filter
+          </Button>
+          <Button type="submit" form="filter-notes" disabled={isRefetching}>
+            {isRefetching ? (
+              <Loader2 className="animate-spin" />
+            ) : (
+              "Apply Filter"
+            )}
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   );
 };
 

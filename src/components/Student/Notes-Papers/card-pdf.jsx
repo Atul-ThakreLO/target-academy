@@ -15,9 +15,10 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { DialogTrigger } from "@radix-ui/react-dialog";
-import PdfPreview from "./pdf-preview";
+import PdfPreview from "@/components/Utils/PDF/pdf-preview";
+// import PdfPreview from "./pdf-preview";
 
-const CardPdf = ({ subject, title }) => {
+const CardPdf = ({ subject, title, url }) => {
   const [star, setStar] = useState(false);
 
   return (
@@ -58,7 +59,7 @@ const CardPdf = ({ subject, title }) => {
           </CardContent>
         </Card>
       </DialogTrigger>
-        <PdfPreview />
+      <PdfPreview url={url} />
     </Dialog>
   );
 };

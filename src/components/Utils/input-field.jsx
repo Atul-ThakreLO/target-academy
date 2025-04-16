@@ -24,11 +24,11 @@ const InputField = ({
         type={type}
         id={id}
         {...register(name)}
-        className={`${
+        className={`mt-2 ${
           error
             ? "border-red-500 outline-red-500 focus-visible:ring-red-100"
             : ""
-        } ${className}`}
+        } mt-1 ${className}`}
         {...props}
       />
       {error && <p className="text-red-500">{error.message}</p>}

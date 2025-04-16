@@ -1,87 +1,103 @@
-import React from "react";
-import { Upload, X } from "lucide-react";
-import { Input } from "@/components/ui/input";
+import React, { useState } from "react";
+import { Loader2, Upload, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { useCreateAssignment } from "@/Hooks/use-assignment";
+import { useForm } from "react-hook-form";
+import SelectField from "@/components/Utils/Form-Fields/select-field";
+import InputField from "@/components/Utils/input-field";
+import { useGetClass } from "@/Hooks/use-class";
+import { useGetSubjectsByClass } from "@/Hooks/use-subject";
+import { useGetBatchByClass } from "@/Hooks/use-batch";
 
 const AddAssignments = () => {
+  const [classId, setClassId] = useState("");
+  const { data: classData, isLoading: classLoading } = useGetClass();
+  const { data: subjectData, isLoading: subjectLoading } =
+    useGetSubjectsByClass(classId);
+  const { data: batchData, isLoading: batchLoading } =
+    useGetBatchByClass(classId);
+  const {
+    register,
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm();
+  const mutation = useCreateAssignment();
+
+  const onSubmit = (data) => {
+    const { file, ...odata } = data;
+    console.log(file[0], odata);
+    mutation.mutate({ file: file[0], ...odata });
+  };
+
   return (
     <div className="mt-3">
-      {/* <div className="w-full">
-        <div
-          className="w-[70%] h-48 mx-auto border-2 border-dashed rounded-xl flex flex-col justify-center items-center cursor-pointer"
-          onClick={() => document.getElementById("notes").click()}
-        >
-          <Upload size={70} />
-          <p>Drag And Drop || Click to select</p>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <div className="grid grid-cols-[repeat(auto-fit,_minmax(200px,_1fr))] justify-between items-center px-2 md:px-12">
+          <div className="">
+            <InputField
+              label={"Title"}
+              type={"text"}
+              id={"title"}
+              name={"title"}
+              register={register}
+              error={errors.title}
+            />
+          </div>
+          <div className="">
+            <InputField
+              label={"Content File"}
+              type={"file"}
+              id={"file"}
+              name={"file"}
+              accept=".pdf"
+              register={register}
+              error={errors.file}
+            />
+          </div>
+          <div>
+            <SelectField
+              control={control}
+              name={"class_id"}
+              placeholder={"Class"}
+              selectItems={classData?.data}
+              label={"Class"}
+              error={errors.class_id}
+              isLoading={classLoading}
+              setValue={setClassId}
+            />
+          </div>
+          <div>
+            <SelectField
+              control={control}
+              name={"subjects_id"}
+              placeholder={"Subject"}
+              selectItems={subjectData?.data}
+              label={"Subject"}
+              error={errors.subjects_id}
+              isLoading={subjectLoading}
+            />
+          </div>
+          <div>
+            <SelectField
+              control={control}
+              name={"batch_id"}
+              placeholder={"Batch"}
+              selectItems={batchData?.data}
+              label={"Batch"}
+              error={errors.batch_id}
+              isLoading={batchLoading}
+            />
+          </div>
+          <Button disabled={mutation.isPending}>
+            {mutation.isPending ? (
+              <Loader2 className="animate-spin" />
+            ) : (
+              "Add Assigments"
+            )}
+          </Button>
         </div>
-        <Input type="file" id="notes" className="hidden" />
-      </div> */}
-      <div className="flex justify-between items-center px-12">
-        <div className="">
-          <Label htmlFor="filename">Name of Assignment</Label>
-          <Input
-            className="w-full mt-2 border-2"
-            placeholder="Enter a file Name"
-            id="filename"
-            name="filename"
-          />
-        </div>
-        <div>
-          <Label>Subjcet</Label>
-          <Select>
-            <SelectTrigger className="w-60 mt-2">
-              <SelectValue placeholder="Select a Subject" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="Ashok Vidyalaya">Ashok Vidyalaya</SelectItem>
-              <SelectItem value="Jivan Vikas Vidyalaya">
-                Jivan Vikas Vidyalaya
-              </SelectItem>
-              <SelectItem value="Sanskar">Sanskar</SelectItem>
-              <SelectItem value="Nutan college">Nutan college</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
-        <div>
-          <Label>Class</Label>
-          <Select>
-            <SelectTrigger className="w-60 mt-2">
-              <SelectValue placeholder="Select a Class" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="8th">8th</SelectItem>
-              <SelectItem value="9th">9th</SelectItem>
-              <SelectItem value="10th">10th</SelectItem>
-              <SelectItem value="11th">11th</SelectItem>
-              <SelectItem value="12th">12th</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
-        <div>
-          <Label>Batch</Label>
-          <Select>
-            <SelectTrigger className="w-60 mt-2">
-              <SelectValue placeholder="Select a Batch" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="Batch-1">Batch-1</SelectItem>
-              <SelectItem value="Batch-2">Batch-2</SelectItem>
-              <SelectItem value="Batch-3">Batch-3</SelectItem>
-              <SelectItem value="Batch-4">Batch-4</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
-        <Button>Add Assigments</Button>
-      </div>
+      </form>
     </div>
   );
 };

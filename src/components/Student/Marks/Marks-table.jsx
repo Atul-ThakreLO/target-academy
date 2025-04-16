@@ -9,6 +9,9 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { Dialog, DialogTrigger } from "@/components/ui/dialog";
+import { Package } from "lucide-react";
+import PdfPreview from "@/components/Utils/PDF/pdf-preview";
 
 const invoices = [
   {
@@ -54,39 +57,51 @@ const invoices = [
     paymentMethod: "Credit Card",
   },
 ];
-const MarksTable = () => {
+const MarksTable = ({ data }) => {
   return (
-    <div className="p-2 sm:p-3 lg:p-6 mb-10 mt-20">
-      <h1 className="text-center text-4xl mb-20 font-semibold">Marks Table</h1>
-      <Table className="rounded-xl">
-        <TableCaption>A list of your recent invoices.</TableCaption>
-        <TableHeader>
-          <TableRow>
-            <TableHead className="w-[100px]">Invoice</TableHead>
-            <TableHead>Status</TableHead>
-            <TableHead>Method</TableHead>
-            <TableHead className="text-right">Amount</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {invoices.map((invoice) => (
-            <TableRow key={invoice.invoice}>
-              <TableCell className="font-medium">{invoice.invoice}</TableCell>
-              <TableCell>{invoice.paymentStatus}</TableCell>
-              <TableCell>{invoice.paymentMethod}</TableCell>
-              <TableCell className="text-right">
-                {invoice.totalAmount}
-              </TableCell>
+    <div className="p-2 sm:p-3 lg:p-6 mb-10 mt-10">
+      <h1 className="text-center text-4xl mb-20 font-medium">Marks Table</h1>
+      <div className="border rounded-xl">
+        <Table className="rounded-xl">
+          <TableHeader>
+            <TableRow>
+              <TableHead>Title</TableHead>
+              <TableHead>Subject</TableHead>
+              <TableHead className="text-center">Question Papers</TableHead>
+              <TableHead className="text-right">Total Marks</TableHead>
+              <TableHead className="text-right">Obtained Marks</TableHead>
             </TableRow>
-          ))}
-        </TableBody>
-        <TableFooter>
+          </TableHeader>
+          <TableBody>
+            {data.map((mark) => (
+              <TableRow>
+                <TableCell>{mark.test_paper.title}</TableCell>
+                <TableCell>{mark.test_paper.subject.name}</TableCell>
+                <TableCell>
+                  {mark.test_paper.papers?.url ? (
+                    <Dialog>
+                      <DialogTrigger className="flex justify-center items-center w-full">
+                        <Package />
+                      </DialogTrigger>
+                      <PdfPreview url={mark.test_paper.papers?.url} />
+                    </Dialog>
+                  ) : (
+                    <div className="text-center">Not Uploaded yet</div>
+                  )}
+                </TableCell>
+                <TableCell className="text-right">{mark.marks}</TableCell>
+                <TableCell className="text-right">50</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+          {/* <TableFooter>
           <TableRow>
             <TableCell colSpan={3}>Total</TableCell>
             <TableCell className="text-right">$2,500.00</TableCell>
           </TableRow>
-        </TableFooter>
-      </Table>
+        </TableFooter> */}
+        </Table>
+      </div>
     </div>
   );
 };

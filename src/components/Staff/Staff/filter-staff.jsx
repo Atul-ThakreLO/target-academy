@@ -1,10 +1,12 @@
 import { Button } from "@/components/ui/button";
 import {
+  Dialog,
   DialogContent,
   DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
+  DialogTrigger,
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import {
@@ -16,53 +18,100 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import React from "react";
+import { Filter, Loader, RefreshCcwDot } from "lucide-react";
+import React, { useState } from "react";
 
-const FilterStaff = () => {
+const FilterStaff = ({ isRefetching, setFilterData }) => {
+  const [role, setRole] = useState("");
+  const [vStatus, setVStatus] = useState("");
+  const handleSubmit = () => {
+    const data = { role, isVerified: vStatus };
+    const keys = Object.keys(data);
+    keys.forEach((key) => {
+      if (data[key] === "") delete data[key];
+    });
+    console.log(data);
+    
+    setFilterData(data);
+  };
+  const handleReset = () => {
+    setRole("");
+    setVStatus("");
+    setFilterData("");
+  };
   return (
-    <DialogContent className="sm:max-w-[425px]">
-      <DialogHeader>
-        <DialogTitle>Filter</DialogTitle>
-        <DialogDescription>
-          Apply Filter to get specific Staff
-        </DialogDescription>
-      </DialogHeader>
-      <div>
+    <Dialog>
+      <DialogTrigger asChild>
+        <Button variant="outline" type="button">
+          <Filter size={18} />
+          <span className="">Filter Staff</span>
+        </Button>
+      </DialogTrigger>
+      <DialogContent className="sm:max-w-[425px]">
+        <DialogHeader>
+          <DialogTitle>Filter</DialogTitle>
+          <DialogDescription>
+            Apply Filter to get specific Staff
+          </DialogDescription>
+        </DialogHeader>
         <div>
-          <Label>Role</Label>
-          <Select>
-            <SelectTrigger className="w-full">
-              <SelectValue placeholder="Select a Role" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectGroup>
-                <SelectLabel>Role</SelectLabel>
-                <SelectItem value="Teacher">Teacher</SelectItem>
-                <SelectItem value="Management">Management</SelectItem>
-              </SelectGroup>
-            </SelectContent>
-          </Select>
+          <div>
+            <Label>Role</Label>
+            <Select value={role} onValueChange={setRole}>
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder="Select a Role" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectLabel>Role</SelectLabel>
+                  <SelectItem value="TEACHER">Teacher</SelectItem>
+                  <SelectItem value="MANAGEMENT">Management</SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+          </div>
+          <div>
+            <Label>Verify Status</Label>
+            <Select value={vStatus} onValueChange={setVStatus}>
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder="Select a status" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectLabel>Status</SelectLabel>
+                  <SelectItem value={true}>Verified</SelectItem>
+                  <SelectItem value={false}>Unverified</SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+          </div>
         </div>
-        <div>
-          <Label>Verify Status</Label>
-          <Select>
-            <SelectTrigger className="w-full">
-              <SelectValue placeholder="Select a status" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectGroup>
-                <SelectLabel>Status</SelectLabel>
-                <SelectItem value="Verified">Verified</SelectItem>
-                <SelectItem value="Unverified">Unverified</SelectItem>
-              </SelectGroup>
-            </SelectContent>
-          </Select>
-        </div>
-      </div>
-      <DialogFooter>
-        <Button type="submit">Apply Filter</Button>
-      </DialogFooter>
-    </DialogContent>
+        <DialogFooter>
+          <DialogFooter>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={handleReset}
+              disabled={isRefetching}
+            >
+              <RefreshCcwDot />
+              Clear Filter
+            </Button>
+            <Button
+              type="button"
+              disabled={isRefetching}
+              onClick={handleSubmit}
+            >
+              {isRefetching ? (
+                <Loader className="animate-spin" />
+              ) : (
+                "Apply Filter"
+              )}
+            </Button>
+          </DialogFooter>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   );
 };
 

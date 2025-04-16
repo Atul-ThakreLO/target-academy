@@ -1,27 +1,28 @@
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
-const useTable = (rows) => {
-  const [selectedIds, setSelectedIds] = useState([]);
+const useTable = (rows, selectedIDs, setSelectedID) => {
+  const dispatch = useDispatch();
 
   const toogleAll = () => {
-    setSelectedIds((prev) =>
-      prev.length === rows.length ? [] : rows.map((row) => row.id)
+    dispatch(
+      setSelectedID(
+        selectedIDs.length === rows.length ? [] : rows.map((row) => row.id)
+      )
     );
   };
 
   const toogleSelect = (id) => {
-    console.log(id);
-
-    setSelectedIds((prev) =>
-      prev.includes(id)
-        ? prev.filter((selectedID) => selectedID !== id)
-        : [...prev, id]
+    dispatch(
+      setSelectedID(
+        selectedIDs.includes(id)
+          ? selectedIDs.filter((selectedID) => selectedID !== id)
+          : [...selectedIDs, id]
+      )
     );
   };
 
-  
-
-  return { selectedIds, toogleAll, toogleSelect };
+  return { toogleAll, toogleSelect };
 };
 
 export default useTable;

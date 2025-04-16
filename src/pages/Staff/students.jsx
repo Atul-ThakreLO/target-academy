@@ -12,10 +12,38 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useSidebar } from "@/components/ui/sidebar";
+import { useGetStudents } from "@/Hooks/use-student";
 import { Filter, Search } from "lucide-react";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 const Students = () => {
+  const { open } = useSidebar();
+  const [filterData, setFilterData] = useState("");
+  const [searchVal, setSearchVal] = useState("");
+  const [searchedData, setSearchedData] = useState("");
+
+  const { data, isLoading, isRefetching, refetch, isFetched } =
+    useGetStudents(filterData);
+  useEffect(() => {
+    refetch();
+  }, [filterData]);
+  const handleSearchInput = (e) => {
+    setSearchVal(e.target.value);
+  };
+
+  const searchData = () => {
+    if (isFetched) {
+      let arrayData = data?.data.filter((val) =>
+        val.StudentInfo.student_name.toLowerCase().includes(searchVal.toLowerCase())
+      );
+      setSearchedData(arrayData);
+    }
+  };
+
+  useEffect(() => {
+    searchData();
+  }, [isFetched, searchVal, data?.data]);
   return (
     <div>
       <div className="mt-5 pl-5">
@@ -26,26 +54,25 @@ const Students = () => {
       </div>
       <div className="mt-10 mb-5 flex justify-between items-center px-2">
         <div className="relative">
-          <Input type="search" className="w-96 pl-12 border-2" />
+          <Input
+            type="search"
+            className="sm:w-96 pl-12 border-2"
+            value={searchVal}
+            onChange={handleSearchInput}
+          />
           <Search className="absolute top-1/2 left-0 -translate-y-1/2 translate-x-1/2" />
         </div>
-        <Dialog>
-          <DialogTrigger asChild>
-            <Button variant="outline" type="button">
-              <Filter size={18} />
-              <span className="">Filter Students</span>
-            </Button>
-          </DialogTrigger>
-          <FilterStudent />
-        </Dialog>
-
-        {/* <div className="flex gap-2 items-center border rounded-lg px-3 py-1">
-          <Filter size={18} />
-          <span className="">Filter Students</span>
-        </div> */}
+        <FilterStudent
+          isRefetching={isRefetching}
+          setFilterData={setFilterData}
+        />
       </div>
-      <div className="border rounded-xl">
-        <StudentsTable />
+      <div
+        className={`border rounded-xl mx-auto ${
+          open ? "scrollable-table-open" : "scrollable-table-closed"
+        }`}
+      >
+        <StudentsTable data={searchedData} />
       </div>
     </div>
   );

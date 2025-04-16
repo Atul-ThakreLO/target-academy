@@ -1,17 +1,28 @@
-import React, { useState } from "react";
-import SchoolCard from "./school-card";
+import React, { useEffect, useState } from "react";
+import SchoolCard, { SchoolCardSkeleton } from "./school-card";
 import { Button } from "@/components/ui/button";
-import { Minus, Plus } from "lucide-react";
+import { Loader, Minus, Plus } from "lucide-react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
+import { useAddSchool, useGetSchool } from "@/Hooks/use-school";
+import DataNotFound from "@/components/Utils/Assets/data-not-found";
+import { useForm } from "react-hook-form";
+import InputField from "@/components/Utils/input-field";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { SchoolSchema } from "@/Zod Schema/Staff/secondary-schema";
 
 const School = () => {
-  const schools = [
-    "Ashok Vidyalaya",
-    "Jivan Vikas",
-    "Sanskar",
-    "Nutan College",
-  ];
+  const [add, setAdd] = useState(false);
+  const { data, isLoading, isFetched, refetch } = useGetSchool();
+  const mutation = useAddSchool();
+  const {
+    handleSubmit,
+    register,
+    setValue,
+    formState: { errors },
+  } = useForm({
+    resolver: zodResolver(SchoolSchema),
+  });
   const schoolsArray = [
     "/School/school-1.png",
     "/School/school-2.png",
@@ -19,7 +30,20 @@ const School = () => {
     "/School/school-4.png",
   ];
 
-  const [add, setAdd] = useState(false);
+  useEffect(() => {
+    if (mutation.isSuccess) {
+      setAdd(false);
+      setValue("name", "");
+    }
+  }, [mutation.isSuccess]);
+
+  useEffect(() => {
+    console.log(data?.data);
+  }, [isLoading]);
+
+  const onSubmit = (data) => {
+    mutation.mutate(data);
+  };
 
   return (
     <>
@@ -42,34 +66,56 @@ const School = () => {
           </Button>
         )}
       </div>
-      <div
+      <form
+        onSubmit={handleSubmit(onSubmit)}
         className={`flex justify-between items-center ${
           add ? "h-24" : "h-0"
         } duration-300 overflow-hidden border-b mt-5 px-2`}
       >
         <div className="">
-          <Label className="text-end">School Name</Label>
-          <Input
-            type="text"
-            name="school"
-            className="w-56"
-            placeholder={"Enter School Name"}
+          <InputField
+            label={"Name"}
+            type={"text"}
+            id={"name"}
+            name={"name"}
+            register={register}
+            error={errors.name}
           />
         </div>
         <div>
-          <Button onClick={() => setAdd((prev) => !prev)}>
-            <Plus /> Add New
+          <Button disabled={mutation.isPending}>
+            {mutation.isPending ? (
+              <Loader className="animate-spin" />
+            ) : (
+              <>
+                <Plus /> Add New
+              </>
+            )}
           </Button>
         </div>
-      </div>
-      <div className="grid grid-cols-2 gap-4 mt-10">
-        {schools.map((school, index) => (
+      </form>
+      <div className="grid grid-cols-[repeat(auto-fit,_minmax(300px,_1fr))] gap-4 mt-10">
+        {isLoading ? (
+          Array.from({ length: 4 }, (_, i) => <SchoolCardSkeleton />)
+        ) : data?.data?.length > 0 ? (
+          data?.data?.map((school, index) => (
+            <SchoolCard
+              key={index}
+              data={school}
+              refetch={refetch}
+              img={schoolsArray[Math.floor(Math.random() * 4)]}
+            />
+          ))
+        ) : (
+          <DataNotFound />
+        )}
+        {/* {schools.map((school, index) => (
           <SchoolCard
             key={index}
             name={school}
             img={schoolsArray[Math.floor(Math.random() * 4)]}
           />
-        ))}
+        ))} */}
       </div>
     </>
   );

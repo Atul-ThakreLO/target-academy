@@ -1,38 +1,49 @@
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetTrigger } from "@/components/ui/sheet";
 import { Edit, MapPin, Trash } from "lucide-react";
-import React from "react";
+import React, { useState } from "react";
 import JobSheet from "./job-sheet";
+import { Dialog } from "@/components/ui/dialog";
+import JobEditForm from "./job-edit-form";
+import { useDeleteJob } from "@/Hooks/use-job";
 
-const JobCard = () => {
+const JobCard = ({ data }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const handleSheet = (e) => {
+    setIsOpen(e);
+  };
+
+  const mutation = useDeleteJob();
+
+  const handleDeleteJob = () => {
+    mutation.mutate(data.id);
+  };
+
   return (
     <div className="border rounded-lg p-5 pt-2 shadow-md">
       <div className="flex items-center justify-between">
-        <h4 className="text-xl font-medium">Job Title</h4>
+        <h4 className="text-xl font-medium">{data.title}</h4>
         <div>
-          <Button variant="ghost">
-            <Edit /> Edit
-          </Button>
-          <Button variant="ghost">
+          <JobEditForm defalut={data} />
+          <Button variant="ghost" onClick={handleDeleteJob}>
             <Trash /> Delete
           </Button>
         </div>
       </div>
       <div className="mt-2">
-        <span className="bg-green-300 rounded-full px-2 text-sm">Teacher</span>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut rem
-          expedita sed temporibus animi quod distinctio ducimus tempora quo!
-        </p>
+        <span className="bg-green-300 rounded-full px-2 text-sm">
+          {data.role}
+        </span>
+        <p>{data.description}</p>
         <div>
           <p>
-            <b>Qualification:</b> Phd
+            <b>Qualification:</b> {data.qualification}
           </p>
           <p>
-            <b>Expreriance:</b> 0-4 Years
+            <b>Expreriance:</b> {data.experience}
           </p>
           <p>
-            <b>Expected Salary:</b> 10k-20k
+            <b>Expected Salary:</b> {data.salary}
           </p>
         </div>
       </div>
@@ -44,13 +55,13 @@ const JobCard = () => {
         >
           <MapPin size={20} /> Umred
         </a>
-        <Sheet>
+        <Sheet onOpenChange={handleSheet}>
           <SheetTrigger asChild>
             <Button variant="outline" className="border-2 shadow-md">
               View Applications
             </Button>
           </SheetTrigger>
-          <JobSheet />
+          <JobSheet id={data.id} state={isOpen} />
         </Sheet>
       </div>
     </div>

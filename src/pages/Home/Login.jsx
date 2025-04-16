@@ -58,9 +58,9 @@ const Login = () => {
       <div className="h-[100vh] w-[100%] flex justify-center items-center">
         <Card className="w-[450px]">
           <CardHeader>
-            <CardTitle>Create project</CardTitle>
+            <CardTitle>Login</CardTitle>
             <CardDescription>
-              Deploy your new project in one-click.
+              Login to your account by email and passowrd
             </CardDescription>
           </CardHeader>
           <CardContent>

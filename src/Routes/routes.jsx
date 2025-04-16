@@ -30,6 +30,9 @@ import Students from "@/pages/Staff/students";
 import Tests from "@/pages/Staff/Tests";
 import TestMarks from "@/pages/Staff/test-marks";
 import EventNotice from "@/pages/Staff/event-notice";
+import StaffRegistration from "@/pages/Home/staff-registration";
+import StaffLogin from "@/pages/Home/staff-login";
+import Assignments from "@/pages/Student/assignments";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -38,24 +41,30 @@ const router = createBrowserRouter(
         <Route index element={<MainPage />} />
         <Route path="about" element={<About />} />
         <Route path="register" element={<Registration />} />
-        <Route path="login" element={<Login />} />
+        <Route path="student/login" element={<Login />} />
         <Route path="results" element={<Results />} />
         <Route path="career" element={<Career />} />
       </Route>
       <Route
+        path="/staff-registration/:name/:job_id/:token"
+        element={<StaffRegistration />}
+      />
+      <Route path="/staff/login" element={<StaffLogin />} />
+
+      <Route
         path="/student"
         element={
-          <ProtectedRoute>
-            <Student />
-          </ProtectedRoute>
+          // <ProtectedRoute>
+          <Student />
+          // </ProtectedRoute>
         }
       >
         <Route index element={<ST_MainPage />} />
-        <Route path="about" element={<About />} />
         <Route path="performance" element={<Marks />} />
         <Route path="notes" element={<Notes />} />
         <Route path="papers" element={<Papers />} />
         <Route path="profile" element={<Profile />} />
+        <Route path="assignments" element={<Assignments />} />
         <Route path="about" element={<About />} />
       </Route>
       <Route path="/staff" element={<Staff />}>

@@ -8,17 +8,42 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Edit, Search } from "lucide-react";
-import React, { useState } from "react";
+import { useAddMarksByTest, useGetMarks } from "@/Hooks/use-marks";
+import { Edit, Loader, Save, Search } from "lucide-react";
+import React, { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import MarksRow from "./marks-row";
+import { useDispatch } from "react-redux";
+import { setTopper } from "@/Redux/slices/secondary/test-papers/topper-profile";
+import { useSidebar } from "@/components/ui/sidebar";
 
-const MarksListTable = () => {
+const MarksListTable = ({ id }) => {
   const [outOff, setOutOff] = useState(null);
   const [edit, setEdit] = useState(false);
   const [value, setValue] = useState(0);
+  const [searchVal, setSearchVal] = useState("");
+  const [searchedData, setSearchData] = useState(null);
+  // const [topper, setTopper] = useState({});
+  const { open } = useSidebar();
+
+  const { data, isFetched, isSuccess, isLoading } = useGetMarks(id);
+
+  const { register, handleSubmit } = useForm({
+    defaultValues: {
+      // marks: "",
+      // student_id: "",
+      test_paper_id: id,
+    },
+  });
+
+  useEffect(() => {
+    if (isFetched) {
+      console.log(data.data);
+    }
+  }, [isLoading, isFetched]);
 
   function handleOutOff(e) {
     e.preventDefault();
-    console.log();
     setOutOff(e.target.total.value);
     setValue(e.target.total.value);
     setEdit(false);
@@ -28,11 +53,46 @@ const MarksListTable = () => {
     setEdit(true);
   }
 
+  const handleSearchVal = (e) => {
+    setSearchVal(e.target.value);
+  };
+
+  const handleSearchData = () => {
+    const sData = data?.data.filter((s) =>
+      s.StudentInfo.student_name.toLowerCase().includes(searchVal.toLowerCase())
+    );
+    setSearchData(sData);
+  };
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(setTopper({}));
+  }, []);
+  const getTopper = () => {
+    data?.data.forEach((s) => {
+      if (s.TestPaperStudents[0]?.marks) {
+        let max = 0;
+        max = Math.max(max, s.TestPaperStudents[0]?.marks);
+        if ((max = s.TestPaperStudents[0]?.marks)) {
+          dispatch(setTopper(s));
+        }
+      }
+    });
+  };
+
+  useEffect(() => {
+    handleSearchData();
+    getTopper();
+  }, [searchVal, isLoading, isSuccess, isFetched]);
+
   return (
     <div>
       <div className="flex justify-between mt-10">
         <div className="relative">
-          <Input type="search" className="w-96 pl-12 border-2" />
+          <Input
+            type="search"
+            className="sm:w-96 pl-12 border-2"
+            onChange={handleSearchVal}
+          />
           <Search className="absolute top-1/2 left-0 -translate-y-1/2 translate-x-1/2" />
         </div>
         <div className="flex gap-3">
@@ -60,18 +120,25 @@ const MarksListTable = () => {
           )}
         </div>
       </div>
-      <div className="border rounded-xl overflow-hidden mt-5">
+      <div className={`border rounded-xl mt-5  mx-auto ${open ? "scrollable-table-open" : "scrollable-table-closed"}`}>
         <Table>
           <TableHeader>
             <TableRow>
               <TableHead>Name</TableHead>
               <TableHead>Marks</TableHead>
-              <TableHead>Toatal Marks</TableHead>
+              <TableHead className="text-nowrap">Toatal Marks</TableHead>
               <TableHead className="w-20"></TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
-            <TableRow>
+            {isLoading ? (
+              <Loader className="animate-spin" />
+            ) : (
+              searchedData?.map((student, index) => (
+                <MarksRow student={student} testId={id} key={index} />
+              ))
+            )}
+            {/* <TableRow>
               <TableCell>Student Name</TableCell>
               <TableCell>
                 <Input type="number" name="mark" className="w-24" />
@@ -82,7 +149,7 @@ const MarksListTable = () => {
                   <Edit /> Edit
                 </Button>
               </TableCell>
-            </TableRow>
+            </TableRow> */}
           </TableBody>
         </Table>
       </div>
