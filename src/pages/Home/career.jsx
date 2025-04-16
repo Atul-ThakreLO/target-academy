@@ -1,9 +1,26 @@
-import CareerCard from "@/components/Home/Career/career-card";
+import CareerCard, {
+  CareerCardSckeleton,
+} from "@/components/Home/Career/career-card";
+import DataNotFound from "@/components/Utils/Assets/data-not-found";
+import ErrorOccured from "@/components/Utils/Assets/error-occured";
 import SectionHeader from "@/components/Utils/MainPage/section-header";
-import { BriefcaseBusiness } from "lucide-react";
-import React from "react";
+import { useGetJobs } from "@/Hooks/use-job";
+import { BriefcaseBusiness, Loader } from "lucide-react";
+import React, { useEffect } from "react";
+import { toast } from "react-toastify";
 
 const Career = () => {
+  const { data, isFetched, isLoading, error, isError } = useGetJobs();
+  useEffect(() => {
+    if (isError) {
+      toast.error(error?.response?.data?.message);
+    }
+  }, [isError]);
+
+  if(isError && error) {
+    return <ErrorOccured text={error?.response?.data?.message} />
+  }
+
   return (
     <div className="w-[80%] mx-auto pt-10 pb-96">
       <div className="mt-10">
@@ -20,8 +37,19 @@ const Career = () => {
           difference, we want to hear from you.
         </p>
       </div>
-      <div className="mt-20 p-6">
-        <CareerCard />
+      <div className="mt-10 p-6">
+        {isLoading ? (
+          <>
+            <CareerCardSckeleton />
+            <CareerCardSckeleton />
+          </>
+        ) : data?.data.length > 0 ? (
+          data?.data?.map((job, index) => <CareerCard key={index} data={job} />)
+        ) : (
+          <DataNotFound text={"Jobs Are Not listed Yet"} />
+        )}
+
+        {/* <CareerCardSckeleton /> */}
       </div>
     </div>
   );

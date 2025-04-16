@@ -2,11 +2,15 @@ import AddAssignments from "@/components/Staff/Assignments/Add-Assignments/add-a
 import Assignments from "@/components/Staff/Assignments/Assignments";
 import AssignmentTable from "@/components/Staff/Assignments/Table/assignment-table";
 import { Button } from "@/components/ui/button";
+import { useGetAssignments } from "@/Hooks/use-assignment";
+import { setAssignmentData } from "@/Redux/slices/secondary/assignment/assignment-data-slice";
 import { Minus, Plus } from "lucide-react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 
 const AssignmentsStaff = () => {
   const [add, setAdd] = useState(false);
+
 
   return (
     <div>
@@ -38,12 +42,12 @@ const AssignmentsStaff = () => {
       </div>
       <div
         className={`${
-          add ? "h-28 duration-500" : "h-0 duration-300"
+          add ? "h-full duration-500" : "h-0 duration-300"
         } overflow-hidden border-b`}
       >
         <AddAssignments />
       </div>
-      <Assignments />
+      {/* <Assignments /> */}
       <AssignmentTable />
     </div>
   );

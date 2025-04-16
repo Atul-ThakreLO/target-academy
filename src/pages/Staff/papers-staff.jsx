@@ -1,12 +1,16 @@
 import AddNotesPapers from "@/components/Staff/Notes-Papers-Utils/add-note-papers";
 import AddPapers from "@/components/Staff/Papers/Add-Papers/add-papers";
-import PapersTable from "@/components/Staff/Papers/Papers-Table/papers-table";
+import PapersTable from "@/components/Staff/Papers/Papers-Table/papers-list";
 import { Button } from "@/components/ui/button";
+import { useAddPaper } from "@/Hooks/use-papers";
 import { Minus, Plus } from "lucide-react";
 import React, { useState } from "react";
 
 const PapersStaff = () => {
   const [add, setAdd] = useState(false);
+
+  const mutation = useAddPaper();
+
   return (
     <div>
       <div className="mt-5 pl-5">
@@ -38,7 +42,7 @@ const PapersStaff = () => {
         } overflow-hidden border-b`}
       >
         {/* <AddPapers /> */}
-        <AddNotesPapers type={"papers"} />
+        <AddNotesPapers papers add={add} mutation={mutation} />
       </div>
       <PapersTable />
     </div>

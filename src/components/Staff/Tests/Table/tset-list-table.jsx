@@ -1,4 +1,5 @@
 import { Checkbox } from "@/components/ui/checkbox";
+import { useSidebar } from "@/components/ui/sidebar";
 import {
   Table,
   TableBody,
@@ -9,59 +10,30 @@ import {
 } from "@/components/ui/table";
 import useTable from "@/components/Utils/Table/useTable";
 import { TransitionLink } from "@/components/Utils/transition-link";
+import { setSelectedID } from "@/Redux/slices/secondary/test-papers/test-papers-id-slice";
 import React, { useEffect } from "react";
+import { useSelector } from "react-redux";
 
-const TsetListTable = ({ toogleActionButton }) => {
+const TsetListTable = ({ rows, more }) => {
   const columns = ["Title", "Subject", "Class", "Batch", "Posted-by", "Date"];
-  const rows = [
-    {
-      id: 1,
-      title: "Test-1",
-      subjec: "Subject-1",
-      class: "12th",
-      batch: "Batch-1",
-      posted_by: "Teacher Name",
-      date: "01-01-2025",
-    },
-    {
-      id: 2,
-      title: "Test-2",
-      subjec: "Subject-2",
-      class: "12th",
-      batch: "Batch-1",
-      posted_by: "Teacher Name",
-      date: "01-01-2025",
-    },
-    {
-      id: 3,
-      title: "Test-3",
-      subjec: "Subject-3",
-      class: "12th",
-      batch: "Batch-1",
-      posted_by: "Teacher Name",
-      date: "01-01-2025",
-    },
-  ];
+  
+  const { open } = useSidebar();
 
-  const keys = Object.keys(rows[0]).slice(2);
-  const { selectedIds, toogleAll, toogleSelect } = useTable(rows);
-
-  useEffect(() => {
-    if (selectedIds.length > 0) {
-      toogleActionButton(true);
-    } else {
-      toogleActionButton(false);
-    }
-  }, [selectedIds]);
+  const { selectedIDs } = useSelector((state) => state.testPaperSelectedID);
+  const { toogleAll, toogleSelect } = useTable(
+    rows,
+    selectedIDs,
+    setSelectedID
+  );
 
   return (
-    <div className="border rounded-xl">
+    <div className={`border rounded-xl mx-auto ${open ? "scrollable-table-open" : "scrollable-table-closed"}`}>
       <Table>
         <TableHeader>
           <TableRow>
             <TableHead className="border-r">
               <Checkbox
-                checked={selectedIds.length === rows.length}
+                checked={selectedIDs.length === rows.length}
                 onCheckedChange={() => toogleAll()}
               />
             </TableHead>
@@ -74,25 +46,25 @@ const TsetListTable = ({ toogleActionButton }) => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {rows.map((note) => (
-            <TableRow key={note.id}>
+          {rows.map((row) => (
+            <TableRow key={row.id}>
               <TableCell className="border-r">
                 <Checkbox
-                  checked={selectedIds.includes(note.id)}
-                  onCheckedChange={() => toogleSelect(note.id)}
+                  checked={selectedIDs.includes(row.id)}
+                  onCheckedChange={() => toogleSelect(row.id)}
                 />
               </TableCell>
               <TableCell>
-                <TransitionLink href={`marks/${note.id}`}>
-                  {note.title}
+                <TransitionLink href={`marks/${row.id}`} className="text-nowrap">
+                  {row.title}
                 </TransitionLink>
               </TableCell>
-              {keys.map((key, index) => (
-                <TableCell className="text-center" key={index}>
-                  {note[key]}
-                </TableCell>
-              ))}
-              <TableCell className="text-center">
+              <TableCell className="text-center text-nowrap">{row.subject.name}</TableCell>
+              <TableCell className="text-center text-nowrap">{row.class.name}</TableCell>
+              <TableCell className="text-center text-nowrap">{row.batch.name}</TableCell>
+              <TableCell className="text-center text-nowrap">{row.batch.id}</TableCell>
+              <TableCell className="text-center text-nowrap">{row.date}</TableCell>
+              <TableCell className="text-center text-nowrap">
                 {/* <More id={note.id} /> */}
               </TableCell>
             </TableRow>

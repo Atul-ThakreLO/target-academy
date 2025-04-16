@@ -1,5 +1,6 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import studentApi from "../api/student-api";
+import api_methods from "../api/secondary-api";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { useRegisterContext } from "@/components/Home/context/register-context-provider";
@@ -11,18 +12,25 @@ import {
 } from "@/Redux/slices/Student/auth-status-slice";
 
 export const useGetStudentById = (id = 1) => {
-  const { student_id } = useSelector((state) => state.authStudent);
+  const { student } = useSelector((state) => state.authStudent);
   return useQuery({
-    queryKey: ["student", student_id],
-    queryFn: () =>
-      studentApi.getStudent("/student"),
+    queryKey: ["student", student.id],
+    queryFn: () => studentApi.getStudent("/student"),
+    retry: 2,
+  });
+};
+
+export const useGetStudents = (data) => {
+  const { staff } = useSelector((state) => state.authStaff);
+  return useQuery({
+    queryKey: ["student", "all", staff.id],
+    queryFn: () => api_methods.getRequest("/student/api/v1/all", data),
     retry: 2,
   });
 };
 
 export const useStudentLogin = () => {
   const navigate = useNavigate();
-
   const dispatch = useDispatch();
   return useMutation({
     mutationFn: (data) => studentApi.loginStudent("/student/l/login", data),
@@ -112,6 +120,15 @@ export const useRegisterStudent = () => {
     onError: (error) => {
       updateStatus(formData, stage, setStageStatus);
       toast.error(error?.response?.data.message);
+    },
+  });
+};
+
+export const useUpdateStudent = () => {
+  return useMutation({
+    mutationFn: (data) => api_methods.putRequest("/student", data),
+    onSuccess: (data) => {
+      toast.success("updated sucessfully");
     },
   });
 };

@@ -151,6 +151,30 @@
     @apply bg-gradient-to-t from-background via-foreground to-foreground bg-clip-text text-transparent;
   }
 
+  .glassmorphism {
+    @apply bg-white bg-opacity-20 backdrop-filter backdrop-blur-sm;
+    @apply border border-white border-opacity-20;
+    @apply shadow-lg rounded-xl;
+  }
+
+  .scrollable-table-open {
+    @apply w-[calc(99vw-1.7rem)] overflow-y-auto md:w-[calc(99vw-var(--sidebar-width)-1.3rem)] ;
+  }
+  .scrollable-table-closed {
+    @apply w-[calc(99vw-1.7rem)] overflow-y-auto  md:w-[calc(99vw-var(--sidebar-width-icon)-2.9rem)];
+  }
+
+  pre {
+    font-family: inherit;
+  }
+
+  .notice-bg {
+    background-color: #ffffff;
+    background-image: linear-gradient(#0000004f 1px, transparent 1px),
+      linear-gradient(to right, #0000004f 1px, #ffffff 1px);
+    background-size: 20px 20px;
+  }
+
   .grid-after-before::after {
     content: " ";
     position: absolute;
@@ -172,6 +196,10 @@
     left: 1.25rem;
   }
 
+  .main-page-scroller > div > div {
+    display: block !important;
+  }
+
   .scrollable::-webkit-scrollbar {
     width: 0.5rem;
   }
@@ -184,7 +212,6 @@
     border-radius: 0.5rem;
   }
 
-  
   .no-scrollbar::-webkit-scrollbar {
     width: 0rem;
   }
@@ -274,14 +301,14 @@ border: 5px solid #000000;
   color: white !important;
 } */
 
-.batch-swiper .swiper-pagination.swiper-pagination-clickable.swiper-pagination-bullets.swiper-pagination-horizontal {
+.batch-swiper
+  .swiper-pagination.swiper-pagination-clickable.swiper-pagination-bullets.swiper-pagination-horizontal {
   top: 0 !important;
   height: min-content;
   display: flex;
   justify-content: center;
   gap: 30px;
 }
-
 
 * {
   scroll-behavior: smooth !important;

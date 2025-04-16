@@ -17,53 +17,51 @@ import { toast } from "react-toastify";
 const MainPage = () => {
   const [date, setDate] = useState(new Date());
   const [greeting, setGreeting] = useState();
-  const dispatch = useDispatch();
+  const { student } = useSelector((state) => state.authStudent);
+  // const dispatch = useDispatch();
 
-  const { data, isLoading, isError, error, isFetched, isSuccess } =
-    useGetStudentById();
+  // const { data, isLoading, isError, error, isFetched, isSuccess } =
+  //   useGetStudentById();
 
-  useEffect(() => {
-    if (isFetched && isSuccess) {
-      // console.log("user", data.data);
-      dispatch(setStudent(data.data));
-    }
-  }, [isFetched, isSuccess]);
+  // useEffect(() => {
+  //   if (isFetched && isSuccess) {
+  //     console.log("user", data.data);
+  //     dispatch(setStudent(data.data));
+  //   }
+  // }, [isFetched, isSuccess]);
 
-  if (isError) {
-    toast.error(error?.response?.data?.message);
-  }
+  // if (isError) {
+  //   toast.error(error?.response?.data?.message);
+  // }
 
   useEffect(() => {
     setGreeting(greetingsFn());
   }, []);
 
   return (
-    <ScrollArea className="h-[95vh]">
+    <ScrollArea className="h-[95vh] main-page-scroller">
+    {/* <div className="h-[95vh] overflow-y-auto w-full scrollable"> */}
       <section className="py-10">
         <div className="text-5xl font-semibold flex items-center text-center flex-col">
-          {greeting} <br />{" "}
-          {isLoading ? (
-            <Skeleton className="w-48 h-14 mt-3" />
-          ) : (
-            data.data?.StudentInfo?.student_name
-          )}
+          {greeting} <br /> {student?.StudentInfo?.student_name}
         </div>
-        <p className="text-center w-[70%] mx-auto font-light text-lg tracking-wide mt-10">
+        <p className="text-center w-[70%] mx-auto font-light text-lg tracking-wide mt-10 ">
           Welcome to the Science Academy online community! We're thrilled to
           provide this platform as a central resource for all our students.
           Explore the various sections to access valuable learning materials,
           track your progress, and connect with your academic community.
         </p>
       </section>
-      <section className="p-8 md:w-[calc(99vw-var(--sidebar-width))]">
-        <div className="border rounded-lg shadow-lg py-4">
+      <section className="p-3 w-full">
+      {/* className="p-3 md:w-[calc(99vw-var(--sidebar-width))]" */}
+        <div className="py-4">
           <h1 className="text-center text-4xl font-bold py-6">Notices</h1>
           <div>
             <Notices />
           </div>
         </div>
       </section>
-      <section className="p-8 md:w-[calc(99vw-var(--sidebar-width))] mt-10 min-h-[50vh]">
+      {/* <section className="p-4 md:p-8 md:w-[calc(99vw-var(--sidebar-width))] mt-10 h-min md:min-h-[50vh]">
         <div>
           <h1 className="text-4xl font-semibold">Events & Tests: </h1>
           <p className="text-sm font-normal tracking-[0.7em] leading-10">
@@ -71,10 +69,10 @@ const MainPage = () => {
           </p>
         </div>
         <div className="grid grid-cols-10 mt-12">
-          <div className="col-span-6">
+          <div className="col-span-10 md:col-span-6">
             <Events />
           </div>
-          <div className="col-span-4">
+          <div className="col-span-10 md:col-span-4 mt-10 md:mt-0">
             <div className="flex items-center justify-center w-full translate-x-[50px]">
               <div className="border rounded-lg shadow-lg p-1 w-full">
                 <div className="border rounded-lg p-6">
@@ -89,7 +87,7 @@ const MainPage = () => {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
       <section className="mt-10 p-8">
         <div className="">
           <h1 className="text-4xl font-semibold">
@@ -169,6 +167,7 @@ const MainPage = () => {
           </div>
         </div>
       </section>
+      {/* // </div> */}
     </ScrollArea>
   );
 };

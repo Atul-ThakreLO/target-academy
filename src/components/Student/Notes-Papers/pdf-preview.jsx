@@ -8,7 +8,7 @@ import { useSidebar } from "@/components/ui/sidebar";
 import ViewPdf from "@/components/Utils/view-pdf";
 import React, { useRef, useState } from "react";
 
-const PdfPreview = () => {
+const PdfPreview = ({url}) => {
   const { isMobile } = useSidebar();
 
   const [zoom, setZoom] = useState(isMobile ? 200 : 500);
@@ -56,7 +56,7 @@ const PdfPreview = () => {
 
         <div className="w-full h-full flex items-center justify-center overflow-auto">
           <div className={`h-full w-full rounded-lg relative`}>
-            <ViewPdf mobile={false} width={zoom} />
+            <ViewPdf url={url} mobile={false} width={zoom} />
           </div>
         </div>
 

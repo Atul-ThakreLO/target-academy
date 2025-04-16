@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
-import { Minus, Plus } from "lucide-react";
-import React, { useState } from "react";
+import { Loader, Minus, Plus } from "lucide-react";
+import React, { useEffect, useState } from "react";
 import JobCard from "./job-card";
 import SelectField from "@/components/Utils/Form-Fields/select-field";
 import { useForm } from "react-hook-form";
@@ -8,6 +8,9 @@ import InputField from "@/components/Utils/input-field";
 import TextareaField from "@/components/Utils/Form-Fields/textarea-field";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { jobPostingSchema } from "@/Zod Schema/Staff/job-schema";
+import { useGetJobs, usePostJob } from "@/Hooks/use-job";
+import { toast } from "react-toastify";
+import DataNotFound from "@/components/Utils/Assets/data-not-found";
 
 const Job = () => {
   const [add, setAdd] = useState(false);
@@ -28,12 +31,24 @@ const Job = () => {
     resolver: zodResolver(jobPostingSchema),
   });
 
+  const mutation = usePostJob();
+  const { data, isFetched, isLoading, error, isError } = useGetJobs();
+
   const onSubmit = (data) => {
-    console.log(data);
-    if(!errors) {
-      setAdd(false)
-    }
+    mutation.mutate(data);
   };
+
+  useEffect(() => {
+    if (isError) {
+      toast.error(error?.response?.data?.message);
+    }
+  }, [isError]);
+
+  useEffect(() => {
+    if (mutation.isSuccess) {
+      setAdd(false);
+    }
+  }, [mutation.isSuccess]);
 
   return (
     <div>
@@ -62,7 +77,7 @@ const Job = () => {
           add ? "h-full" : "h-0"
         } duration-300 overflow-hidden border-b mt-5 px-2`}
       >
-        <div className="flex justify-between items-start gap-4">
+        <div className="grid grid-cols-[repeat(auto-fit,_minmax(200px,_1fr))] justify-between items-start gap-4">
           <div className="">
             <InputField
               label={"Job Title"}
@@ -78,7 +93,7 @@ const Job = () => {
               control={control}
               name={"role"}
               placeholder={"Role"}
-              selectItems={["Teacher", "Management"]}
+              selectItems={["TEACHER", "MANAGEMENT"]}
               label={"Select Role"}
               error={errors.role}
             />
@@ -104,40 +119,52 @@ const Job = () => {
             />
           </div>
         </div>
-        <div className="flex items-center justify-between">
-          <div className="w-1/2">
+        <div className="grid grid-cols-[repeat(auto-fit,_minmax(200px,_1fr))] mt-5">
+          <div className="">
             <TextareaField
               label={"Description"}
               id={"description"}
               name={"description"}
               register={register}
               error={errors.description}
-              className="w-full border-2 rounded-lg p-2"
+              className="w-full border-2 rounded-lg p-2 bg-background"
               classNameLabel={"text-end"}
               rows={4}
             />
           </div>
-          <div className="">
-            <InputField
-              label={"Salary Upto"}
-              type={"text"}
-              id={"salary"}
-              name={"salary"}
-              register={register}
-              error={errors.salary}
-            />
-          </div>
-          <div className="h-full flex items-end pb-3">
-            <Button type="submit">
-              <Plus /> Add New
+          <div className="h-full flex justify-between px-2 md:px-4 items-end pb-3">
+            <div className="">
+              <InputField
+                label={"Salary Upto"}
+                type={"text"}
+                id={"salary"}
+                name={"salary"}
+                register={register}
+                error={errors.salary}
+              />
+            </div>
+            <Button type="submit" disabled={mutation.isPending}>
+              {mutation.isPending ? (
+                <Loader className="animate-spin" />
+              ) : (
+                <>
+                  <Plus /> Add New
+                </>
+              )}
             </Button>
           </div>
         </div>
       </form>
       <div className="grid grid-cols-[repeat(auto-fill,_minmax(300px,_1fr))] gap-6 mt-10">
-        <JobCard />
-        <JobCard />
-        <JobCard />
+        {isLoading ? (
+          <Loader className="animate-spin" />
+        ) : data?.data.length > 0 ? (
+          data?.data?.map((job, index) => <JobCard key={index} data={job} />)
+        ) : (
+          <DataNotFound
+            text={"Jobs Are Not listed Yet Click On Add Button To Add"}
+          />
+        )}
       </div>
       {/* <div className="grid grid-cols-[repeat(auto-fill,_minmax(300px,_1fr))] gap-6">
         <JobAppliedCard />

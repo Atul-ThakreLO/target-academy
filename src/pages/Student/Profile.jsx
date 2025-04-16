@@ -21,22 +21,24 @@ import { Skeleton } from "@/components/ui/skeleton";
 import InfoCard, {
   InfoCardSkelleton,
 } from "@/components/Student/Profile.jsx/info-card";
+import { useSelector } from "react-redux";
 
 const Profile = () => {
-  // const dispatch = useDispatch();
-  const { data, isLoading, isError, error, isFetched } = useGetStudentById();
+  const { student } = useSelector((state) => state.authStudent);
+  // // const dispatch = useDispatch();
+  // const { data, isLoading, isError, error, isFetched } = useGetStudentById();
 
-  if (isError) {
-    toast.error(error?.response?.data?.message);
-    if (error.message === "Request failed with status code 500") {
-      return toast.error("Network Error");
-    }
-    console.log(error?.response?.data?.message);
-  }
+  // if (isError) {
+  //   toast.error(error?.response?.data?.message);
+  //   if (error.message === "Request failed with status code 500") {
+  //     return toast.error("Network Error");
+  //   }
+  //   console.log(error?.response?.data?.message);
+  // }
 
-  const student = data && data.data;
-  const info = data && data.data.StudentInfo;
-  const subjects = data && data.data.StudentSubjects;
+  // const student = data && data.data;
+  // const info = data && data.data.StudentInfo;
+  // const subjects = data && data.data.StudentSubjects;
 
   // if (isFetched) {
   //   dispatch(setStudentInfo(data.data));
@@ -93,14 +95,13 @@ const Profile = () => {
                     }`}
                   >
                     <AvatarImage
-                      src={isLoading ? "" : info?.avtar_url}
-                      alt={isLoading ? "" : info?.public_id}
+                      src={student?.StudentInfo?.avtar_url}
+                      alt={student?.StudentInfo?.public_id}
+                      className="object-cover"
                     />
                     <AvatarFallback>
-                      {isLoading ? (
-                        <Skeleton className="w-6 aspect-square rounded-full" />
-                      ) : (
-                        nickName(info?.student_name || "Student Name")
+                      {nickName(
+                        student?.StudentInfo?.student_name || "Student Name"
                       )}
                     </AvatarFallback>
                   </Avatar>
@@ -110,19 +111,10 @@ const Profile = () => {
                     }`}
                   >
                     <div className="text-foreground text-xl">
-                      @
-                      {isLoading ? (
-                        <Skeleton className="w-6 aspect-square rounded-full" />
-                      ) : (
-                        info?.student_name
-                      )}
+                      @{student?.StudentInfo?.student_name}
                     </div>
                     <div className="text-muted-foreground text-sm">
-                      {isLoading ? (
-                        <Skeleton className="w-6 aspect-square rounded-full" />
-                      ) : (
-                        student?.email
-                      )}
+                      {student?.email}
                     </div>
                   </span>
                 </div>
@@ -133,18 +125,10 @@ const Profile = () => {
                   }`}
                 >
                   <div className="text-foreground text-xl">
-                    {isLoading ? (
-                      <Skeleton className="w-36 h-7" />
-                    ) : (
-                      "@" + info?.student_name
-                    )}
+                    {"@" + student?.StudentInfo?.student_name}
                   </div>
                   <div className="text-muted-foreground text-sm">
-                    {isLoading ? (
-                      <Skeleton className="w-36 h-7" />
-                    ) : (
-                      student?.email
-                    )}
+                    {student?.email}
                   </div>
                 </div>
               </div>
@@ -163,34 +147,32 @@ const Profile = () => {
           <div className="p-3 lg:p-4 lg:px-5 grid grid-cols-2 grid-flow-row auto-rows-min gap-4 w-full">
             <div className="bg-muted/70 rounded-xl p-6">
               <p className="font-semibold text-3xl mb-6 pl-2">Personal Info</p>
-              {isLoading ? (
-                <InfoCardSkelleton />
-              ) : (
-                <InfoCard data={info?.student_name} title={"Student Name"}>
+              {
+                <InfoCard
+                  data={student?.StudentInfo?.student_name}
+                  title={"Student Name"}
+                >
                   <IdCard size={22} />
                 </InfoCard>
-              )}
-              {isLoading ? (
-                <InfoCardSkelleton />
-              ) : (
+              }
+              {
                 <InfoCard data={student?.email} title={"Email"}>
                   <Mail size={20} />
                 </InfoCard>
-              )}
-              {isLoading ? (
-                <InfoCardSkelleton />
-              ) : (
-                <InfoCard data={student?.student_id} title={"Student ID"}>
+              }
+              {
+                <InfoCard data={student?.id} title={"Student ID"}>
                   <Hash absoluteStrokeWidth size={20} />
                 </InfoCard>
-              )}
-              {isLoading ? (
-                <InfoCardSkelleton />
-              ) : (
-                <InfoCard data={info?.mobile} title={"Mobile No."}>
+              }
+              {
+                <InfoCard
+                  data={student?.StudentInfo?.mobile}
+                  title={"Mobile No."}
+                >
                   <Phone size={20} />
                 </InfoCard>
-              )}
+              }
               <div className="mb-10">
                 <div className="mb-4 rounded-xl border-2 bg-card-custom border-muted-foreground/10 shadow-lg shadow-black/20 p-5">
                   <p className="pr-2 flex items-center  w-max">
@@ -225,21 +207,23 @@ const Profile = () => {
             </div>
             <div className="bg-muted/70 rounded-xl p-6">
               <p className="font-semibold text-3xl mb-6 pl-2">Academics Info</p>
-              {isLoading ? (
-                <InfoCardSkelleton />
-              ) : (
-                <InfoCard data={info?.school.school_name} title={"School Name"}>
+              {
+                <InfoCard
+                  data={student?.StudentInfo?.school.name}
+                  title={"School Name"}
+                >
                   <IdCard size={22} />
                 </InfoCard>
-              )}
+              }
 
-              {isLoading ? (
-                <InfoCardSkelleton />
-              ) : (
-                <InfoCard data={info.class.class_name} title={"School Name"}>
+              {
+                <InfoCard
+                  data={student?.StudentInfo?.class.name}
+                  title={"School Name"}
+                >
                   <IdCard size={22} />
                 </InfoCard>
-              )}
+              }
 
               <div className="mb-10">
                 <div className="mb-4 rounded-xl border-2 bg-card-custom border-muted-foreground/10 shadow-lg shadow-black/20 p-5">
@@ -261,27 +245,14 @@ const Profile = () => {
                         </TableRow>
                       </TableHeader>
                       <TableBody className="text-center">
-                        {isLoading ? (
-                          <TableRow>
-                            <TableCell>
-                              <Skeleton className="w-6 aspect-square rounded-full" />
-                            </TableCell>
-                            <TableCell>
-                              <Skeleton className="w-6 aspect-square rounded-full" />
-                            </TableCell>
-                          </TableRow>
-                        ) : (
-                          data?.data.StudentSubjects?.map((subject, index) => {
-                            return (
-                              <TableRow key={index}>
-                                <TableCell>{index + 1}</TableCell>
-                                <TableCell>
-                                  {subject.subject.subject_name}
-                                </TableCell>
-                              </TableRow>
-                            );
-                          })
-                        )}
+                        {student?.StudentSubjects?.map((subject, index) => {
+                          return (
+                            <TableRow key={index}>
+                              <TableCell>{index + 1}</TableCell>
+                              <TableCell>{subject.subject?.name}</TableCell>
+                            </TableRow>
+                          );
+                        })}
                       </TableBody>
                       <TableFooter>
                         <TableRow>
@@ -289,7 +260,7 @@ const Profile = () => {
                             Total
                           </TableCell>
                           <TableCell className="text-center">
-                            {isLoading ? "" : data?.data.StudentSubjects?.length}
+                            { student?.StudentSubjects?.length}
                           </TableCell>
                         </TableRow>
                       </TableFooter>
@@ -301,7 +272,7 @@ const Profile = () => {
             </div>
             <div className="bg-muted/70 rounded-xl p-6 col-span-2">
               <p className="font-semibold text-3xl mb-6 pl-2">Fess Info</p>
-              {isLoading ? "" : <Fees subjects={data?.data.StudentSubjects} />}
+              { <Fees subjects={student?.StudentSubjects} />}
             </div>
           </div>
         </section>

@@ -12,7 +12,10 @@ import "swiper/css/pagination";
 // import required modules
 import { EffectCreative, Pagination } from "swiper/modules";
 import NoticeCard from "../../Notices/Notice-Board/notice-card";
+import { useGetNotices } from "@/Hooks/use-notice";
+import { Loader2 } from "lucide-react";
 const NoticeSwiper = () => {
+  const { data, isLoading } = useGetNotices();
   return (
     <Swiper
       grabCursor={true}
@@ -31,33 +34,17 @@ const NoticeSwiper = () => {
       modules={[EffectCreative, Pagination]}
       className="max-w-96 min-w-52 w-full h-full"
     >
-      <SwiperSlide className="flex justify-center items-cente p-2">
-        <NoticeCard />
-      </SwiperSlide>
-      <SwiperSlide className="flex justify-center items-center p-2">
-        <NoticeCard />
-      </SwiperSlide>
-      <SwiperSlide className="flex justify-center items-center p-2">
-        <NoticeCard />
-      </SwiperSlide>
-      <SwiperSlide className="flex justify-center items-center p-2">
-        <NoticeCard />
-      </SwiperSlide>
-      <SwiperSlide className="flex justify-center items-center p-2">
-        <NoticeCard />
-      </SwiperSlide>
-      <SwiperSlide className="flex justify-center items-center p-2">
-        <NoticeCard />
-      </SwiperSlide>
-      <SwiperSlide className="flex justify-center items-center p-2">
-        <NoticeCard />
-      </SwiperSlide>
-      <SwiperSlide className="flex justify-center items-center p-2">
-        <NoticeCard />
-      </SwiperSlide>
-      <SwiperSlide className="flex justify-center items-center p-2">
-        <NoticeCard />
-      </SwiperSlide>
+      {isLoading ? (
+        <SwiperSlide className="flex justify-center items-cente p-2">
+          <Loader2 />
+        </SwiperSlide>
+      ) : (
+        data?.data.map((notice) => (
+          <SwiperSlide className="flex justify-center items-cente p-2 !h-full">
+            <NoticeCard data={notice} />
+          </SwiperSlide>
+        ))
+      )}
     </Swiper>
   );
 };

@@ -6,8 +6,8 @@ import {
   SelectItem,
   SelectLabel,
   SelectTrigger,
+  SelectValue,
 } from "@/components/ui/select";
-import { SelectValue } from "@radix-ui/react-select";
 import React from "react";
 import { Controller } from "react-hook-form";
 
@@ -18,7 +18,9 @@ const SelectField = ({
   selectItems,
   label,
   error,
-  className
+  className,
+  isLoading = false,
+  setValue = () => {},
 }) => {
   return (
     <>
@@ -27,10 +29,18 @@ const SelectField = ({
         control={control}
         name={name}
         render={({ field }) => (
-          <Select onValueChange={field.onChange} value={field.value}>
+          <Select
+            onValueChange={(val) => {
+              field.onChange(val);
+              setValue(val);
+            }}
+            value={field.value}
+            defaultValue="" 
+            clearable
+          >
             <SelectTrigger
               id={name}
-              className={`${
+              className={`mt-1 ${
                 error
                   ? "border-red-500 outline-red-500 focus-visible:ring-red-100"
                   : ""
@@ -41,11 +51,18 @@ const SelectField = ({
             <SelectContent>
               <SelectGroup>
                 <SelectLabel>{placeholder}</SelectLabel>
-                {selectItems.map((item, index) => (
-                  <SelectItem key={index} value={item}>
-                    {item}
-                  </SelectItem>
-                ))}
+                {isLoading ? (
+                  "Loading"
+                ) : (
+                  <>
+                    {/* <SelectItem value=" " >{`Select ${placeholder}`}</SelectItem> */}
+                    {selectItems?.map((item, index) => (
+                      <SelectItem key={index} value={item.id}>
+                        {item.name}
+                      </SelectItem>
+                    ))}
+                  </>
+                )}
               </SelectGroup>
             </SelectContent>
           </Select>

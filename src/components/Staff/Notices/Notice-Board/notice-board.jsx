@@ -4,6 +4,7 @@ import { Edit, Link, Trash } from "lucide-react";
 import React, { useState } from "react";
 import NoticeSwiper from "./notice-swiper";
 import { Button } from "@/components/ui/button";
+import EditNotice from "../Edit Notice/edit-notice";
 
 const NoticeBoard = ({ display }) => {
   const [date, setDate] = useState(new Date());
@@ -17,12 +18,9 @@ const NoticeBoard = ({ display }) => {
           </TransitionLink>
         ) : (
           <div className="flex">
-            <Button variant="ghost">
-              <Edit size={17} /> Edit
-            </Button>
-            <Button variant="ghost">
+            {/* <Button variant="ghost">
               <Trash size={17} /> Delete
-            </Button>
+            </Button> */}
           </div>
         )}
       </div>

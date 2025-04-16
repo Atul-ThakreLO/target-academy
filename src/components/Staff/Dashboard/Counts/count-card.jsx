@@ -4,7 +4,7 @@ import React from "react";
 
 const CountCard = ({ icon, title, count, href }) => {
   return (
-    <div className="p-3 border rounded-xl w-44">
+    <div className="p-3 border rounded-xl">
       <div className="flex gap-2 items-center">
         <span className="bg-muted rounded-full p-2">{icon}</span>
         <span className="mb-1 text-lg">{title}</span>

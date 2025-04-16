@@ -19,7 +19,7 @@ const TextareaField = ({
       <textarea
         id={id}
         {...register(name)}
-        className={`${
+        className={`mt-2 ${
           error
             ? "border-red-500 outline-red-500 focus-visible:ring-red-100"
             : ""

@@ -9,28 +9,43 @@ import { Separator } from "@/components/ui/separator";
 import { greetingsFn } from "@/components/Utils/greetings";
 import { SwatchBook, User, Users } from "lucide-react";
 import React, { useEffect, useState } from "react";
+import { useGetDashboard } from "@/Hooks/use-staff";
+import { useSelector } from "react-redux";
 
 const Dashboard = () => {
+  const { staff } = useSelector((state) => state.authStaff);
   const [greeting, setGreeting] = useState();
   useEffect(() => {
     setGreeting(greetingsFn());
   });
+  const { data, isLoading, isSuccess } = useGetDashboard();
+
+  // useEffect(() => {
+  //   if (isSuccess) {
+  //     console.log(data?.data);
+  //   }
+  // }, [isLoading, isSuccess]);
+
   return (
     <>
-      <section className="flex justify-between">
+      <section className="flex flex-col-reverse md:flex-row justify-between">
         <div>
-          <p className="text-3xl tracking-wider">{greeting}</p>
+          <p className="text-3xl tracking-wider mt-5 md:mt-0">{greeting}</p>
         </div>
-        <div>
+        <div className="flex justify-end gap-1 h-min">
           <span className="px-3 ml-2 text-sm bg-green-200 rounded-full">
-            Verified
+            {staff.OfficeStaffInfo.isVerified ? "Verified" : "UnVerified"}
           </span>
           <span className="px-3 ml-2 text-sm bg-blue-200 rounded-full">
-            Teacher
+            {staff.OfficeStaffInfo.role}
           </span>
-          <span className="px-3 ml-2 text-sm bg-red-200 rounded-full">
-            Admin
-          </span>
+          {staff.OfficeStaffInfo.isAdmin ? (
+            <span className="px-3 ml-2 text-sm bg-red-200 rounded-full">
+              Admin
+            </span>
+          ) : (
+            ""
+          )}
         </div>
       </section>
       <section className="flex gap-3 mt-5">
@@ -40,40 +55,40 @@ const Dashboard = () => {
         </div>
         <TeachersGrid />
       </section>
-      <section className="mt-5 flex justify-around">
+      <section className="mt-5 grid grid-cols-[repeat(auto-fit,_minmax(150px,_1fr))] gap-3">
         <CountCard
           icon={<Users size={18} />}
           title={"Students"}
-          count={"1231"}
+          count={data?.data?.studentCount}
           href={"/staff/students"}
         />
         <CountCard
           icon={<User size={18} />}
           title={"Staff"}
-          count={"12"}
+          count={data?.data?.staffCount}
           href={"/staff/staff"}
         />
         <CountCard
           icon={<SwatchBook size={18} />}
           title={"Batches"}
-          count={"16"}
+          count={data?.data?.batchCount}
         />
-        <TopStudents />
+        <TopStudents data={data?.data} />
       </section>
-      <section className="mt-5 flex gap-4">
-        <div className="w-[60%]">
+      <section className="mt-5 grid grid-cols-5 gap-4">
+        <div className="w-full col-span-5 md:col-span-5 lg:col-span-3 sm:col-span-5">
           <Events />
         </div>
-        <div className="w-[40%]">
+        <div className="w-full col-span-5 md:col-span-5 lg:col-span-2 sm:col-span-5">
           <Assignments />
           {/* <Events /> */}
         </div>
       </section>
-      <section className="mt-5 flex gap-4">
-        <div className="w-[35%]">
+      <section className="mt-5 grid grid-cols-5 gap-4">
+        <div className="w-full col-span-5 md:col-span-5 lg:col-span-2 sm:col-span-5">
           <NoticeBoard display={"dashboard"} />
         </div>
-        <div className="w-[65%]">
+        <div className="w-full col-span-5 md:col-span-5 lg:col-span-3 sm:col-span-5">
           <Tests />
         </div>
       </section>

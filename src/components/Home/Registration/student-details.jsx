@@ -18,7 +18,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { studentDetailsSchema } from "./register-zod-schema";
 import { useGetClass } from "@/Hooks/use-class";
 import { useGetSchool } from "@/Hooks/use-school";
-import { useGetSubjects } from "@/Hooks/use-subject";
+import { useGetSubjectsByClass } from "@/Hooks/use-subject";
 
 const StudentDetails = () => {
   const { formData, stage, setStage, setFormData, setStageStatus } =
@@ -51,7 +51,14 @@ const StudentDetails = () => {
     isLoading: isSchoolLoading,
     isError: isSchoolError,
     error: schoolError,
+    isFetched,
   } = useGetSchool();
+
+  useEffect(() => {
+    console.log(isFetched);
+
+    console.log(schoolData?.data);
+  }, [isFetched, isSchoolLoading]);
 
   const {
     data: subjectData,
@@ -59,7 +66,7 @@ const StudentDetails = () => {
     isError: isSubjectError,
     error: subjectError,
     refetch,
-  } = useGetSubjects(classID);
+  } = useGetSubjectsByClass(classID);
   // console.log(!!classID);
 
   const onSubmit = (data) => {
@@ -132,9 +139,9 @@ const StudentDetails = () => {
             render={({ field }) => (
               <Select onValueChange={field.onChange} value={field.value}>
                 <SelectTrigger
-                  id="school"
+                  id="school_id"
                   className={`${
-                    errors.school_id
+                    errors.id
                       ? "border-red-500 outline-red-500 focus-visible:ring-red-100"
                       : ""
                   }`}
@@ -145,13 +152,10 @@ const StudentDetails = () => {
                   {isSchoolLoading ? (
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                   ) : (
-                    schoolData?.map((school) => {
+                    schoolData.data?.map((school) => {
                       return (
-                        <SelectItem
-                          value={school.school_id}
-                          key={school.school_id}
-                        >
-                          {school.school_name}
+                        <SelectItem value={school.id} key={school.id}>
+                          {school.name}
                         </SelectItem>
                       );
                     })
@@ -191,13 +195,10 @@ const StudentDetails = () => {
                   {isClassLoading ? (
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                   ) : (
-                    classData?.map((classData) => {
+                    classData.data?.map((classData) => {
                       return (
-                        <SelectItem
-                          value={classData.class_id}
-                          key={classData.class_id}
-                        >
-                          {classData.class_name}
+                        <SelectItem value={classData.id} key={classData.id}>
+                          {classData.name}
                         </SelectItem>
                       );
                     })
@@ -222,27 +223,23 @@ const StudentDetails = () => {
                   name="subjects"
                   defaultValue={[]}
                   render={({ field }) =>
-                    subjectData?.map((subject) => {
+                    subjectData.data?.map((subject) => {
                       return (
                         <div
-                          key={subject.subject_id}
+                          key={subject.id}
                           className="flex items-center space-x-2 my-1"
                         >
                           <Checkbox
-                            id={subject.subject_id}
-                            checked={field.value.includes(subject.subject_id)}
+                            id={subject.id}
+                            checked={field.value.includes(subject.id)}
                             onCheckedChange={(checked) => {
                               const updateValue = checked
-                                ? [...field.value, subject.subject_id]
-                                : field.value.filter(
-                                    (id) => id !== subject.subject_id
-                                  );
+                                ? [...field.value, subject.id]
+                                : field.value.filter((id) => id !== subject.id);
                               field.onChange(updateValue);
                             }}
                           />
-                          <Label htmlFor={subject.subject_id}>
-                            {subject.subject_name}
-                          </Label>
+                          <Label htmlFor={subject.id}>{subject.name}</Label>
                         </div>
                       );
                     })

@@ -63,8 +63,8 @@ const chartConfig = {
 
 export function Chart() {
   return (
-    <div className="p-2 sm:p-3 lg:p-6 mt-10">
-      <h1 className="text-center text-4xl font-semibold sticky top-0 bg-background py-3">Chemistry</h1>
+    <div className="p-2 sm:p-3 lg:p-6 mt-20">
+      <h1 className="text-center text-4xl font-medium sticky top-0 bg-background py-3">Chemistry</h1>
       <div className="p-1 sm:p-3 lg:p-6 rounded-xl mb-10">
         <ChartContainer config={chartConfig} className="overflow-auto">
           <LineChart
@@ -94,7 +94,7 @@ export function Chart() {
           </LineChart>
         </ChartContainer>
       </div>
-      <h1 className="text-center text-4xl font-semibold sticky top-0 bg-background py-3">Mathematics</h1>
+      <h1 className="text-center text-4xl font-medium sticky top-0 bg-background py-3">Mathematics</h1>
       <div className="p-1 sm:p-3 lg:p-6 rounded-xl mb-10">
         <ChartContainer config={chartConfig} className="overflow-auto">
           <LineChart
@@ -124,7 +124,7 @@ export function Chart() {
           </LineChart>
         </ChartContainer>
       </div>
-      <h1 className="text-center text-4xl font-semibold sticky top-0 bg-background py-3">Physics</h1>
+      <h1 className="text-center text-4xl font-medium sticky top-0 bg-background py-3">Physics</h1>
       <div className="p-1 sm:p-3 lg:p-6 rounded-xl mb-10">
         <ChartContainer config={chartConfig} className="overflow-auto">
           <LineChart

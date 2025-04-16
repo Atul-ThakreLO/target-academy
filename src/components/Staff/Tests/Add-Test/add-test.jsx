@@ -10,11 +10,58 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Minus, Plus } from "lucide-react";
-import React, { useState } from "react";
+import SelectField from "@/components/Utils/Form-Fields/select-field";
+import InputField from "@/components/Utils/input-field";
+import { useGetBatchByClass } from "@/Hooks/use-batch";
+import { useGetClass } from "@/Hooks/use-class";
+import { useGetSubjectsByClass } from "@/Hooks/use-subject";
+import { useAddTestPaper } from "@/Hooks/use-test-paper";
+import { Loader, Minus, Plus } from "lucide-react";
+import React, { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
 
 const AddTest = () => {
   const [add, setAdd] = useState(false);
+  const [classID, setClassID] = useState("");
+
+  const {
+    register,
+    handleSubmit,
+    control,
+    reset,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      title: "",
+      class_id: "",
+      subject_id: "",
+      batch_id: "",
+    },
+  });
+
+  const { data: ClassData, isLoading: ClassLoading } = useGetClass(add);
+  const { data: SubjectData, isLoading: SubjectLoading } =
+    useGetSubjectsByClass(classID);
+  const { data: BatchData, isLoading: BatchLoading } =
+    useGetBatchByClass(classID);
+
+  const setClassValue = (val) => {
+    setClassID(val);
+  };
+
+  const mutation = useAddTestPaper();
+
+  const onSubmit = (data) => {
+    console.log(data);
+    mutation.mutate(data);
+  };
+
+  useEffect(() => {
+    if (mutation.isSuccess) {
+      reset();
+    }
+  }, [mutation.isSuccess, mutation.isPending]);
+
   return (
     <div>
       <div className="flex justify-end items-center mb-5                                    ">
@@ -38,68 +85,61 @@ const AddTest = () => {
       </div>
       <div
         className={`${
-          add ? "h-36 duration-500" : "h-0 duration-300"
+          add ? "h-full duration-500" : "h-0 duration-300"
         } overflow-hidden border-b`}
       >
-        <div className="mt-10 flex justify-between items-center px-12">
+        <form
+          className="mt-10 grid grid-cols-[repeat(auto-fit,_minmax(200px,_1fr))] justify-between items-center px-2 md:px-12"
+          onSubmit={handleSubmit(onSubmit)}
+        >
           <div className="">
-            <Label htmlFor="filename">Test Title</Label>
-            <Input
-              className="w-full mt-2 border-2"
-              placeholder="Enter a Test Title"
-              id="title"
-              name="title"
+            <InputField
+              label={"Title"}
+              type={"text"}
+              id={"title"}
+              name={"title"}
+              register={register}
+              error={errors.title}
             />
           </div>
           <div>
-            <Label>Subjcet</Label>
-            <Select>
-              <SelectTrigger className="w-60 mt-2">
-                <SelectValue placeholder="Select a Subject" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="Ashok Vidyalaya">Ashok Vidyalaya</SelectItem>
-                <SelectItem value="Jivan Vikas Vidyalaya">
-                  Jivan Vikas Vidyalaya
-                </SelectItem>
-                <SelectItem value="Sanskar">Sanskar</SelectItem>
-                <SelectItem value="Nutan college">Nutan college</SelectItem>
-              </SelectContent>
-            </Select>
+            <SelectField
+              control={control}
+              name={"class_id"}
+              placeholder={"Select Class"}
+              selectItems={ClassData?.data}
+              label={"Class"}
+              error={errors.class_id}
+              isLoading={ClassLoading}
+              setValue={setClassValue}
+            />
           </div>
           <div>
-            <Label>Class</Label>
-            <Select>
-              <SelectTrigger className="w-60 mt-2">
-                <SelectValue placeholder="Select a Class" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="8th">8th</SelectItem>
-                <SelectItem value="9th">9th</SelectItem>
-                <SelectItem value="10th">10th</SelectItem>
-                <SelectItem value="11th">11th</SelectItem>
-                <SelectItem value="12th">12th</SelectItem>
-              </SelectContent>
-            </Select>
+            <SelectField
+              control={control}
+              name={"subject_id"}
+              placeholder={"Select Subject"}
+              selectItems={SubjectData?.data}
+              label={"Subject"}
+              error={errors.subject_id}
+              isLoading={SubjectLoading}
+            />
           </div>
           <div>
-            <Label>Batch</Label>
-            <Select>
-              <SelectTrigger className="w-full">
-                <SelectValue placeholder="Select a Batch" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectGroup>
-                  <SelectLabel>Batch</SelectLabel>
-                  <SelectItem value="Batch-1">Batch-1</SelectItem>
-                  <SelectItem value="Batch-2">Batch-2</SelectItem>
-                  <SelectItem value="Batch-3">Batch-3</SelectItem>
-                </SelectGroup>
-              </SelectContent>
-            </Select>
+            <SelectField
+              control={control}
+              name={"batch_id"}
+              placeholder={"Select Batch"}
+              selectItems={BatchData?.data}
+              label={"Batch"}
+              error={errors.batch_id}
+              isLoading={BatchLoading}
+            />
           </div>
-          <Button>Add Test</Button>
-        </div>
+          <Button disabled={mutation.isPending} className="mt-3">
+            {mutation.isPending ? <Loader className="animate-spin" /> : "Add"}
+          </Button>
+        </form>
       </div>
     </div>
   );

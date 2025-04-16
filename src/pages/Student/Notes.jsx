@@ -1,6 +1,6 @@
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useSidebar } from "@/components/ui/sidebar";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Select,
   SelectContent,
@@ -11,98 +11,114 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import CardPdf from "@/components/Student/Notes-Papers/card-pdf";
+import { Input } from "@/components/ui/input";
+import { Search, X } from "lucide-react";
+import { useGetNotesForStudent } from "@/Hooks/use-notes";
+import { useSelector } from "react-redux";
+import { Button } from "@/components/ui/button";
+import { useQueryClient } from "@tanstack/react-query";
 
 const Notes = () => {
+  const [subject, setSubject] = useState("");
   const { isMobile } = useSidebar();
+  const { student } = useSelector((state) => state.authStudent);
+  const [searchVal, setSearchVal] = useState("");
+  const [searchedNotes, setSearchedNotes] = useState("");
 
-  const pdfs = [
-    {
-      subject: "Chemistry",
-      title: "Chem cha-1 pdf",
-    },
-    {
-      subject: "Physics",
-      title: "Phy cha-1 pdf",
-    },
-    {
-      subject: "Mathematics",
-      title: "Maths cha-1 pdf",
-    },
-    {
-      subject: "Chemistry",
-      title: "Chem cha-1 pdf",
-    },
-    {
-      subject: "Physics",
-      title: "Phy cha-1 pdf",
-    },
-    {
-      subject: "Mathematics",
-      title: "Maths cha-1 pdf",
-    },
-    {
-      subject: "Chemistry",
-      title: "Chem cha-1 pdf",
-    },
-    {
-      subject: "Physics",
-      title: "Phy cha-1 pdf",
-    },
-    {
-      subject: "Mathematics",
-      title: "Maths cha-1 pdf",
-    },
-    {
-      subject: "Chemistry",
-      title: "Chem cha-1 pdf",
-    },
-    {
-      subject: "Physics",
-      title: "Phy cha-1 pdf",
-    },
-    {
-      subject: "Mathematics",
-      title: "Maths cha-1 pdf",
-    },
-  ];
+  const { data, isLoading, isSuccess, isFetched } = useGetNotesForStudent(
+    student.StudentInfo.batch_id,
+    subject
+  );
 
-  const [selectedSubject, setSelectedSubject] = useState("Chemistry");
+  const queryClient = useQueryClient();
+  useEffect(() => {
+    queryClient.invalidateQueries(["notes", "student", student.id]);
+  }, [subject]);
 
-  const filtered = pdfs.filter((pdf) => pdf.subject === selectedSubject);
+  const searchedData = () => {
+    if (isFetched) {
+      let arrayData = data?.data.filter((val) =>
+        val.note.title.toLowerCase().includes(searchVal.toLowerCase())
+      );
+      setSearchedNotes(arrayData);
+    }
+  };
+
+  useEffect(() => {
+    searchedData();
+    
+  }, [isFetched, searchVal, , data?.data]);
+
+  // const [selectedSubject, setSelectedSubject] = useState("Chemistry");
+
+  // const filtered = pdfs.filter((pdf) => pdf.subject === selectedSubject);
 
   return (
     <ScrollArea className="h-[95vh]">
       <section className="p-4">
         <div>
-          <div className="flex gap-[0.5rem] items-stretch">
-            <div className="w-[30%] h-16 bg-muted rounded-tl-lg rounded-tr-lg curv-outside relative after:bg-muted before:bg-background">
+          <div className="flex flex-col-reverse md:flex-row gap-[0.5rem] items-stretch">
+            <div className="md:w-[50%] h-16 bg-muted rounded-tl-lg rounded-tr-lg md:curv-outside relative after:bg-muted before:bg-background">
               <div className="w-full h-full flex items-center justify-center px-4">
-                <Select
-                  defaultValue="Chemistry"
-                  onValueChange={(value) => setSelectedSubject(value)}
-                >
+                <Select value={subject} onValueChange={setSubject}>
                   <SelectTrigger>
                     <SelectValue placeholder="Select a Subject" />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectGroup>
                       <SelectLabel>Subjects</SelectLabel>
-                      <SelectItem value="Chemistry">Chemistry</SelectItem>
-                      <SelectItem value="Mathematics">Mathematics</SelectItem>
-                      <SelectItem value="Physics">Physics</SelectItem>
-                      <SelectItem value="Biology">Biology</SelectItem>
+                      {student.StudentSubjects.map((s) => (
+                        <SelectItem value={s.subject.id}>
+                          {s.subject.name}
+                        </SelectItem>
+                      ))}
                     </SelectGroup>
                   </SelectContent>
                 </Select>
+                {subject ? (
+                  <div className="p-1">
+                    <Button
+                      variant="ghost"
+                      className="w-full justify-start"
+                      onClick={() => setSubject("")}
+                    >
+                      <X />
+                    </Button>
+                  </div>
+                ) : (
+                  ""
+                )}
               </div>
             </div>
-            <div className="w-[70%] h-[3.55rem] bg-muted rounded-lg z-10"></div>
+            <div className="md:w-[50%] h-[3.55rem] bg-muted rounded-lg z-10 flex items-center justify-center px-2">
+              <div className="relative w-full">
+                <Input
+                  type="search"
+                  className="w-full pl-12 border-2"
+                  onChange={(e) => setSearchVal(e.target.value)}
+                />
+                <Search className="absolute top-1/2 left-0 -translate-y-1/2 translate-x-1/2" />
+              </div>
+            </div>
           </div>
-          <div className="bg-muted rounded-b-lg rounded-tr-lg p-8">
+          <div className="bg-muted rounded-b-lg md:rounded-tr-lg p-8">
             <div className="grid grid-cols-[repeat(auto-fill,_minmax(200px,_1fr))] gap-4">
-              { filtered.length > 0 ? filtered.map((pdf, index) => {
-                  return <CardPdf key={index} subject={pdf.subject} title={pdf.title} />;
-              }) : <div className="text-center text-lg font-semibold">The Notes for This Subject is not Provided yet</div> }
+              {!searchedNotes ? (
+                <div className="text-center text-lg font-semibold">
+                  The Notes for This Subject is not Provided yet
+                </div>
+              ) : (
+                searchedNotes?.map((note) => {
+                  return (
+                    <CardPdf
+                      key={note.id}
+                      subject={note.note.subject.name}
+                      title={note.note.title}
+                      url={note.note.url}
+                    />
+                  );
+                })
+              )}
             </div>
           </div>
         </div>

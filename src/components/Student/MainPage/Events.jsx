@@ -123,8 +123,8 @@ const Events = () => {
           </div>
         </div>
       </div>
-      <div className="w-full px-4">
-        <ScrollArea className="max-h-[50vh] h-[40vh]">
+      <div className="w-full md:px-4">
+        <ScrollArea className="md:max-h-[50vh] md:h-[40vh]">
           <Table className="w-full">
             <TableCaption>A list of your Events and Tests</TableCaption>
             <TableHeader>
