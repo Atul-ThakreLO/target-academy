@@ -15,6 +15,18 @@ export const useAddTestPaper = () => {
   });
 };
 
+export const useAddUpdateTotalMarks = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (data) =>
+      api_methods.postRequest("/staff/api/v1/total-marks", data),
+    onSuccess: (data) => {
+      queryClient.invalidateQueries(["test-paper"]);
+      toast.success("Total Marks Updated");
+    },
+  });
+};
+
 export const useGetTestPapers = () => {
   const { data } = useSelector((state) => state.testsFilterData);
   return useQuery({

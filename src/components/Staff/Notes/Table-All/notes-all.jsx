@@ -13,6 +13,7 @@ import ProvideNotesDialog from "../Table-provided/provide-notes-dialog";
 import { setNotesFilterData } from "@/Redux/slices/secondary/notes/notes-filter-data-slice";
 import { setSelectedID } from "@/Redux/slices/secondary/notes/notes-id-slice";
 import CustomTable from "./custom-table";
+import CustomTableNP from "../../Notes-Papers-Utils/custom-table-n-p";
 
 const NotesAll = () => {
   const [open, setOpen] = useState(false);
@@ -108,12 +109,23 @@ const NotesAll = () => {
       {!notesData ? (
         "loading"
       ) : (
-        <CustomTable
+        // <CustomTable
+        //   columns={["Title", "Subject", "Class", "Posted-BY", "Date"]}
+        //   rows={notesData}
+        //   // keys={Object.keys(data.data[0]).slice(2)}
+        //   keys={["subject", "class", "id", "date"]}
+        //   More={EditDeleteButtons}
+        // />
+        <CustomTableNP
           columns={["Title", "Subject", "Class", "Posted-BY", "Date"]}
           rows={notesData}
           // keys={Object.keys(data.data[0]).slice(2)}
-          keys={["subject", "class", "id", "date"]}
+          keys={["subject.name", "class.name", "officeStaff.OfficeStaffInfo.name", "date"]}
           More={EditDeleteButtons}
+          selectedIDs={selectedIDs}
+          setSelectedID={setSelectedID}
+          // papers
+          // More={EditDeleteButtons}
         />
       )}
     </>

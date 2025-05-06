@@ -47,15 +47,15 @@ const EditBatches = ({ id }) => {
     }
   }, [addMutation.isSuccess]);
 
-  useEffect(() => {
-    console.log(data?.data);
-  }, [isLoading, isFetched]);
+  // useEffect(() => {
+  //   console.log(data?.data);
+  // }, [isLoading, isFetched]);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button variant="ghost">
-          <Edit />
+          <Edit /> Edit Batches
         </Button>
       </DialogTrigger>
       <DialogContent>
@@ -89,7 +89,7 @@ const EditBatches = ({ id }) => {
               {isLoading ? (
                 "Loading"
               ) : data?.data.length > 0 ? (
-                <BatchNameCard data={data?.data} />
+                <BatchNameCard data={data?.data} classID={id} />
               ) : (
                 <p className="font-medium text-lg mt-3">
                   Batches Are not added Yet____

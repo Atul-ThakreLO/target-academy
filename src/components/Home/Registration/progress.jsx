@@ -31,13 +31,13 @@ const Progress = () => {
   const getLine = (index) => {
     const status = stageStatus[index];
     if (status === "success") {
-      return <Separator className="w-[calc(10vw-22px)] h-1 bg-green-500" />;
+      return <Separator className="w-[calc(17vw-22px)] md:w-[calc(10vw-22px)] h-1 bg-green-500" />;
     } else if (status === "error") {
-      return <Separator className="w-[calc(10vw-22px)] h-1 bg-red-600" />;
+      return <Separator className="w-[calc(17vw-22px)] md:w-[calc(10vw-22px)] h-1 bg-red-600" />;
     } else if (index === stage) {
-      return <Separator className="w-[calc(10vw-22px)] h-1 bg-orange-300" />;
+      return <Separator className="w-[calc(17vw-22px)] md:w-[calc(10vw-22px)] h-1 bg-orange-300" />;
     } else {
-      return <Separator className="w-[calc(10vw-22px)] h-1 bg-gray-500" />;
+      return <Separator className="w-[calc(17vw-22px)] md:w-[calc(10vw-22px)] h-1 bg-gray-500" />;
     }
   };
   return (

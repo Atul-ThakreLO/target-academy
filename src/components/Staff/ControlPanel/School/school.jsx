@@ -8,6 +8,7 @@ import { useForm } from "react-hook-form";
 import InputField from "@/components/Utils/input-field";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SchoolSchema } from "@/Zod Schema/Staff/secondary-schema";
+import { useSelector } from "react-redux";
 
 const School = () => {
   const [add, setAdd] = useState(false);
@@ -35,13 +36,15 @@ const School = () => {
     }
   }, [mutation.isSuccess]);
 
-  useEffect(() => {
-    console.log(data?.data);
-  }, [isLoading]);
+  // useEffect(() => {
+  //   console.log(data?.data);
+  // }, [isLoading]);
 
   const onSubmit = (data) => {
     mutation.mutate(data);
   };
+
+  const { staff } = useSelector((state) => state.authStaff);
 
   return (
     <>
@@ -50,7 +53,9 @@ const School = () => {
           Schools
         </h6>
         {/* <p className="text-gray-500 mt-1">Add or Provide Notes</p> */}
-        {add ? (
+        {!staff.OfficeStaffInfo.isAdmin ? (
+          ""
+        ) : add ? (
           <Button
             variant="outline"
             onClick={() => setAdd((prev) => !prev)}
@@ -94,7 +99,7 @@ const School = () => {
       </form>
       <div className="grid grid-cols-[repeat(auto-fit,_minmax(300px,_1fr))] gap-4 mt-10">
         {isLoading ? (
-          Array.from({ length: 4 }, (_, i) => <SchoolCardSkeleton />)
+          Array.from({ length: 4 }, (_, i) => <SchoolCardSkeleton key={i} />)
         ) : data?.data?.length > 0 ? (
           data?.data?.map((school, index) => (
             <SchoolCard

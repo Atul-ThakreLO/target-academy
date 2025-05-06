@@ -16,7 +16,7 @@ const AchievementsUpdates = () => {
         }
       />
       <Carousel />
-      <div className="grid grid-cols-2 gap-6 p-8">
+      <div className="grid md:grid-cols-2 gap-6 p-2 md:p-8">
         <AchievementsCard />
         <AchievementsCard />
         <AchievementsCard />

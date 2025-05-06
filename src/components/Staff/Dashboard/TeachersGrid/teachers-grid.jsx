@@ -2,25 +2,30 @@ import React, { useEffect, useRef } from "react";
 import nickName from "@/components/Utils/nick-name";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { TransitionLink } from "@/components/Utils/transition-link";
-import { Settings } from "lucide-react";
+import { Loader2, Settings } from "lucide-react";
+import { useGetAllStaff } from "@/Hooks/use-staff";
+import { Sheet, SheetTrigger } from "@/components/ui/sheet";
+import { Button } from "@/components/ui/button";
+import StaffProfileSheet from "../../Profile/staff-profile-sheet";
 
-const teachers = [
-  { name: "Atul chaudhari", src: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTjUuYcnZ-xqlGZiDZvuUy_iLx3Nj6LSaZSzQ&s"},
-  { name: "Atul chaudhari", src: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBwgu1A5zgPSvfE83nurkuzNEoXs9DMNr8Ww&s"},
-  { name: "Atul chaudhari", src: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrKxfjTf49GAtu0PpFXK7mKBgqyJ5MfJCgQw&s"},
-  { name: "Atul chaudhari", src: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ7__AYALUiCLxKF5perbqGZdn56Oxycl2B0Q&s"},
-  { name: "Atul chaudhari", src: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTHDRlp-KGr_M94k_oor4Odjn2UzbAS7n1YoA&s"},
-];
+// const teachers = [
+//   { name: "Atul chaudhari", src: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTjUuYcnZ-xqlGZiDZvuUy_iLx3Nj6LSaZSzQ&s"},
+//   { name: "Atul chaudhari", src: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBwgu1A5zgPSvfE83nurkuzNEoXs9DMNr8Ww&s"},
+//   { name: "Atul chaudhari", src: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrKxfjTf49GAtu0PpFXK7mKBgqyJ5MfJCgQw&s"},
+//   { name: "Atul chaudhari", src: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ7__AYALUiCLxKF5perbqGZdn56Oxycl2B0Q&s"},
+//   { name: "Atul chaudhari", src: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTHDRlp-KGr_M94k_oor4Odjn2UzbAS7n1YoA&s"},
+// ];
 
 const TeachersGrid = () => {
   const avatar = useRef(null);
   const grid = useRef(null);
+  const { data, isLoading } = useGetAllStaff();
 
   useEffect(() => {
     console.log(avatar.current?.offsetWidth);
   }, []);
 
-  const count = teachers.length + 1;
+  const count = data?.data?.length + 1;
   const width = avatar.current?.offsetWidth;
 
   const mouseOver = (e) => {
@@ -43,16 +48,42 @@ const TeachersGrid = () => {
       className={`grid transition-[grid-template-columns] duration-300 px-5 items-center`}
       style={style}
     >
-      {teachers.map((tecaher) => (
+      {/* {teachers.map((teacher) => (
         <Avatar
           ref={avatar}
           className="border-2 cursor-pointer hover:border-foreground"
-          key={tecaher.name}
+          key={teacher.name}
         >
-          <AvatarFallback>{nickName(tecaher.name)}</AvatarFallback>
-          <AvatarImage src={tecaher.src} alt="" />
+          <AvatarFallback>{nickName(teacher.name)}</AvatarFallback>
+          <AvatarImage src={teacher.src} alt="" />
         </Avatar>
-      ))}
+      ))} */}
+      {isLoading ? (
+        <Loader2 className="animate-spin" />
+      ) : (
+        data.data.map((teacher) => (
+          <Sheet>
+            <SheetTrigger asChild>
+              <Button variant="ghost" className="text-start">
+                <Avatar
+                  ref={avatar}
+                  className="border-2 cursor-pointer hover:border-foreground"
+                  key={teacher.OfficeStaffInfo.name}
+                >
+                  <AvatarFallback>
+                    {nickName(teacher.OfficeStaffInfo.name)}
+                  </AvatarFallback>
+                  <AvatarImage
+                    src={teacher.OfficeStaffInfo.avtar_url}
+                    alt={teacher.OfficeStaffInfo.name}
+                  />
+                </Avatar>
+              </Button>
+            </SheetTrigger>
+            <StaffProfileSheet data={teacher} />
+          </Sheet>
+        ))
+      )}
       <TransitionLink href={"/staff/staff"}>
         <Settings size={21} />
       </TransitionLink>

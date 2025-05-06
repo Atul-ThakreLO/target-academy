@@ -7,19 +7,19 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import {  useGetMarks } from "@/Hooks/use-marks";
-import { Loader, Search } from "lucide-react";
+import { useGetMarks } from "@/Hooks/use-marks";
+import { Loader, Loader2, Search, X } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import MarksRow from "./marks-row";
 import { useDispatch } from "react-redux";
 import { setTopper } from "@/Redux/slices/secondary/test-papers/topper-profile";
 import { useSidebar } from "@/components/ui/sidebar";
+import { useAddUpdateTotalMarks } from "@/Hooks/use-test-paper";
 
-const MarksListTable = ({ id }) => {
-  const [outOff, setOutOff] = useState(null);
+const MarksListTable = ({ id, totalMarks }) => {
   const [edit, setEdit] = useState(false);
-  const [value, setValue] = useState(0);
+  const [totalMarksValue, setTotalMarksValue] = useState(0);
   const [searchVal, setSearchVal] = useState("");
   const [searchedData, setSearchData] = useState(null);
   // const [topper, setTopper] = useState({});
@@ -35,21 +35,22 @@ const MarksListTable = ({ id }) => {
     },
   });
 
-  useEffect(() => {
-    if (isFetched) {
-      console.log(data.data);
-    }
-  }, [isLoading, isFetched]);
+  // useEffect(() => {
+  //   if (isFetched) {
+  //     console.log(data.data);
+  //   }
+  // }, [isLoading, isFetched]);
+  const mutation = useAddUpdateTotalMarks();
 
   function handleOutOff(e) {
     e.preventDefault();
-    setOutOff(e.target.total.value);
-    setValue(e.target.total.value);
+    setTotalMarksValue(e.target.total.value);
+    mutation.mutate({ testID: id, totalMarks: e.target.total.value });
     setEdit(false);
   }
 
   function handleEdit() {
-    setEdit(true);
+    setEdit((prev) => !prev);
   }
 
   const handleSearchVal = (e) => {
@@ -94,10 +95,11 @@ const MarksListTable = ({ id }) => {
           />
           <Search className="absolute top-1/2 left-0 -translate-y-1/2 translate-x-1/2" />
         </div>
+        <p>{totalMarks}</p>
         <div className="flex gap-3">
-          {outOff && !edit ? (
+          {totalMarks && !edit ? (
             <div className="pl-3 border rounded-lg flex items-center">
-              <b>OutOff:</b> <span className="px-4">{outOff}</span>
+              <b>OutOff:</b> <span className="px-4">{totalMarks}</span>
               <div className="border-l">
                 <Button variant="ghost" onClick={handleEdit}>
                   Edit
@@ -110,16 +112,33 @@ const MarksListTable = ({ id }) => {
                 <Input
                   type="number"
                   name="total"
-                  value={value}
-                  onChange={(e) => setValue(e.target.value)}
+                  value={totalMarksValue || totalMarks}
+                  onChange={(e) => setTotalMarksValue(e.target.value)}
                 />
-                <Button variant="outline">Add total</Button>
+                <Button variant="outline">
+                  {mutation.isPending ? (
+                    <Loader2 className="animate-spin" />
+                  ) : (
+                    "Add total"
+                  )}
+                </Button>
+                {!edit ? (
+                  ""
+                ) : (
+                  <Button variant="ghost" onClick={handleEdit}>
+                    <X />
+                  </Button>
+                )}
               </form>
             </div>
           )}
         </div>
       </div>
-      <div className={`border rounded-xl mt-5  mx-auto ${open ? "scrollable-table-open" : "scrollable-table-closed"}`}>
+      <div
+        className={`border rounded-xl mt-5  mx-auto ${
+          open ? "scrollable-table-open" : "scrollable-table-closed"
+        }`}
+      >
         <Table>
           <TableHeader>
             <TableRow>
@@ -134,21 +153,14 @@ const MarksListTable = ({ id }) => {
               <Loader className="animate-spin" />
             ) : (
               searchedData?.map((student, index) => (
-                <MarksRow student={student} testId={id} key={index} />
+                <MarksRow
+                  student={student}
+                  testId={id}
+                  key={index}
+                  totalMarks={totalMarks}
+                />
               ))
             )}
-            {/* <TableRow>
-              <TableCell>Student Name</TableCell>
-              <TableCell>
-                <Input type="number" name="mark" className="w-24" />
-              </TableCell>
-              <TableCell>{outOff ? outOff : "null"}</TableCell>
-              <TableCell>
-                <Button variant="ghost">
-                  <Edit /> Edit
-                </Button>
-              </TableCell>
-            </TableRow> */}
           </TableBody>
         </Table>
       </div>

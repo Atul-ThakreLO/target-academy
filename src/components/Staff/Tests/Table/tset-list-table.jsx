@@ -8,6 +8,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { formatDate } from "@/components/Utils/Date Formater/formatDate";
 import useTable from "@/components/Utils/Table/useTable";
 import { TransitionLink } from "@/components/Utils/transition-link";
 import { setSelectedID } from "@/Redux/slices/secondary/test-papers/test-papers-id-slice";
@@ -16,7 +17,7 @@ import { useSelector } from "react-redux";
 
 const TsetListTable = ({ rows, more }) => {
   const columns = ["Title", "Subject", "Class", "Batch", "Posted-by", "Date"];
-  
+
   const { open } = useSidebar();
 
   const { selectedIDs } = useSelector((state) => state.testPaperSelectedID);
@@ -27,7 +28,11 @@ const TsetListTable = ({ rows, more }) => {
   );
 
   return (
-    <div className={`border rounded-xl mx-auto ${open ? "scrollable-table-open" : "scrollable-table-closed"}`}>
+    <div
+      className={`border rounded-xl mx-auto ${
+        open ? "scrollable-table-open" : "scrollable-table-closed"
+      }`}
+    >
       <Table>
         <TableHeader>
           <TableRow>
@@ -55,15 +60,28 @@ const TsetListTable = ({ rows, more }) => {
                 />
               </TableCell>
               <TableCell>
-                <TransitionLink href={`marks/${row.id}`} className="text-nowrap">
+                <TransitionLink
+                  href={`marks/${row.id}`}
+                  className="text-nowrap"
+                >
                   {row.title}
                 </TransitionLink>
               </TableCell>
-              <TableCell className="text-center text-nowrap">{row.subject.name}</TableCell>
-              <TableCell className="text-center text-nowrap">{row.class.name}</TableCell>
-              <TableCell className="text-center text-nowrap">{row.batch.name}</TableCell>
-              <TableCell className="text-center text-nowrap">{row.batch.id}</TableCell>
-              <TableCell className="text-center text-nowrap">{row.date}</TableCell>
+              <TableCell className="text-center text-nowrap">
+                {row.subject.name}
+              </TableCell>
+              <TableCell className="text-center text-nowrap">
+                {row.class.name}
+              </TableCell>
+              <TableCell className="text-center text-nowrap">
+                {row.batch.name}
+              </TableCell>
+              <TableCell className="text-center text-nowrap">
+                {row.officeStaff?.OfficeStaffInfo?.name}
+              </TableCell>
+              <TableCell className="text-center text-nowrap">
+                {formatDate(row.date)}
+              </TableCell>
               <TableCell className="text-center text-nowrap">
                 {/* <More id={note.id} /> */}
               </TableCell>

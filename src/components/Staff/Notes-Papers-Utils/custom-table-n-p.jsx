@@ -14,6 +14,7 @@ import { useDispatch } from "react-redux";
 import useTable from "@/components/Utils/Table/useTable";
 import { TransitionLink } from "@/components/Utils/transition-link";
 import { useSidebar } from "@/components/ui/sidebar";
+import { formatDate } from "@/components/Utils/Date Formater/formatDate";
 // import { setSelectedID } from "@/Redux/slices/secondary/notes/notes-id-slice";
 
 const CustomTableNP = ({
@@ -27,7 +28,7 @@ const CustomTableNP = ({
 }) => {
   //   const [dialogState, setDialogState] = useState(false);
   //   const { selectedIDs } = useSelector((state) => state.notesSelectedID);
-  
+
   const { open } = useSidebar();
   const { toogleAll, toogleSelect } = useTable(
     rows,
@@ -35,6 +36,24 @@ const CustomTableNP = ({
     setSelectedID
   );
   const dispatch = useDispatch();
+
+  function getValue(key, row) {
+    // let data = row;
+    // key.split(".").reduce((curr, prev) => data = data?.[curr]);
+    // return data
+    if (!row || !key) return null;
+
+    // Handle both dot notation strings and already-split arrays
+    const keys = typeof key === "string" ? key.split(".") : key;
+
+    // Reduce through the keys to get the nested value
+    if(key === "date") {
+      return formatDate(row[key])
+    }
+    return keys.reduce((acc, key) => {
+      return acc && acc[key] !== undefined ? acc[key] : null;
+    }, row);
+  }
 
   return (
     <div
@@ -80,17 +99,9 @@ const CustomTableNP = ({
               </TableCell>
               {keys?.map((key, index) => (
                 <TableCell className="text-center text-nowrap" key={index}>
-                  {key.split(".").length > 1
-                    ? row[key.split(".")[0]]?.[key.split(".")[1]]
-                    : row[key]}
+                  {getValue(key, row)}
                 </TableCell>
-                // <TableCell className="text-center" key={index}>
-                //   {row[key]?.name || row[key]}
-                // </TableCell>
               ))}
-              {/* <TableCell className="text-center">{note.class}</TableCell>
-              <TableCell className="text-center">{note.posted_by}</TableCell>
-              <TableCell className="text-center">{note.date}</TableCell> */}
               {papers ? (
                 row?.test?.title ? (
                   <TableCell className="text-center text-nowrap">

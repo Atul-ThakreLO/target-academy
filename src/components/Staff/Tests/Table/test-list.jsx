@@ -66,7 +66,7 @@ const TestList = () => {
         <div className="relative">
           <Input
             type="search"
-            className="sm:w-96 s:mpl-12 border-2"
+            className="sm:w-96 pl-12 border-2"
             onChange={handleSearchInput}
           />
           <Search className="absolute top-1/2 left-0 -translate-y-1/2 translate-x-1/2" />

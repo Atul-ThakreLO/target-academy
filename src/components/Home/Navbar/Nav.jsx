@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
-import { TransitionLink, TransitionNavLink } from "../Utils/transition-link";
-import { Button } from "../ui/button";
+import { TransitionLink, TransitionNavLink } from "../../Utils/transition-link";
+import { Button } from "../../ui/button";
 import { Target } from "lucide-react";
 
 const Nav = ({ scroller }) => {

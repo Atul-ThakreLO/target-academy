@@ -10,7 +10,7 @@ import React from "react";
 
 const MainPage = () => {
   return (
-    <div className="w-[80%] mx-auto pt-10 pb-96">
+    <div className="w-[93%] md:w-[80%] mx-auto pt-10">
       <section className="">
         <Hero />
       </section>
@@ -26,7 +26,7 @@ const MainPage = () => {
         <AchievementsUpdates />
       </section>
       <section className="mt-20 mb-20">
-        <Faculty />
+        {/* <Faculty /> */}
       </section>
       <section className="mt-20 mb-20">
         <Career />

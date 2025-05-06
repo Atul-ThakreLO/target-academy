@@ -48,13 +48,18 @@ const Dashboard = () => {
           )}
         </div>
       </section>
-      <section className="flex gap-3 mt-5">
-        <span className="text-lg self-center mb-1">Teachers</span>
-        <div>
-          <Separator orientation="vertical" className="border-2" />
-        </div>
-        <TeachersGrid />
-      </section>
+
+      {staff.OfficeStaffInfo.isAdmin ? (
+        <section className="flex gap-3 mt-5">
+          <span className="text-lg self-center mb-1">Teachers</span>
+          <div>
+            <Separator orientation="vertical" className="border-2" />
+          </div>
+          <TeachersGrid />
+        </section>
+      ) : (
+        ""
+      )}
       <section className="mt-5 grid grid-cols-[repeat(auto-fit,_minmax(150px,_1fr))] gap-3">
         <CountCard
           icon={<Users size={18} />}

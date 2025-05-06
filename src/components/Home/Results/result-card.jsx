@@ -16,17 +16,17 @@ const ResultCard = () => {
           <AvatarFallback>ST</AvatarFallback>
           <AvatarImage src="" alt="" />
         </Avatar>
-        <p className="font-semibold text-xl">Name of Student</p>
+        <p className="font-medium text-center text-lg md:text-xl">Name of Student</p>
       </CardHeader>
       <Separator />
       <CardContent>
         <table className="w-full mt-2">
           <tr>
-            <td className="text-start">Chemistry</td>
+            <td className="text-start text-sm">Chemistry</td>
             <td>:</td>
             <th>94</th>
           </tr>
-          <tr>
+          {/* <tr>
             <td className="text-start">Physics</td>
             <td>:</td>
             <th>84</th>
@@ -35,14 +35,14 @@ const ResultCard = () => {
             <td className="text-start">Mathematics</td>
             <td>:</td>
             <th>82</th>
-          </tr>
+          </tr> */}
         </table>
       </CardContent>
       <Separator />
       <CardFooter>
         <div className="flex items-center w-full justify-between mt-5">
-          <p className="font-bold text-xl">Total %: </p>
-          <p className="font-bold text-xl">81.00%</p>
+          <p className="font-semibold text-lg">Total %: </p>
+          <p className="font-semibold text-lg">81.00%</p>
         </div>
       </CardFooter>
     </Card>

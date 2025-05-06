@@ -10,7 +10,7 @@ import { Edit, Loader, Save, Trash, X } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
-const MarksRow = ({ student, testId }) => {
+const MarksRow = ({ student, testId, totalMarks }) => {
   const [editMarks, setEditMarks] = useState(false);
   const { register, handleSubmit } = useForm({
     defaultValues: {
@@ -74,7 +74,7 @@ const MarksRow = ({ student, testId }) => {
                   />
                 </form>
               </TableCell>
-              <TableCell className="text-right">{"null"}</TableCell>
+              <TableCell className="">{totalMarks}</TableCell>
               <TableCell>
                 <div className="flex">
                   <Button
@@ -102,10 +102,10 @@ const MarksRow = ({ student, testId }) => {
             </>
           ) : (
             <>
-              <TableCell className="text-right">
+              <TableCell className="">
                 {student.TestPaperStudents[0]?.marks}
               </TableCell>
-              <TableCell className="text-right">null</TableCell>
+              <TableCell className="">{totalMarks}</TableCell>
               <TableCell>
                 <div className="flex gap-2 border px-2 rounded-xl w-max">
                   <Button
@@ -149,7 +149,7 @@ const MarksRow = ({ student, testId }) => {
                 />
               </form>
             </TableCell>
-            <TableCell className="text-right">{"null"}</TableCell>
+            <TableCell className="">{totalMarks}</TableCell>
             <TableCell>
               <Button form={student.id} disabled={mutation.isPending}>
                 {mutation.isPending ? (

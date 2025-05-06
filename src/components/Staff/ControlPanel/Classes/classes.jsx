@@ -7,6 +7,7 @@ import InputField from "@/components/Utils/input-field";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ClassSchema } from "@/Zod Schema/Staff/secondary-schema";
+import { useSelector } from "react-redux";
 
 const Classes = () => {
   const [add, setAdd] = useState(false);
@@ -30,9 +31,10 @@ const Classes = () => {
   }, [mutation.isSuccess]);
 
   const onSubmit = (data) => {
-    console.log(data);
     mutation.mutate(data);
   };
+
+  const { staff } = useSelector((state) => state.authStaff);
 
   return (
     <>
@@ -41,7 +43,9 @@ const Classes = () => {
           Classes
         </h6>
         {/* <p className="text-gray-500 mt-1">Add or Provide Notes</p> */}
-        {add ? (
+        {!staff.OfficeStaffInfo.isAdmin ? (
+          ""
+        ) : add ? (
           <Button
             variant="outline"
             onClick={() => setAdd((prev) => !prev)}
@@ -85,12 +89,8 @@ const Classes = () => {
       </form>
       <div className="grid grid-cols-[repeat(auto-fit,_minmax(100px,_1fr))] gap-6 mx-auto mt-10">
         {isLoading
-          ? Array.from({ length: 5 }, (_, i) => <ClassCardSkeleton />)
-          : data?.data?.map((data) => <ClassCard data={data} />)}
-        {/* <ClassCard name={"9th"} />
-        <ClassCard name={"10th"} />
-        <ClassCard name={"11th"} />
-        <ClassCard name={"12th"} /> */}
+          ? Array.from({ length: 5 }, (_, i) => <ClassCardSkeleton key={i} />)
+          : data?.data?.map((data, i) => <ClassCard key={i} data={data} />)}
       </div>
     </>
   );

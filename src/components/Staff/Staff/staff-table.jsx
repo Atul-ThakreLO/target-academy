@@ -12,6 +12,7 @@ import { useGetAllStaff } from "@/Hooks/use-staff";
 import { Sheet, SheetTrigger } from "@/components/ui/sheet";
 import StaffProfileSheet from "../Profile/staff-profile-sheet";
 import { Button } from "@/components/ui/button";
+import { useSelector } from "react-redux";
 
 const CellSkeleton = () => {
   return (
@@ -56,6 +57,7 @@ const StaffTable = ({ data }) => {
   // useEffect(() => {
   //   if (data?.data) console.log(data.data);
   // }, [data, isLoading]);
+  const { staff } = useSelector((state) => state.authStaff);
   return (
     <Table>
       <TableHeader>
@@ -72,55 +74,70 @@ const StaffTable = ({ data }) => {
       <TableBody>
         {!data
           ? Array.from({ length: 10 }, (_, i) => <CellSkeleton />)
-          : data.map((row) => (
-              <TableRow>
-                <TableCell>
-                  <Sheet>
-                    <SheetTrigger asChild>
-                      <Button variant="ghost" className="text-start">
-                        <TableProfile
-                          src={row.OfficeStaffInfo.avtar_url}
-                          name={row.OfficeStaffInfo.name}
-                          email={row.email}
-                        />
-                      </Button>
-                    </SheetTrigger>
-                    <StaffProfileSheet data={row} />
-                  </Sheet>
-                </TableCell>
-                <TableCell className="text-center">
-                  {row.OfficeStaffInfo.mobile}
-                </TableCell>
-                <TableCell className="text-center">
-                  {row.OfficeStaffInfo.qualification}Bed
-                </TableCell>
-                <TableCell className="text-center">
-                  {row.OfficeStaffInfo.subjects} Science
-                </TableCell>
-                <TableCell className="text-center">
-                  {row.OfficeStaffInfo.hire_date}
-                </TableCell>
-                <TableCell>
-                  <div className="w-min mx-auto">
-                    <span className="px-3 py-1 bg-blue-400/40 rounded-sm">
-                      {row.OfficeStaffInfo.role}
-                    </span>
-                  </div>
-                </TableCell>
-                <TableCell>
-                  <div className="w-min mx-auto">
-                    <span className="px-2 border rounded-full bg-red-500/50 mr-2">
-                      {row.OfficeStaffInfo.isVerified
-                        ? "Verified"
-                        : "UnVerified"}
-                    </span>
-                    <span className="px-2 border rounded-full bg-green-500/50">
-                      {row.OfficeStaffInfo.isAdmin ? "Admin" : "Staff"}
-                    </span>
-                  </div>
-                </TableCell>
-              </TableRow>
-            ))}
+          : data.map((row) =>
+              staff.id === row.id ? (
+                ""
+              ) : (
+                <TableRow>
+                  {staff.OfficeStaffInfo.isAdmin ? (
+                    <TableCell>
+                      <Sheet>
+                        <SheetTrigger asChild>
+                          <Button variant="ghost" className="text-start">
+                            <TableProfile
+                              src={row.OfficeStaffInfo.avtar_url}
+                              name={row.OfficeStaffInfo.name}
+                              email={row.email}
+                            />
+                          </Button>
+                        </SheetTrigger>
+                        <StaffProfileSheet data={row} />
+                      </Sheet>
+                    </TableCell>
+                  ) : (
+                    <TableCell>
+                      <TableProfile
+                        src={row.OfficeStaffInfo.avtar_url}
+                        name={row.OfficeStaffInfo.name}
+                        email={row.email}
+                      />
+                    </TableCell>
+                  )}
+
+                  <TableCell className="text-center">
+                    {row.OfficeStaffInfo.mobile}
+                  </TableCell>
+                  <TableCell className="text-center">
+                    {row.OfficeStaffInfo.qualification}Bed
+                  </TableCell>
+                  <TableCell className="text-center">
+                    {row.OfficeStaffInfo.subjects} Science
+                  </TableCell>
+                  <TableCell className="text-center">
+                    {row.OfficeStaffInfo.hire_date}
+                  </TableCell>
+                  <TableCell>
+                    <div className="w-min mx-auto">
+                      <span className="px-3 py-1 bg-blue-400/40 rounded-sm">
+                        {row.OfficeStaffInfo.role}
+                      </span>
+                    </div>
+                  </TableCell>
+                  <TableCell>
+                    <div className="w-min mx-auto">
+                      <span className="px-2 border rounded-full bg-red-500/50 mr-2">
+                        {row.OfficeStaffInfo.isVerified
+                          ? "Verified"
+                          : "UnVerified"}
+                      </span>
+                      <span className="px-2 border rounded-full bg-green-500/50">
+                        {row.OfficeStaffInfo.isAdmin ? "Admin" : "Staff"}
+                      </span>
+                    </div>
+                  </TableCell>
+                </TableRow>
+              )
+            )}
       </TableBody>
     </Table>
   );

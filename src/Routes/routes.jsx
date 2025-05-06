@@ -6,7 +6,7 @@ import {
 import Home from "@/layouts/Home";
 import Student from "@/layouts/Student";
 import ST_MainPage from "@/pages/Student/main-page";
-import Marks from "@/pages/Student/marks";
+// import Marks from "@/pages/Student/marks";
 import Notes from "@/pages/Student/notes";
 import Papers from "@/pages/Student/papers";
 import Profile from "@/pages/Student/profile";
@@ -32,6 +32,7 @@ import EventNotice from "@/pages/Staff/event-notice";
 import StaffRegistration from "@/pages/Home/staff-registration";
 import StaffLogin from "@/pages/Home/staff-login";
 import Assignments from "@/pages/Student/assignments";
+import Marks from "@/pages/Student/Marks";
 
 const router = createBrowserRouter(
   createRoutesFromElements(

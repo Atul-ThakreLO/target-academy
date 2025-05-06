@@ -67,17 +67,17 @@ const StudentRegister = () => {
 
   return (
     <div className="flex flex-col justify-center items-center w-full h-full p-10">
-      <div className="flex w-[80%] justify-center items-center gap-4 mt-4 mb-20 sticky top-0">
+      <div className="flex w-full md:w-[80%] justify-center items-center gap-4 mt-4 mb-20 sticky top-0">
         <Progress />
       </div>
       <div>
-        <Card className="w-[500px]">
+        <Card className="w-[390px] md:w-[500px]">
           <CardHeader>
             <CardTitle>{cardTitle[stage]}</CardTitle>
             <CardDescription>{cardDescription[stage]}</CardDescription>
           </CardHeader>
           <CardContent>{getForm()}</CardContent>
-          <CardFooter className="grid grid-cols-2 justify-between">
+          <CardFooter className="flex justify-center">
             {/* <span
               data-enabled={!isPrev}
               className="data-[enabled=true]:cursor-not-allowed select-none"
@@ -95,7 +95,7 @@ const StudentRegister = () => {
             </span> */}
             <span
               data-enabled={mutationState.isPending || mutationState.isZodError}
-              className="data-[enabled=true]:cursor-not-allowed select-none justify-self-end"
+              className="data-[enabled=true]:cursor-not-allowed select-none"
             >
               <Button
                 type="submit"

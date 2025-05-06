@@ -29,7 +29,6 @@ export const useStaffLogin = () => {
   return useMutation({
     mutationFn: (data) => staffApi.postRequest("/staff/login", data),
     onSuccess: (data) => {
-      console.log(data.data.id);
       dispatch(setStaff(data.data));
       toast.success("Loged in Succeessfully");
       navigate("/staff");
@@ -63,10 +62,8 @@ export const useGetStaff = () => {
 };
 
 export const useGetAllStaff = (data) => {
-  // const { id } = useSelector((state) => state.authStaff);
-  const { staff } = useSelector((state) => state.authStaff);
   return useQuery({
-    queryKey: ["staff", "all", staff?.id],
+    queryKey: ["staff", "all"],
     queryFn: () => staffApi.getRequest("/admin/staffs/all", data),
   });
 };
@@ -106,5 +103,17 @@ export const useGetDashboard = () => {
   return useQuery({
     queryKey: ["dashboard"],
     queryFn: () => staffApi.getRequest("/staff/api/v1/get/dashboard"),
+  });
+};
+
+export const useActiveInActive = (field, params) => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (data) =>
+      staffApi.postJost(`/staff/api/v1/control-panel/${field}`, data),
+    onSuccess: (data) => {
+      queryClient.invalidateQueries([...params]);
+      toast.success(`${field} status changed`);
+    },
   });
 };

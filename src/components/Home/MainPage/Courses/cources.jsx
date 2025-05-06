@@ -5,9 +5,9 @@ import SectionHeader from "@/components/Utils/MainPage/section-header";
 
 const Cources = () => {
   return (
-    <div className="flex sticky top-10">
-      <div className="flex justify-center w-1/2 pb-20">
-        <div className="sticky top-[40%] h-min">
+    <div className="flex flex-col md:flex-row sticky top-10 px-2">
+      <div className="flex justify-center md:w-1/2 pb-20 h-full sticky top-[13%] md:relative md:top-0 md:h-auto">
+        <div className="sticky top-[25%] md:top-[40%] md:h-min">
           <SectionHeader
             icon={<School />}
             title={"Cources"}
@@ -16,7 +16,7 @@ const Cources = () => {
           />
         </div>
       </div>
-      <div className="w-1/2 flex flex-col gap-32 items-center">
+      <div className="md:w-1/2 flex flex-col gap-60 items-center">
         <CourseCard />
         <CourseCard />
         <CourseCard />

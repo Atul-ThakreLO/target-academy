@@ -115,7 +115,7 @@ const PapersTable = () => {
           columns={["Title", "Subject", "Class", "Posted-BY", "Date", "Test"]}
           rows={papersData}
           // keys={Object.keys(data.data[0]).slice(2)}
-          keys={["subject.name", "class.name", "id", "date"]}
+          keys={["subject.name", "class.name", "officeStaff.OfficeStaffInfo.name", "date"]}
           More={EditDeleteButtons}
           selectedIDs={selectedIDs}
           setSelectedID={setSelectedID}

@@ -1,4 +1,5 @@
-import Nav from "@/components/Home/Nav";
+import Nav from "@/components/Home/Navbar/Nav";
+import NavMobile from "@/components/Home/Navbar/NavMobile";
 import React, { useEffect, useRef, useState } from "react";
 import { Outlet } from "react-router-dom";
 
@@ -21,7 +22,13 @@ const Home = () => {
       className={`scrollable overflow-y-auto h-[100vh] bg-muted`}
     >
       {/* <div className="background"></div> */}
-      <Nav scroller={scrollAMount} />
+      <div className="hidden md:block">
+        <Nav scroller={scrollAMount} />
+      </div>
+      <div className="block md:hidden">
+        <NavMobile scroller={scrollAMount} />
+      </div>
+
       <div className="main-div">
         <Outlet />
       </div>

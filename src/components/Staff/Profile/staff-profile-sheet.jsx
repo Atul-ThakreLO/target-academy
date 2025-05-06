@@ -1,17 +1,22 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import {
-  SheetContent,
-  SheetFooter,
-} from "@/components/ui/sheet";
+import { SheetContent, SheetFooter } from "@/components/ui/sheet";
 import nickName from "@/components/Utils/nick-name";
-import { GraduationCap, Mail, Phone, Trash } from "lucide-react";
+import {
+  CircleArrowDown,
+  GraduationCap,
+  Mail,
+  Phone,
+  Trash,
+} from "lucide-react";
 import React from "react";
 import EditDialog from "./Edit Profile/edit-dialog";
 import EditDpDialog from "./Edit Profile/edit-dp-dialog";
+import { useSelector } from "react-redux";
 
 const StaffProfileSheet = ({ data }) => {
+  const { staff } = useSelector((state) => state.authStaff);
   return (
     <SheetContent className="overflow-hidden">
       {/* <SheetHeader>
@@ -32,23 +37,51 @@ const StaffProfileSheet = ({ data }) => {
                 {nickName(data?.OfficeStaffInfo?.name)}
               </AvatarFallback>
             </Avatar>
-            <div className="absolute top-0 right-0 bg-background rounded-full hidden group-hover:block">
-              <EditDpDialog defaultData={data} />
-            </div>
+            {staff.id !== data.id ? (
+              ""
+            ) : (
+              <div className="absolute top-0 right-0 bg-background rounded-full hidden group-hover:block">
+                <EditDpDialog defaultData={data} />
+              </div>
+            )}
           </div>
           <div className="flex py-0 border rounded-full mt-5">
-            <EditDialog defaultValue={data} />
-            <div>
-              <Separator orientation="vertical" />
-            </div>
-            <Button variant="ghost" className="py-1 px-4 h-6">
-              <Trash size={15} />
-            </Button>
+            {staff.id !== data.id ? (
+              ""
+            ) : (
+              <>
+                <EditDialog defaultValue={data} />
+                <div>
+                  <Separator orientation="vertical" />
+                </div>
+              </>
+            )}
+            {!staff.OfficeStaffInfo.isAdmin ? (
+              ""
+            ) : (
+              <Button variant="ghost" className="py-1 px-4 h-6">
+                <CircleArrowDown />
+              </Button>
+            )}
+            {!staff.OfficeStaffInfo.isAdmin ? (
+              ""
+            ) : (
+              <>
+                <div>
+                  <Separator orientation="vertical" />
+                </div>
+                <Button variant="ghost" className="py-1 px-4 h-6">
+                  <Trash size={15} />
+                </Button>
+              </>
+            )}
           </div>
         </div>
         <div>
           <div className="mt-2">
-            <h1 className="text-xl font-medium">{data?.OfficeStaffInfo?.name}</h1>
+            <h1 className="text-xl font-medium">
+              {data?.OfficeStaffInfo?.name}
+            </h1>
             <h1>@{data?.email?.split("@")[0]}</h1>
           </div>
         </div>
@@ -56,7 +89,7 @@ const StaffProfileSheet = ({ data }) => {
           <div className="px-4 py-0 border-2 rounded-md text-sm font-medium">
             {data?.OfficeStaffInfo?.role}
           </div>
-          {!data?.OfficeStaffInfo?.isAdmin && (
+          {data?.OfficeStaffInfo?.isAdmin && (
             <div className="px-4 py-0 border-2 rounded-md text-sm font-medium">
               ADMIN
             </div>

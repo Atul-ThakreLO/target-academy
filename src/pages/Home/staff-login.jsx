@@ -53,7 +53,7 @@ const StaffLogin = () => {
   return (
     <>
       <div className="h-[100vh] w-[100%] flex justify-center items-center">
-        <Card className="w-[450px]">
+        <Card className="w-[380px] sm:w-[450px]">
           <CardHeader>
             <CardTitle>Login</CardTitle>
             <CardDescription>

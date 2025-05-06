@@ -10,7 +10,6 @@ export const useAddBatch = () => {
       toast.success("Batch Added");
       queryClient.invalidateQueries(["batch", data.data.class_id]);
       queryClient.invalidateQueries(["batch", "class"]);
-      console.log(data.data.class_id);
     },
   });
 };

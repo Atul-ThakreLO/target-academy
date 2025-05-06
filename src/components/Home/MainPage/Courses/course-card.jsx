@@ -2,7 +2,7 @@ import React from "react";
 
 const CourseCard = () => {
   return (
-    <div className={`py-6 px-4 bg-background rounded-xl border w-[400px] flex flex-col gap-4 sticky top-[25%]`}>
+    <div className={`py-6 px-4 bg-background rounded-xl border w-full md:w-[400px] flex flex-col gap-4 sticky top-[33%] md:top-[25%]`}>
       <div>
         <span className="bg-muted p-2 rounded-lg font-extrabold">01</span>
       </div>

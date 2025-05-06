@@ -22,14 +22,14 @@ const Career = () => {
   }
 
   return (
-    <div className="w-[80%] mx-auto pt-10 pb-96">
-      <div className="mt-10">
+    <div className="w-full md:w-[80%] mx-auto pt-10 pb-96">
+      <div className="mt-10 p-6 md:p-0">
         <SectionHeader
           icon={<BriefcaseBusiness />}
           title={"Career"}
           heading={"Career Opportunities"}
         />
-        <p className="w-1/2 text-center mx-auto mt-8 text-lg">
+        <p className="md:w-1/2 text-center mx-auto mt-8 text-lg">
           We're always looking for passionate educators in Physics, Chemistry,
           and Mathematics who can inspire the next generation of scientists and
           engineers. If you have a postgraduate degree in your subject, a proven
@@ -37,7 +37,7 @@ const Career = () => {
           difference, we want to hear from you.
         </p>
       </div>
-      <div className="mt-10 p-6">
+      <div className="mt-10 p-2 md:p-6">
         {isLoading ? (
           <>
             <CareerCardSckeleton />

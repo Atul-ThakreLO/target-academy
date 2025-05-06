@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import studentApi from "../api/student-api";
 import api_methods from "../api/secondary-api";
 import { toast } from "react-toastify";
@@ -10,11 +10,12 @@ import {
   setAuth,
   setStudentId,
 } from "@/Redux/slices/Student/auth-status-slice";
+import { setStudent } from "@/Redux/slices/Student/auth-student-slice";
 
 export const useGetStudentById = (id = 1) => {
   const { student } = useSelector((state) => state.authStudent);
   return useQuery({
-    queryKey: ["student", student.id],
+    queryKey: ["student", student?.id],
     queryFn: () => studentApi.getStudent("/student"),
     retry: 2,
   });
@@ -35,13 +36,9 @@ export const useStudentLogin = () => {
   return useMutation({
     mutationFn: (data) => studentApi.loginStudent("/student/l/login", data),
     onSuccess: (data) => {
-      dispatch(setAuth(true));
-      dispatch(setStudentId(data.data?.response.student_id));
-      toast.success("Login Success", {
-        onOpen: () => {
-          navigate("/student");
-        },
-      });
+      dispatch(setStudent(data.data));
+      navigate("/student");
+      toast.success("Login Success");
     },
     onError: (error) => {
       toast.error(error?.response?.data?.message);
@@ -56,7 +53,7 @@ export const useStudentLogout = () => {
     onSuccess: (data) => {
       toast.success("Logout Success", {
         onOpen: () => {
-          navigate("/login");
+          navigate("/student/login");
         },
       });
     },
@@ -129,6 +126,21 @@ export const useUpdateStudent = () => {
     mutationFn: (data) => api_methods.putRequest("/student", data),
     onSuccess: (data) => {
       toast.success("updated sucessfully");
+    },
+  });
+};
+
+export const useUpdateStudentDP = (id) => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (data) =>
+      api_methods.postRequest(`/student/v1/api/update/profile-picture/${id}`, data, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }),
+    onSuccess: (data) => {
+      queryClient.invalidateQueries(["student", data.data.id]);
     },
   });
 };

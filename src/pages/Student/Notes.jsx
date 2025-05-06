@@ -46,7 +46,9 @@ const Notes = () => {
 
   useEffect(() => {
     searchedData();
-    
+    if (isFetched) {
+      console.log(data.data);
+    }
   }, [isFetched, searchVal, , data?.data]);
 
   // const [selectedSubject, setSelectedSubject] = useState("Chemistry");

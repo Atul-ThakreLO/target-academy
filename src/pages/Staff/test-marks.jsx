@@ -41,7 +41,7 @@ const TestMarks = () => {
         <h3 className="text-2xl font-semibold">Test {id}</h3>
       </div>
       {/* upload */}
-      <div className="flex flex-col-reverse md:flex- md:gap-10 gap-5 justify-evenly md:mt-7 mt-5">
+      <div className="flex flex-col-reverse md:flex-row md:gap-10 gap-5 justify-evenly md:mt-7 mt-5">
         {isLoading ? (
           <div className="flex items-center gap-2">
             <LoaderCard />
@@ -121,7 +121,7 @@ const TestMarks = () => {
       </div>
       {/* list with field for marks */}
       <div>
-        <MarksListTable id={id} />
+        <MarksListTable id={id} totalMarks={data?.data?.totalMarks} />
       </div>
     </div>
   );
