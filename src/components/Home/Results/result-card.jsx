@@ -6,26 +6,40 @@ import {
   CardHeader,
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import nickName from "@/components/Utils/nick-name";
 import React from "react";
 
-const ResultCard = () => {
+const ResultCard = ({ data }) => {
+  console.log(data);
+
   return (
     <Card>
       <CardHeader className="items-center">
         <Avatar className="h-20 w-20">
-          <AvatarFallback>ST</AvatarFallback>
-          <AvatarImage src="" alt="" />
+          <AvatarFallback>
+            {nickName(data?.student.StudentInfo.student_name)}
+          </AvatarFallback>
+          <AvatarImage
+          className="object-cover"
+            src={data?.student.StudentInfo.avtar_url}
+            alt={data?.student.StudentInfo.student_name}
+          />
         </Avatar>
-        <p className="font-medium text-center text-lg md:text-xl">Name of Student</p>
+        <p className="font-medium text-center text-lg md:text-xl">
+          {data?.student.StudentInfo.student_name}
+        </p>
       </CardHeader>
       <Separator />
       <CardContent>
         <table className="w-full mt-2">
-          <tr>
-            <td className="text-start text-sm">Chemistry</td>
-            <td>:</td>
-            <th>94</th>
-          </tr>
+          {data?.marks?.map((sm) => (
+            <tr>
+              <td className="text-start text-sm">{sm.subject}</td>
+              <td>:</td>
+              <th>{sm.marks}</th>
+            </tr>
+          ))}
+
           {/* <tr>
             <td className="text-start">Physics</td>
             <td>:</td>
@@ -42,7 +56,7 @@ const ResultCard = () => {
       <CardFooter>
         <div className="flex items-center w-full justify-between mt-5">
           <p className="font-semibold text-lg">Total %: </p>
-          <p className="font-semibold text-lg">81.00%</p>
+          <p className="font-semibold text-lg">{data?.total_percent}</p>
         </div>
       </CardFooter>
     </Card>

@@ -3,6 +3,7 @@ import Carousel from "./carousel";
 import AchievementsCard from "./achievements-card";
 import SectionHeader from "@/components/Utils/MainPage/section-header";
 import { Newspaper } from "lucide-react";
+import { achievement } from "@/constants/Home/achievements";
 
 const AchievementsUpdates = () => {
   return (
@@ -17,10 +18,17 @@ const AchievementsUpdates = () => {
       />
       <Carousel />
       <div className="grid md:grid-cols-2 gap-6 p-2 md:p-8">
+        {achievement.map((achiev, index) => (
+          <AchievementsCard
+            title={achiev.title}
+            para={achiev.desc}
+            index={index}
+          />
+        ))}
+{/* 
         <AchievementsCard />
         <AchievementsCard />
-        <AchievementsCard />
-        <AchievementsCard />
+        <AchievementsCard /> */}
       </div>
     </div>
   );

@@ -17,16 +17,16 @@ import { useSelector } from "react-redux";
 import { Button } from "@/components/ui/button";
 import { useQueryClient } from "@tanstack/react-query";
 import { useGetPapersForStudent } from "@/Hooks/use-papers";
+import NPCardSkeleton from "@/components/Loaders/Student/np-card-skeleton";
 
 const Papers = () => {
   const [subject, setSubject] = useState("");
   const [session, setSession] = useState(new Date().getFullYear());
-  const { isMobile } = useSidebar();
   const { student } = useSelector((state) => state.authStudent);
   const [searchVal, setSearchVal] = useState("");
   const [searchedPapers, setSearchedPapers] = useState("");
 
-  const { data, isLoading, isSuccess, isFetched } = useGetPapersForStudent(
+  const { data, isFetched } = useGetPapersForStudent(
     student.StudentInfo.class_id,
     subject,
     session
@@ -121,6 +121,8 @@ const Papers = () => {
           <div className="bg-muted rounded-b-lg md:rounded-tr-lg p-8">
             <div className="grid grid-cols-[repeat(auto-fill,_minmax(200px,_1fr))] gap-4">
               {!searchedPapers ? (
+                Array.from({ length: 5 }, (_, i) => <NPCardSkeleton key={i} />)
+              ) : !searchedPapers.length > 0 ? (
                 <div className="text-center text-lg font-semibold">
                   The Notes for This Subject is not Provided yet
                 </div>

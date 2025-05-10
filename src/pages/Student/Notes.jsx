@@ -1,5 +1,4 @@
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { useSidebar } from "@/components/ui/sidebar";
 import React, { useEffect, useState } from "react";
 import {
   Select,
@@ -17,18 +16,24 @@ import { useGetNotesForStudent } from "@/Hooks/use-notes";
 import { useSelector } from "react-redux";
 import { Button } from "@/components/ui/button";
 import { useQueryClient } from "@tanstack/react-query";
+import NPCardSkeleton from "@/components/Loaders/Student/np-card-skeleton";
 
 const Notes = () => {
   const [subject, setSubject] = useState("");
-  const { isMobile } = useSidebar();
   const { student } = useSelector((state) => state.authStudent);
   const [searchVal, setSearchVal] = useState("");
   const [searchedNotes, setSearchedNotes] = useState("");
 
-  const { data, isLoading, isSuccess, isFetched } = useGetNotesForStudent(
+  const { data, isFetched } = useGetNotesForStudent(
     student.StudentInfo.batch_id,
     subject
   );
+
+  useEffect(() => {
+    if (isFetched) {
+      console.log(data?.data);
+    }
+  }, [isFetched, data]);
 
   const queryClient = useQueryClient();
   useEffect(() => {
@@ -46,10 +51,7 @@ const Notes = () => {
 
   useEffect(() => {
     searchedData();
-    if (isFetched) {
-      console.log(data.data);
-    }
-  }, [isFetched, searchVal, , data?.data]);
+  }, [isFetched, searchVal, data?.data]);
 
   // const [selectedSubject, setSelectedSubject] = useState("Chemistry");
 
@@ -106,6 +108,8 @@ const Notes = () => {
           <div className="bg-muted rounded-b-lg md:rounded-tr-lg p-8">
             <div className="grid grid-cols-[repeat(auto-fill,_minmax(200px,_1fr))] gap-4">
               {!searchedNotes ? (
+                Array.from({ length: 5 }, (_, i) => <NPCardSkeleton key={i} />)
+              ) : !searchedNotes.length > 0 ? (
                 <div className="text-center text-lg font-semibold">
                   The Notes for This Subject is not Provided yet
                 </div>

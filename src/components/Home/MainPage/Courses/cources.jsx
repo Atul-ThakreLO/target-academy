@@ -2,6 +2,7 @@ import { School } from "lucide-react";
 import React from "react";
 import CourseCard from "./course-card";
 import SectionHeader from "@/components/Utils/MainPage/section-header";
+import { cources } from "@/constants/Home/cources";
 
 const Cources = () => {
   return (
@@ -17,9 +18,9 @@ const Cources = () => {
         </div>
       </div>
       <div className="md:w-1/2 flex flex-col gap-60 items-center">
-        <CourseCard />
-        <CourseCard />
-        <CourseCard />
+        {cources.map((cource, index) => (
+          <CourseCard key={index} title={cource.title} para={cource.desc} index={index} />
+        ))}
       </div>
     </div>
   );

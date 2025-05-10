@@ -23,11 +23,11 @@ const Hero = () => {
             </Button>
           </div>
         </div>
-        <div className="md:w-1/2 w-full h-96 flex items-center justify-cente relative md:static">
+        <div className="md:w-1/2 w-full h-96 flex items-center justify-cente relative md:stati">
           <img
-            src="https://cdn.kastatic.org/images/lohp/hero_student_collage_IN_1x.png"
+            src="/Home/2.png"
             alt="img"
-            className="absolute -right-20 top-10 md:static md:right-0"
+            className="mt-12 md:mt-0 md:ml-10"
           />
         </div>
       </div>

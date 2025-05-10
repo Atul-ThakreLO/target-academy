@@ -39,7 +39,7 @@ const Nav = ({ scroller }) => {
               <TransitionNavLink href="/about">About</TransitionNavLink>
             </li>
             <li className="flex gap-2">
-              <TransitionLink href="/login">
+              <TransitionLink href="/student/login">
                 <Button variant="outline">Login</Button>
               </TransitionLink>
               <TransitionLink href="/register">

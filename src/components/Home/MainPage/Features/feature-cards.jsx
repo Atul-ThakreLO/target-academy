@@ -1,17 +1,13 @@
 import React from "react";
 
-const FeatureCards = () => {
+const FeatureCards = ({ title, para, index }) => {
   return (
-    <div className="py-6 px-4 bg-background rounded-xl border w-[400px] flex flex-col gap-4">
+    <div className="py-8 px-4 bg-background rounded-xl border flex flex-col gap-4">
       <div>
-        <span className="bg-muted p-2 rounded-lg font-extrabold">01</span>
+        <span className="bg-muted p-2 rounded-lg font-extrabold">0{index + 1}</span>
       </div>
-      <h4 className="text-xl font-semibold">Expert Faculty</h4>
-      <p className="pr-4">
-        Learn from experienced educators with proven track records in academic
-        excellence
-      </p>
-      <div className="w-full h-44"></div>
+      <h4 className="text-xl font-semibold">{title}</h4>
+      <p className="pr-4">{para}</p>
     </div>
   );
 };

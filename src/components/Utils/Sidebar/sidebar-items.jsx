@@ -11,24 +11,45 @@ import { Home } from "lucide-react";
 
 const SidebarItems = ({ title, icon, path }) => {
   const { pathname } = useLocation();
-  const { toggleSidebar } = useSidebar();
+  const { toggleSidebar, isMobile } = useSidebar();
 
   return (
     <>
-      <SidebarMenuItem title={title}>
-        <TransitionLink href={path} onClick={() => toggleSidebar()}>
-          <SidebarMenuButton
-            className="py-5"
-            isActive={pathname === path ? "true" : "false"}
-          >
-            <div className="text-base flex gap-2 items-center">
-              {icon}
-              {title}
-            </div>
-          </SidebarMenuButton>
-        </TransitionLink>
-      </SidebarMenuItem>
-      <SidebarSeparator />
+      {isMobile ? (
+        <>
+          <SidebarMenuItem title={title}>
+            <TransitionLink href={path} onClick={() => toggleSidebar()}>
+              <SidebarMenuButton
+                className="py-5"
+                isActive={pathname === path ? "true" : "false"}
+              >
+                <div className="text-base flex gap-2 items-center">
+                  {icon}
+                  {title}
+                </div>
+              </SidebarMenuButton>
+            </TransitionLink>
+          </SidebarMenuItem>
+          <SidebarSeparator />
+        </>
+      ) : (
+        <>
+          <SidebarMenuItem title={title}>
+            <TransitionLink href={path}>
+              <SidebarMenuButton
+                className="py-5"
+                isActive={pathname === path ? "true" : "false"}
+              >
+                <div className="text-base flex gap-2 items-center">
+                  {icon}
+                  {title}
+                </div>
+              </SidebarMenuButton>
+            </TransitionLink>
+          </SidebarMenuItem>
+          <SidebarSeparator />
+        </>
+      )}
     </>
   );
 };

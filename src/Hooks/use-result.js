@@ -29,6 +29,15 @@ export const useGetResult = () => {
   });
 };
 
+export const useGetHomeResult = (data) => {
+  console.log(!!data.id);
+  return useQuery({
+    queryKey: ["results", "home", data.id, data.session],
+    queryFn: () => api_methods.getRequest("home/api/v1/result", data),
+    enabled: !!data.id
+  });
+};
+
 export const useUpdateResult = (refetch) => {
   return useMutation({
     mutationFn: (data) => api_methods.putRequest("/staff/api/v1/result", data),

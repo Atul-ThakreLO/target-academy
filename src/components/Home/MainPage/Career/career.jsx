@@ -10,7 +10,7 @@ const Career = () => {
       <div className="flex flex-col md:flex-row gap-6 pb-8 md:pb-0">
         <div className="md:w-1/2 flex items-center justify-center bg-background rounded-xl pb-20 pt-14 border">
           <img
-            src="https://cdn.kastatic.org/images/lohp/hero_student_collage_IN_1x.png"
+            src="/Home/career.png"
             alt="img"
           />
         </div>

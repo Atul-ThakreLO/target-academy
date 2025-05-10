@@ -2,6 +2,7 @@ import { Flame } from "lucide-react";
 import React from "react";
 import FeatureCards from "./feature-cards";
 import SectionHeader from "@/components/Utils/MainPage/section-header";
+import { features } from "@/constants/Home/features";
 
 const Features = () => {
   return (
@@ -24,8 +25,15 @@ const Features = () => {
           }
         />
       </div>
-      <div className="mt-20">
-        <FeatureCards />
+      <div className="mt-20 grid grid-cols-[repeat(auto-fill,_minmax(350px,_1fr))] gap-4">
+        {features.map((feature, index) => (
+          <FeatureCards
+            key={index}
+            title={feature.title}
+            para={feature.desc}
+            index={index}
+          />
+        ))}
       </div>
     </>
   );
