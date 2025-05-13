@@ -11,6 +11,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import EditDeleteButtons from "../Edit-Delete/edit-delete-buttons";
 import CustomTableNP from "../../Notes-Papers-Utils/custom-table-n-p";
 import { setSelectedID } from "@/Redux/slices/secondary/papers/papers-selected-id";
+import NotesCellSkeleton from "@/components/Loaders/Staff/notes-cell-skeleton";
 
 const PapersTable = () => {
   const [open, setOpen] = useState(false);
@@ -64,8 +65,6 @@ const PapersTable = () => {
     }
   }, [mutation.isSuccess, mutation.isPaused]);
 
-  console.log(papersData);
-
   return (
     <>
       <div className="mt-5 mb-5 flex justify-between items-center px-2">
@@ -109,13 +108,20 @@ const PapersTable = () => {
         toogleActionButton={toogleDeleteButton}
         /> */}
       {!papersData ? (
-        "Loading"
+        <NotesCellSkeleton />
+      ) : !papersData.length > 0 ? (
+        <p className="text-center">No Papers Found</p>
       ) : (
         <CustomTableNP
           columns={["Title", "Subject", "Class", "Posted-BY", "Date", "Test"]}
           rows={papersData}
           // keys={Object.keys(data.data[0]).slice(2)}
-          keys={["subject.name", "class.name", "officeStaff.OfficeStaffInfo.name", "date"]}
+          keys={[
+            "subject.name",
+            "class.name",
+            "officeStaff.OfficeStaffInfo.name",
+            "date",
+          ]}
           More={EditDeleteButtons}
           selectedIDs={selectedIDs}
           setSelectedID={setSelectedID}

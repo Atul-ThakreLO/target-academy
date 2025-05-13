@@ -35,6 +35,18 @@ export const useGetTestPapers = () => {
   });
 };
 
+export const useDeleteManyNotes = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (data) =>
+      secondaryApi.postRequest("/staff/notes-delete/many", data),
+    onSuccess: (data) => {
+      toast.success("Selected Notes Deleted");
+      queryClient.invalidateQueries(["notes"]);
+    },
+  });
+};
+
 export const useGetRecentTestPapers = (limit = 5) => {
   return useQuery({
     queryKey: ["test-paper", limit],
@@ -44,7 +56,7 @@ export const useGetRecentTestPapers = (limit = 5) => {
 };
 
 export const useGetTestPaperByClass = (id, enable) => {
-  console.log(enable);
+  // console.log(enable);
   return useQuery({
     queryKey: ["test-paper", id, "class"],
     queryFn: () => api_methods.getRequest("/staff/test-paper/by/class", id),

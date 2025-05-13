@@ -8,6 +8,7 @@ import FilterNotes from "../../Notes/filter-notes";
 import { useSelector } from "react-redux";
 import { setTestsFilterData } from "@/Redux/slices/secondary/test-papers/tests-filter-data-slice";
 import { useQueryClient } from "@tanstack/react-query";
+import NotesCellSkeleton from "@/components/Loaders/Staff/notes-cell-skeleton";
 
 const TestList = () => {
   const [searchedData, setSearchedData] = useState(null);
@@ -29,6 +30,14 @@ const TestList = () => {
     setSearchVal(e.target.value);
   };
 
+  const handleDeleteMultiple = () => {};
+
+  // useEffect(() => {
+  //   if (mutation.isSuccess) {
+  //     dispatch(setSelectedID([]));
+  //   }
+  // }, [mutation.isSuccess, mutation.isPending]);
+
   const searchedFilter = () => {
     if (isFetched) {
       let arrayData = data?.data.filter((val) =>
@@ -41,24 +50,6 @@ const TestList = () => {
   useEffect(() => {
     searchedFilter();
   }, [isFetched, searchVal, filteredData, data?.data]);
-
-  // const mutation = useDeleteManyNotes();
-
-  // const handleDeleteMany = () => {
-  //   let public_ids = [];
-  //   notesData.map((data) => {
-  //     if (selectedIDs.includes(data.id)) {
-  //       public_ids.push(data.public_id);
-  //     }
-  //   });
-  //   mutation.mutate({ ids: [...selectedIDs], public_ids });
-  // };
-
-  // useEffect(() => {
-  //   if (mutation.isSuccess) {
-  //     dispatch(setSelectedID([]));
-  //   }
-  // }, [mutation.isSuccess, mutation.isPending]);
 
   return (
     <>
@@ -73,7 +64,7 @@ const TestList = () => {
         </div>
         <div>
           {selectedIDs.length > 0 && (
-            <Button variant="outline">
+            <Button variant="outline" onClick={handleDeleteMultiple}>
               <Trash /> Delete Selected
             </Button>
           )}
@@ -87,7 +78,17 @@ const TestList = () => {
           />
         </div>
       </div>
-      {!searchedData ? "Loading..." : <TsetListTable rows={searchedData} />}
+      {!searchedData ? (
+        <NotesCellSkeleton />
+      ) : !searchedData.length > 0 ? (
+        <TableRow>
+          <TableCell colSpan={7}>
+            <p className="text-center">No Marks Found</p>
+          </TableCell>
+        </TableRow>
+      ) : (
+        <TsetListTable rows={searchedData} />
+      )}
     </>
   );
 };

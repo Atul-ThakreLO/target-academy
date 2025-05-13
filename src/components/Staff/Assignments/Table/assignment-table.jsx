@@ -22,6 +22,10 @@ import { setAssignmentFilterData } from "@/Redux/slices/secondary/assignment/ass
 import { useQueryClient } from "@tanstack/react-query";
 import EditDeleteOptions from "../Edit-Delete/edit-delete-options";
 import { useSidebar } from "@/components/ui/sidebar";
+import NotesCellSkeleton from "@/components/Loaders/Staff/notes-cell-skeleton";
+import AssignmentCellSkeleton from "@/components/Loaders/Staff/assignment-cell-skeleton";
+import { Dialog, DialogTrigger } from "@/components/ui/dialog";
+import PdfPreview from "@/components/Utils/PDF/pdf-preview";
 
 const AssignmentTable = () => {
   const [searchedData, setSearchedData] = useState(null);
@@ -34,8 +38,7 @@ const AssignmentTable = () => {
     (state) => state.assignmentFilterData
   );
 
-  
-  const { open:sidebarOpen } = useSidebar();
+  const { open: sidebarOpen } = useSidebar();
 
   const { toogleAll, toogleSelect } = useTable(
     data,
@@ -114,7 +117,11 @@ const AssignmentTable = () => {
           />
         </div>
       </div>
-      <div className={`border rounded-xl mx-auto ${sidebarOpen ? "scrollable-table-open" : "scrollable-table-closed"}`}>
+      <div
+        className={`border rounded-xl mx-auto ${
+          sidebarOpen ? "scrollable-table-open" : "scrollable-table-closed"
+        }`}
+      >
         <Table>
           <TableHeader>
             <TableRow>
@@ -135,8 +142,16 @@ const AssignmentTable = () => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {!data ? (
-              <Loader2 />
+            {!searchedData ? (
+              Array.from({ length: 10 }, (_, i) => (
+                <AssignmentCellSkeleton key={i} />
+              ))
+            ) : !searchedData.length > 0 ? (
+              <TableRow>
+                <TableCell colSpan={7}>
+                  <p className="text-center">No staff Found</p>
+                </TableCell>
+              </TableRow>
             ) : (
               searchedData?.map((assi) => (
                 <TableRow>
@@ -149,7 +164,16 @@ const AssignmentTable = () => {
                   <TableCell>
                     <SheetAssignment data={assi} />
                   </TableCell>
-                  <TableCell>nvnhbjhbj</TableCell>
+                  <TableCell>
+                    <Dialog
+                    //  open={dialogState} onOpenChange={handleDialog}
+                    >
+                      <DialogTrigger className="hover:text-blue-500">
+                        View
+                      </DialogTrigger>
+                      <PdfPreview url={assi.pdf_url} />
+                    </Dialog>
+                  </TableCell>
                   <TableCell className="text-center text-nowrap">
                     <span className="bg-green-500/50 px-2 py-1 rounded-sm">
                       {assi.batch.name}
@@ -164,7 +188,9 @@ const AssignmentTable = () => {
                   <TableCell className="text-center text-nowrap">
                     {assi.staff.OfficeStaffInfo.name}
                   </TableCell>
-                  <TableCell className="text-center text-nowrap">{assi.date}</TableCell>
+                  <TableCell className="text-center text-nowrap">
+                    {assi.date}
+                  </TableCell>
                   <TableCell className="text-center text-nowrap">
                     <EditDeleteOptions data={assi} />
                   </TableCell>

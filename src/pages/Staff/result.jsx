@@ -9,11 +9,11 @@ import { useForm } from "react-hook-form";
 const Result = () => {
   const { data, isLoading } = useGetClass();
   const [query, setQuery] = useState(null);
-  const {
-    data: resultData,
-    isLoading: resultLoading,
-    isSuccess: resultSuccess,
-  } = useGetResult();
+  // const {
+  //   data: resultData,
+  //   isLoading: resultLoading,
+  //   isSuccess: resultSuccess,
+  // } = useGetResult();
   const {
     handleSubmit,
     formState: { errors },
@@ -21,7 +21,6 @@ const Result = () => {
   } = useForm();
 
   const onSubmit = (data) => {
-    console.log(data);
     setQuery(data);
   };
 
@@ -39,8 +38,8 @@ const Result = () => {
         </h6>
       </div>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="flex justify-between md:justify-around items-center mt-5">
-          <div>
+        <div className="flex justify-between items-center mt-5 md:w-[80%] mx-auto gap-4">
+          <div className="w-full">
             <SelectField
               control={control}
               name={"class_id"}
@@ -51,7 +50,7 @@ const Result = () => {
               isLoading={isLoading}
             />
           </div>
-          <div>
+          <div className="w-full">
             <SelectField
               control={control}
               name={"session"}
@@ -66,7 +65,7 @@ const Result = () => {
             />
           </div>
           <div>
-            <Button>Submit</Button>
+            <Button className="mt-5">Submit</Button>
           </div>
         </div>
       </form>

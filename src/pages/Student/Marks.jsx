@@ -9,17 +9,13 @@ const Marks = () => {
   const { data, isLoading, isFetched } = useGetMarksForStudent();
   return (
     <ScrollArea className="h-[95vh]">
-      {isLoading ? (
-        <div className="w-full h-screen grid place-items-center">
-          <Loader2 size={30} className="animate-spin" />
-        </div>
-      ) : (
-        <>
-          <MarksTable data={data?.data} />
-          <h5 className="text-4xl mt-20  font-medium">Graphical Representation</h5>
-          <Chart />
-        </>
-      )}
+      <>
+        <MarksTable data={data?.data} isLoading={isLoading} />
+        <h5 className="text-4xl mt-20  font-medium">
+          Graphical Representation
+        </h5>
+        <Chart />
+      </>
     </ScrollArea>
   );
 };

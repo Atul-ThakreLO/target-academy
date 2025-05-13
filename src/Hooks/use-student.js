@@ -18,6 +18,8 @@ export const useGetStudentById = (id = 1) => {
     queryKey: ["student", student?.id],
     queryFn: () => studentApi.getStudent("/student"),
     retry: 2,
+    refetchOnWindowFocus: false,
+    refetchOnMount: false,
   });
 };
 
@@ -134,11 +136,15 @@ export const useUpdateStudentDP = (id) => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (data) =>
-      api_methods.postRequest(`/student/v1/api/update/profile-picture/${id}`, data, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }),
+      api_methods.postRequest(
+        `/student/v1/api/update/profile-picture/${id}`,
+        data,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      ),
     onSuccess: (data) => {
       queryClient.invalidateQueries(["student", data.data.id]);
     },

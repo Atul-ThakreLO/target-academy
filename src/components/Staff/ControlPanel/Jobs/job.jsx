@@ -18,6 +18,7 @@ const Job = () => {
     register,
     control,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm({
     defaultValues: {
@@ -46,6 +47,7 @@ const Job = () => {
 
   useEffect(() => {
     if (mutation.isSuccess) {
+      reset();
       setAdd(false);
     }
   }, [mutation.isSuccess]);
@@ -93,7 +95,10 @@ const Job = () => {
               control={control}
               name={"role"}
               placeholder={"Role"}
-              selectItems={["TEACHER", "MANAGEMENT"]}
+              selectItems={[
+                { id: "TEACHER", name: "TEACHER" },
+                { id: "MANAGEMENT", name: "MANAGEMENT" },
+              ]}
               label={"Select Role"}
               error={errors.role}
             />
@@ -147,9 +152,7 @@ const Job = () => {
               {mutation.isPending ? (
                 <Loader className="animate-spin" />
               ) : (
-                <>
-                  <Plus /> Add New
-                </>
+                <>Create</>
               )}
             </Button>
           </div>

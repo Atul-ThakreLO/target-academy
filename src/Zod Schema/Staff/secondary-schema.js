@@ -8,7 +8,7 @@ export const ClassSchema = z.object({
   name: z.string().min(1, "School Name can't be Empty"),
 });
 
-const MAX_FILE_SIZE = 3 * 1024 * 1024;
+const MAX_FILE_SIZE = 10 * 1024 * 1024;
 const ACCEPTED_FILE_TYPES = ["application/pdf"];
 
 export const NotesSchema = z.object({
@@ -19,7 +19,7 @@ export const NotesSchema = z.object({
     .instanceof(File)
     .refine((file) => {
       return file.size <= MAX_FILE_SIZE;
-    }, `Max file size is 3MB.`)
+    }, `Max file size is 10MB.`)
     .refine(
       (file) => ACCEPTED_FILE_TYPES.includes(file.type),
       "Only PDF formats are supported"
@@ -35,7 +35,7 @@ export const PaperSchema = z.object({
     .instanceof(File)
     .refine((file) => {
       return file.size <= MAX_FILE_SIZE;
-    }, `Max file size is 3MB.`)
+    }, `Max file size is 10MB.`)
     .refine(
       (file) => ACCEPTED_FILE_TYPES.includes(file.type),
       "Only PDF formats are supported"

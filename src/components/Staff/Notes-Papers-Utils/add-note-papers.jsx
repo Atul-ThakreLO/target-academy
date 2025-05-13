@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { FileText, Loader, Upload, X } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -21,6 +21,9 @@ const AddNotesPapers = ({ type, add, mutation }) => {
   const [dragOver, setDragOver] = useState(false);
   const [file, setFile] = useState(null);
   const [fileUrl, setFileUrl] = useState(null);
+
+  const inputFileRef = useRef(null);
+
   const {
     register,
     handleSubmit,
@@ -64,6 +67,13 @@ const AddNotesPapers = ({ type, add, mutation }) => {
     setFileUrl(URL.createObjectURL(e.target.files[0]));
   };
 
+  const handleClear = () => {
+    inputFileRef.current.value = "";
+    setValue("file", "");
+    setFile(null);
+    setFileUrl(null);
+  };
+
   const setClassValue = (val) => {
     setClassID(val);
   };
@@ -74,6 +84,7 @@ const AddNotesPapers = ({ type, add, mutation }) => {
 
   useEffect(() => {
     if (mutation.isSuccess) {
+      inputFileRef.current.value = "";
       setFile(null);
       setFileUrl(null);
       reset();
@@ -82,56 +93,59 @@ const AddNotesPapers = ({ type, add, mutation }) => {
 
   return (
     <form className="mt-5" onSubmit={handleSubmit(onSubmit)}>
-      {file ? (
-        <div>
-          <div className="border shadow-md p-2 rounded-lg flex gap-2 max-w-96">
-            <div>
-              <FileText size={50} />
-            </div>
-            <div>
-              <Dialog>
-                <DialogTrigger className="hover:text-blue-500 text-left">
-                  {file.name}
-                </DialogTrigger>
-                <PdfPreview url={fileUrl} />
-              </Dialog>
-              <Separator />
-              <p className="line-clamp-2">{file.type}</p>
-            </div>
+      <div className={`flex w-full ${file ? "block" : "hidden"}`}>
+        <div className="border shadow-md p-2 rounded-lg flex gap-2 max-w-96">
+          <div>
+            <FileText size={50} />
+          </div>
+          <div>
+            <Dialog>
+              <DialogTrigger className="hover:text-blue-500 text-left">
+                {file?.name}
+              </DialogTrigger>
+              <PdfPreview url={fileUrl} />
+            </Dialog>
+            <Separator />
+            <p className="line-clamp-2">{file?.type}</p>
           </div>
         </div>
-      ) : (
-        <div className="w-full">
-          <div
-            className={`w-[70%] h-48 mx-auto border-2 border-dashed ${
-              dragOver ? "border-green-500 bg-green-100/50" : ""
-            } ${
-              errors.file ? "border-red-500 bg-red-100/50 " : ""
-            } rounded-xl flex flex-col justify-center items-center cursor-pointer`}
-            onClick={() => document.getElementById("file").click()}
-            onDragOver={handleDragOver}
-            onDragLeave={handleDragRmove}
-            onDrop={handleDrop}
-          >
-            <Upload size={70} />
-            <p>Drag And Drop || Click to select</p>
-          </div>
-          <Input
-            type="file"
-            id="file"
-            className="hidden"
-            onChange={handleFileChange}
-          />
+        <Button type="button" variant="ghost" onClick={handleClear}>
+          <X />
+        </Button>
+      </div>
+
+      <div className={`w-full ${file ? "hidden" : "block"}`}>
+        <div
+          className={`w-[70%] h-48 mx-auto border-2 border-dashed ${
+            dragOver ? "border-green-500 bg-green-100/50" : ""
+          } ${
+            errors.file ? "border-red-500 bg-red-100/50 " : ""
+          } rounded-xl flex flex-col justify-center items-center cursor-pointer`}
+          onClick={() => inputFileRef.current.click()}
+          onDragOver={handleDragOver}
+          onDragLeave={handleDragRmove}
+          onDrop={handleDrop}
+        >
+          <Upload size={70} />
+          <p>Drag And Drop || Click to select</p>
         </div>
-      )}
+        <Input
+          ref={inputFileRef}
+          type="file"
+          id="file"
+          className="hidden"
+          accept=".pdf"
+          onChange={handleFileChange}
+        />
+      </div>
 
       {errors.file ? (
         <p className="text-center text-red-500">{errors.file.message}</p>
       ) : (
         ""
       )}
-      <div className="mt-10 flex justify-between items-center px-12">
-        <div className="">
+      <div className="mt-10 flex justify-between gap-5 items-center px-12">
+        <div className="w-full">
           <InputField
             label={"File Title"}
             type={"text"}
@@ -141,8 +155,9 @@ const AddNotesPapers = ({ type, add, mutation }) => {
             error={errors.title}
           />
         </div>
-        <div>
+        <div className="w-full">
           <SelectField
+          className={"w-full"}
             control={control}
             name={"class_id"}
             placeholder={"Select Class"}
@@ -153,7 +168,7 @@ const AddNotesPapers = ({ type, add, mutation }) => {
             setValue={setClassValue}
           />
         </div>
-        <div>
+        <div className="w-full">
           <SelectField
             control={control}
             name={"subject_id"}
@@ -180,7 +195,7 @@ const AddNotesPapers = ({ type, add, mutation }) => {
             </Select>
           </div>
         )} */}
-        <Button disabled={mutation.isPending}>
+        <Button className="md:mt-5 w-56" disabled={mutation.isPending}>
           {mutation.isPending ? <Loader className="animate-spin" /> : "Add"}
         </Button>
       </div>

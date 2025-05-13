@@ -34,7 +34,7 @@ class api_methods {
         }
       }
     } catch (error) {
-      console.error(error);
+      // console.error(error);
       if (error.message === "Network Error") {
         toast.error(error.message);
       }

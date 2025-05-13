@@ -25,7 +25,7 @@ import {
   Search,
   X,
 } from "lucide-react";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { dueStatus } from "./due-status";
 import {
   useGetAssignmentsForStudent,
@@ -38,6 +38,8 @@ import PdfPreview from "@/components/Utils/PDF/pdf-preview";
 import SubmitAssignments from "./submit-assignments";
 import { useQueryClient } from "@tanstack/react-query";
 import { useSidebar } from "@/components/ui/sidebar";
+import AssignmentRowSkeleton from "@/components/Loaders/Student/assignment-row-skeleton";
+import { toast } from "react-toastify";
 
 const AssignmentsList = () => {
   const [subject, setSubject] = useState("");
@@ -46,10 +48,14 @@ const AssignmentsList = () => {
   const [searchedAssi, setSearchedAssi] = useState("");
   const { open } = useSidebar();
 
-  const { data, isLoading, isSuccess, isFetched } = useGetAssignmentsForStudent(
-    student.StudentInfo.batch_id,
-    subject
-  );
+  const { data, isLoading, isSuccess, isFetched, isError, error } =
+    useGetAssignmentsForStudent(student.StudentInfo.batch_id, subject);
+
+  // useMemo(() => {
+  //   if (isError) {
+  //     // toast.error(error.response.data.message);
+  //   }
+  // }, [isLoading, isError]);
 
   const mutation = useUnSubmitAssignment();
 
@@ -75,11 +81,11 @@ const AssignmentsList = () => {
     searchedData();
   }, [isFetched, searchVal, , data?.data]);
 
-  useEffect(() => {
-    if (isSuccess) {
-      console.log(data?.data);
-    }
-  }, [isLoading, isSuccess]);
+  // useEffect(() => {
+  //   if (isSuccess) {
+  //     console.log(data?.data);
+  //   }
+  // }, [isLoading, isSuccess]);
   return (
     <div>
       <div>
@@ -94,7 +100,7 @@ const AssignmentsList = () => {
                   <SelectGroup>
                     <SelectLabel>Subjects</SelectLabel>
                     {student.StudentSubjects.map((s) => (
-                      <SelectItem value={s.subject.id}>
+                      <SelectItem key={s.subject.id} value={s.subject.id}>
                         {s.subject.name}
                       </SelectItem>
                     ))}
@@ -127,7 +133,11 @@ const AssignmentsList = () => {
             </div>
           </div>
         </div>
-        <div className={`bg-muted rounded-b-lg md:rounded-tr-lg p-2 md:p-8 ${open ? "scrollable-table-open" : "scrollable-table-closed"}`}>
+        <div
+          className={`bg-muted rounded-b-lg md:rounded-tr-lg p-2 md:p-8 ${
+            open ? "scrollable-table-open" : "scrollable-table-closed"
+          }`}
+        >
           <div className="border rounded-xl">
             <Table>
               <TableHeader>
@@ -141,34 +151,22 @@ const AssignmentsList = () => {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {/* <TableRow>
-                  <TableCell className="text-center">
-                    This the Assignment-1
-                  </TableCell>
-                  <TableCell className="text-center">
-                    <Package2 />
-                  </TableCell>
-                  <TableCell>Chemistry</TableCell>
-                  <TableCell>12-04-2025</TableCell>
-                  <TableCell>{dueStatus("2025-04-15T18:30:00.000Z")}</TableCell>
-                  <TableCell className="flex justify-end gap-2">
-                    <p className="flex gap-1 items-center text-green-500">
-                      <span>
-                        <CircleCheck size={17} />
-                      </span>
-                      <span>Completed</span>
-                    </p>
-                    <Button variant="outline">View</Button>
-                    <Button variant="outline">
-                      <CircleAlert /> UnSubmit
-                    </Button>
-                  </TableCell>
-                </TableRow> */}
                 {!searchedAssi ? (
-                  <Loader2 className="animate-spin" />
+                  Array.from({ length: 6 }, (_, i) => (
+                    <AssignmentRowSkeleton key={i} />
+                  ))
+                ) : !searchedAssi.length > 0 ? (
+                  <TableRow>
+                    <TableCell
+                      colSpan={6}
+                      className="text-center text-xl font-medium py-10"
+                    >
+                      Assignments are not available or given
+                    </TableCell>
+                  </TableRow>
                 ) : (
                   searchedAssi.map((assi) => (
-                    <TableRow>
+                    <TableRow key={assi.title}>
                       <TableCell className="text-center">
                         {assi.title}
                       </TableCell>
@@ -204,7 +202,7 @@ const AssignmentsList = () => {
                                   View
                                 </Button>
                               </DialogTrigger>
-                              <PdfPreview url={assi.pdf_url} />
+                              <PdfPreview url={assi.completedAssignment[0].pdf_url} />
                             </Dialog>
                             <Button
                               variant="outline"

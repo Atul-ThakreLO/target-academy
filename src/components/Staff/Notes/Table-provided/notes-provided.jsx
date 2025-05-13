@@ -10,6 +10,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { setProvidedNotesFilterData } from "@/Redux/slices/secondary/notes/provided-notes-filter-data";
 import ProvidedCustomTable from "./provided-custom-table";
 import { setSelectedID } from "@/Redux/slices/secondary/notes/provided-selected-id-slice";
+import NotesCellSkeleton from "@/components/Loaders/Staff/notes-cell-skeleton";
 
 const NotesProvided = () => {
   const [searchedData, setSearchedData] = useState(null);
@@ -83,7 +84,7 @@ const NotesProvided = () => {
           <Search className="absolute top-1/2 left-0 -translate-y-1/2 translate-x-1/2" />
         </div>
         <div>
-          {selectedIDs.length > 0 && (
+          {selectedIDs?.length > 0 && (
             <Button variant="ghost" onClick={handleUnprovideMany}>
               <Trash /> UnProvide Selected
             </Button>
@@ -98,7 +99,9 @@ const NotesProvided = () => {
         </div>
       </div>
       {!searchedData ? (
-        "Loading"
+        <NotesCellSkeleton />
+      ) : !searchedData.length > 0 ? (
+        <p className="text-center">No Notes Found</p>
       ) : (
         <ProvidedCustomTable
           columns={["Title", "Batch", "Class", "Date"]}

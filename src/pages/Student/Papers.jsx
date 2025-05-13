@@ -1,6 +1,6 @@
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useSidebar } from "@/components/ui/sidebar";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import {
   Select,
   SelectContent,
@@ -18,6 +18,7 @@ import { Button } from "@/components/ui/button";
 import { useQueryClient } from "@tanstack/react-query";
 import { useGetPapersForStudent } from "@/Hooks/use-papers";
 import NPCardSkeleton from "@/components/Loaders/Student/np-card-skeleton";
+import { toast } from "react-toastify";
 
 const Papers = () => {
   const [subject, setSubject] = useState("");
@@ -26,11 +27,17 @@ const Papers = () => {
   const [searchVal, setSearchVal] = useState("");
   const [searchedPapers, setSearchedPapers] = useState("");
 
-  const { data, isFetched } = useGetPapersForStudent(
+  const { data, isFetched, isLoading, isError, error } = useGetPapersForStudent(
     student.StudentInfo.class_id,
     subject,
     session
   );
+
+  useMemo(() => {
+    if (isError) {
+      toast.error(error.response.data.message);
+    }
+  }, [isLoading, isError]);
 
   const queryClient = useQueryClient();
   useEffect(() => {
@@ -49,10 +56,6 @@ const Papers = () => {
   useEffect(() => {
     searchedData();
   }, [isFetched, searchVal, , data?.data]);
-
-  // const [selectedSubject, setSelectedSubject] = useState("Chemistry");
-
-  // const filtered = pdfs.filter((pdf) => pdf.subject === selectedSubject);
 
   return (
     <ScrollArea className="h-[95vh]">

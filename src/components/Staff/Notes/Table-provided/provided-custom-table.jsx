@@ -39,7 +39,7 @@ const ProvidedCustomTable = ({ columns, rows = {}, More }) => {
           <TableRow>
             <TableHead className="border-r">
               <Checkbox
-                checked={selectedIDs.length === rows?.length}
+                checked={selectedIDs?.length === rows?.length}
                 onCheckedChange={() => toogleAll()}
               />
             </TableHead>
@@ -56,7 +56,7 @@ const ProvidedCustomTable = ({ columns, rows = {}, More }) => {
             <TableRow key={row.id}>
               <TableCell className="border-r">
                 <Checkbox
-                  checked={selectedIDs.includes(row.id)}
+                  checked={selectedIDs?.includes(row.id)}
                   onCheckedChange={() => toogleSelect(row.id)}
                 />
               </TableCell>

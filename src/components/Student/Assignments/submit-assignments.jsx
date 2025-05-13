@@ -5,11 +5,12 @@ import { Label } from "@/components/ui/label";
 import PdfPreview from "@/components/Utils/PDF/pdf-preview";
 import { useSubmitAssignment } from "@/Hooks/use-assignment";
 import { Loader2, Upload, X } from "lucide-react";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 
 const SubmitAssignments = ({ assiID }) => {
   const [fileUrl, setFileUrl] = useState(null);
+  const inputRef = useRef(null);
 
   const {
     handleSubmit,
@@ -17,14 +18,20 @@ const SubmitAssignments = ({ assiID }) => {
     formState: { errors },
   } = useForm();
 
+  const handleClick = () => {
+    inputRef.current.click();
+  };
+
   const handleFileChange = (e) => {
     if (e.target.files[0]) {
+      console.log(e.target.files[0]);
       setValue("file", e.target.files[0]);
       setFileUrl(URL.createObjectURL(e.target.files[0]));
     }
   };
 
   const handleClear = () => {
+    inputRef.current.value = "";
     setValue("file", null);
     setFileUrl(null);
   };
@@ -32,12 +39,13 @@ const SubmitAssignments = ({ assiID }) => {
   const mutation = useSubmitAssignment();
 
   const onSubmit = (data) => {
-    console.log({ ...data, assi_id: assiID });
-    mutation.mutate({...data, assi_id: assiID})
+    // console.log({ ...data, assi_id: assiID });
+    mutation.mutate({ ...data, assi_id: assiID });
   };
 
   useEffect(() => {
     if (mutation.isSuccess) {
+      inputRef.current.value = "";
       setValue("file", null);
       setFileUrl(null);
     }
@@ -46,6 +54,7 @@ const SubmitAssignments = ({ assiID }) => {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Input
+        ref={inputRef}
         type="file"
         name="file"
         className="hidden"
@@ -82,10 +91,10 @@ const SubmitAssignments = ({ assiID }) => {
           </Button>
         </div>
       ) : (
-        <Button variant="outline" type="button">
-          <Label htmlFor="assi-upload" className="flex gap-2 ">
-            <Upload /> Add work
-          </Label>
+        <Button variant="outline" type="button" onClick={handleClick}>
+          {/* <Label htmlFor="assi-upload" className="flex gap-2 "> */}
+          <Upload /> Add work
+          {/* </Label> */}
         </Button>
       )}
     </form>

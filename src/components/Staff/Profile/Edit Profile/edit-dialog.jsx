@@ -10,6 +10,8 @@ import {
 } from "@/components/ui/dialog";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useUpdateStaff } from "@/Hooks/use-staff";
+import { staffEditSchema } from "@/Zod Schema/Staff/staff-edit-schema";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Edit } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -22,6 +24,7 @@ const EditDialog = ({ defaultValue }) => {
     control,
     formState: { errors },
   } = useForm({
+    resolver: zodResolver(staffEditSchema),
     defaultValues: {
       email: defaultValue?.email,
       name: defaultValue?.OfficeStaffInfo.name,
@@ -35,7 +38,7 @@ const EditDialog = ({ defaultValue }) => {
   const mutation = useUpdateStaff();
 
   const onSubmit = (data) => {
-    console.log(data);
+    // console.log(data);
     mutation.mutate({ ...data, id: defaultValue.id });
   };
 

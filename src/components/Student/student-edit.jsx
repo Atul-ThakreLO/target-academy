@@ -22,11 +22,14 @@ import { useGetSchool } from "@/Hooks/use-school";
 import { useGetBatchByClass } from "@/Hooks/use-batch";
 import { Checkbox } from "../ui/checkbox";
 import { useUpdateStudent } from "@/Hooks/use-student";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { studentEditSchema } from "@/Zod Schema/Student/student-edit-schema";
 
 const StudentEdit = ({ className }) => {
   const [open, setOpen] = useState(false);
   const { student } = useSelector((state) => state.authStudent);
   const [classID, setClassID] = useState(student.StudentInfo.class_id);
+  const [batchID, setBatchID] = useState(student.StudentInfo.batch_id);
   const { data: classData, isLoading: classLOading } = useGetClass(open);
   const { data: schoolData, isLoading: schoolLoading } = useGetSchool();
   const { data: subjectData, isLoading: subjectLoading } =
@@ -35,28 +38,48 @@ const StudentEdit = ({ className }) => {
     classID,
     open
   );
+
+  const schema = studentEditSchema(student, batchID, classID);
+
   const {
     register,
     handleSubmit,
+    setValue,
     control,
     formState: { errors },
   } = useForm({
+    resolver: zodResolver(schema),
     defaultValues: {
       student_name: student.StudentInfo.student_name,
       mobile: student.StudentInfo.mobile,
       school_id: student.StudentInfo.school_id,
       class_id: student.StudentInfo.class_id,
+      batch_id: student.StudentInfo.batch_id,
       subjects: student.StudentSubjects.map((s) => s.subject.id),
     },
   });
+
+  useEffect(() => {
+    if (classID !== student.StudentInfo.class_id) {
+      setValue("subjects", []);
+      setValue("batch_id", "");
+    } else {
+      setValue(
+        "subjects",
+        student.StudentSubjects.map((s) => s.subject.id)
+      );
+      setValue("batch_id", student.StudentInfo.batch_id);
+    }
+  }, [classID]);
 
   // const s = student.StudentSubjects.map((s) => s.subject.id);
   // console.log(s);
   const mutation = useUpdateStudent();
 
+  // console.log(student.StudentSubjects[0].subject.id);
   const onSubmit = (data) => {
     mutation.mutate(data);
-    console.log(data);
+    // console.log(data);
   };
 
   useEffect(() => {
@@ -102,7 +125,7 @@ const StudentEdit = ({ className }) => {
                     label={"Mobile"}
                     id={"mobile"}
                     type={"text"}
-                    error={errors.student_name}
+                    error={errors.mobile}
                   />
                 </div>
                 <div className="flex flex-col space-y-1.5">
@@ -137,6 +160,7 @@ const StudentEdit = ({ className }) => {
                     placeholder={"Batch"}
                     label={"Select Batch"}
                     isLoading={batchLoading}
+                    setValue={setBatchID}
                   />
                 </div>
               </div>
@@ -144,7 +168,7 @@ const StudentEdit = ({ className }) => {
                 (subjectLoading ? (
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                 ) : (
-                  <>
+                  <div className="mt-5">
                     <Controller
                       control={control}
                       name="subjects"
@@ -154,7 +178,7 @@ const StudentEdit = ({ className }) => {
                           return (
                             <div
                               key={subject.id}
-                              className="flex items-center space-x-2 my-1"
+                              className="flex items-center space-x-2 my-2"
                             >
                               <Checkbox
                                 id={subject.id}
@@ -177,7 +201,7 @@ const StudentEdit = ({ className }) => {
                     {errors.subjects && (
                       <p className="text-red-500">{errors.subjects.message}</p>
                     )}
-                  </>
+                  </div>
                 ))}
             </form>
           </div>

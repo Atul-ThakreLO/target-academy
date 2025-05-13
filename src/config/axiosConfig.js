@@ -1,4 +1,5 @@
 import axios from "axios";
+import { toast } from "react-toastify";
 
 export const axiosInstance = axios.create({
   baseURL: "http://localhost:3000/",
@@ -24,7 +25,8 @@ axiosInstance.interceptors.request.use(
 axiosInstance.interceptors.response.use(
   (response) => response,
   (error) => {
-    console.error(error);
+    toast.error(error.response.data.message);
+    console.log(error);
     throw error;
   }
 );

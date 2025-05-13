@@ -9,9 +9,9 @@ import {
 import React from "react";
 import TableProfile from "@/components/Utils/Staff-Main/table-profile";
 import { Loader2 } from "lucide-react";
+import StudentCellSkeleton from "@/components/Loaders/Staff/student-cell-skeleton";
 
 const StudentsTable = ({ data }) => {
-  console.log(data);
   return (
     <Table>
       <TableHeader>
@@ -26,7 +26,13 @@ const StudentsTable = ({ data }) => {
       </TableHeader>
       <TableBody>
         {!data ? (
-          <Loader2 />
+          Array.from({ length: 10 }, (_, i) => <StudentCellSkeleton key={i} />)
+        ) : !data.length > 1 ? (
+          <TableRow>
+            <TableCell colSpan={6}>
+              <p className="text-center">No Student Found</p>
+            </TableCell>
+          </TableRow>
         ) : (
           data.map((student) => (
             <TableRow>
@@ -54,7 +60,9 @@ const StudentsTable = ({ data }) => {
               <TableCell>
                 <div className="w-max mx-auto">
                   <span className="px-3 py-1 bg-blue-400/40 rounded-sm">
-                    {student.StudentInfo.batches?.name ? student.StudentInfo.batches?.name : "Not Updated"}
+                    {student.StudentInfo.batches?.name
+                      ? student.StudentInfo.batches?.name
+                      : "Not Updated"}
                   </span>
                 </div>
               </TableCell>

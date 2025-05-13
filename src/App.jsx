@@ -12,7 +12,7 @@ function App() {
   const queryClient = new QueryClient();
 
   return (
-    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+    <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
       <Provider store={store}>
         <ToastContainer
           position="top-center"

@@ -13,33 +13,6 @@ const NotesStaff = () => {
   const [provide, setProvide] = useState(false);
   const [tableTab, setTableTab] = useState("All");
 
-  const notes = [
-    {
-      id: 1,
-      title: "nvj$$EWV JY*&^*%$ZIU LOIU$^%R^",
-      subject: "Chemistry",
-      class: "12th",
-      posted_by: "Teacher Name",
-      date: "01-02-2025",
-    },
-    {
-      id: 2,
-      title: "nvj$$EWV JY*&^*%$ZIU LOIU$^%R^",
-      subject: "Chemistry",
-      class: "12th",
-      posted_by: "Teacher Name",
-      date: "01-02-2025",
-    },
-    {
-      id: 3,
-      title: "nvj$$EWV JY*&^*%$ZIU LOIU$^%R^",
-      subject: "Chemistry",
-      class: "12th",
-      posted_by: "Teacher Name",
-      date: "01-02-2025",
-    },
-  ];
-
   const mutation = useAddNotes();
 
   const updateTab = (value) => {

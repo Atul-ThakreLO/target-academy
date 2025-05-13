@@ -15,7 +15,7 @@ import { useSelector } from "react-redux";
 const ClassCard = ({ data }) => {
   const mutation = useDeleteClass();
 
-  const statusMutation = useActiveInActive("class");
+  const statusMutation = useActiveInActive("class", ["class"]);
 
   const handleDelete = () => {
     mutation.mutate(data.id);
@@ -75,9 +75,11 @@ const ClassCard = ({ data }) => {
           {data.name}
         </h6>
       </div>
-      <div className={`w-full h-2 bg-foreground/40 rounded-full shadow-sm ${
+      <div
+        className={`w-full h-2 bg-foreground/40 rounded-full shadow-sm ${
           data.isActive ? "shadow-green-500" : "shadow-red-500"
-        } `}></div>
+        } `}
+      ></div>
     </div>
   );
 };

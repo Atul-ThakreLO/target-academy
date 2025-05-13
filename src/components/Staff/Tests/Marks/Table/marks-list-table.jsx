@@ -3,6 +3,7 @@ import { Input } from "@/components/ui/input";
 import {
   Table,
   TableBody,
+  TableCell,
   TableHead,
   TableHeader,
   TableRow,
@@ -16,6 +17,7 @@ import { useDispatch } from "react-redux";
 import { setTopper } from "@/Redux/slices/secondary/test-papers/topper-profile";
 import { useSidebar } from "@/components/ui/sidebar";
 import { useAddUpdateTotalMarks } from "@/Hooks/use-test-paper";
+import TestMarksCellSkeleton from "@/components/Loaders/Staff/test-marks-cell-skeleton";
 
 const MarksListTable = ({ id, totalMarks }) => {
   const [edit, setEdit] = useState(false);
@@ -150,7 +152,13 @@ const MarksListTable = ({ id, totalMarks }) => {
           </TableHeader>
           <TableBody>
             {isLoading ? (
-              <Loader className="animate-spin" />
+              Array.from({ length: 10 }, (_, i) => <TestMarksCellSkeleton key={i} />)
+            ) : !searchedData?.length > 0 ? (
+              <TableRow>
+                <TableCell colSpan={7}>
+                  <p className="text-center">No Marks given Found</p>
+                </TableCell>
+              </TableRow>
             ) : (
               searchedData?.map((student, index) => (
                 <MarksRow

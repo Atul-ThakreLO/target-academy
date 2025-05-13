@@ -31,6 +31,7 @@ const FilterStudent = ({ isRefetching, setFilterData }) => {
     defaultValues: {
       class_id: "",
       subject_id: "",
+      school_id: "",
       batch_id: "",
     },
   });

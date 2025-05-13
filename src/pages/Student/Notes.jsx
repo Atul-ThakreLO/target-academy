@@ -1,5 +1,5 @@
 import { ScrollArea } from "@/components/ui/scroll-area";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import {
   Select,
   SelectContent,
@@ -17,6 +17,7 @@ import { useSelector } from "react-redux";
 import { Button } from "@/components/ui/button";
 import { useQueryClient } from "@tanstack/react-query";
 import NPCardSkeleton from "@/components/Loaders/Student/np-card-skeleton";
+import { toast } from "react-toastify";
 
 const Notes = () => {
   const [subject, setSubject] = useState("");
@@ -24,16 +25,16 @@ const Notes = () => {
   const [searchVal, setSearchVal] = useState("");
   const [searchedNotes, setSearchedNotes] = useState("");
 
-  const { data, isFetched } = useGetNotesForStudent(
+  const { data, isLoading, isFetched, isError, error } = useGetNotesForStudent(
     student.StudentInfo.batch_id,
     subject
   );
 
-  useEffect(() => {
-    if (isFetched) {
-      console.log(data?.data);
+  useMemo(() => {
+    if (isError) {
+      toast.error(error.response.data.message);
     }
-  }, [isFetched, data]);
+  }, [isLoading, isError]);
 
   const queryClient = useQueryClient();
   useEffect(() => {

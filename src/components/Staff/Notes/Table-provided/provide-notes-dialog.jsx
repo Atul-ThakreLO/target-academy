@@ -19,7 +19,8 @@ import {
 } from "@/components/ui/select";
 import { useGetBatchAll } from "@/Hooks/use-batch";
 import { useProvideNotes } from "@/Hooks/use-notes";
-import { setSelectedID } from "@/Redux/slices/secondary/notes/table-row-ids";
+import { setSelectedID } from "@/Redux/slices/secondary/notes/notes-id-slice";
+// import { setSelectedID } from "@/Redux/slices/secondary/notes/table-row-ids";
 import { Loader } from "lucide-react";
 import React, { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
@@ -27,7 +28,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 const ProvideNotesDialog = ({ name = "batch_id" }) => {
   const { data, isLoading } = useGetBatchAll();
-  const { selectedIDs } = useSelector((state) => state.tableRowIDs);
+  const { selectedIDs } = useSelector((state) => state.notesSelectedID);
   const mutation = useProvideNotes();
   const dispatch = useDispatch();
 
@@ -37,13 +38,15 @@ const ProvideNotesDialog = ({ name = "batch_id" }) => {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      note_id: selectedIDs,
+      // note_id: [...selectedIDs],
       batch_id: "",
     },
   });
 
   const onSubmit = (data) => {
-    mutation.mutate(data);
+    console.log({ note_id: [...selectedIDs], ...data });
+
+    mutation.mutate({ note_id: [...selectedIDs], ...data });
   };
 
   useEffect(() => {

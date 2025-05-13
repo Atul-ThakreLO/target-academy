@@ -15,6 +15,7 @@ const Assignments = () => {
           </p>
         </div>
         <div>
+          
           <AssignmentsList />
         </div>
       </section>

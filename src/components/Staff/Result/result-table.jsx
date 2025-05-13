@@ -3,6 +3,7 @@ import { Input } from "@/components/ui/input";
 import {
   Table,
   TableBody,
+  TableCell,
   TableHead,
   TableHeader,
   TableRow,
@@ -15,13 +16,16 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import MarksCell from "./marks-row";
 import { useSidebar } from "@/components/ui/sidebar";
+import ResultCellSkeleton from "@/components/Loaders/Staff/result-cell-skeleton";
 
 const ResultTable = ({ query }) => {
   const [searchVal, setSearchVal] = useState("");
   const [resultsData, setResultsData] = useState(null);
-  const { data, isLoading, isSuccess, refetch } = useGetStudents(query);
   const { selectedIDs } = useSelector((state) => state.resultSelectedID);
   const { open } = useSidebar();
+
+  const { data, isLoading, isSuccess, refetch } = useGetStudents(query);
+
   const { toogleAll, toogleSelect } = useTable(
     data?.data,
     selectedIDs,
@@ -51,7 +55,9 @@ const ResultTable = ({ query }) => {
   const searchResult = () => {
     if (isSuccess) {
       let results = data?.data.filter((result) =>
-        result.StudentInfo.student_name.toLowerCase().includes(searchVal.toLowerCase())
+        result.StudentInfo.student_name
+          .toLowerCase()
+          .includes(searchVal.toLowerCase())
       );
       setResultsData(results);
     }
@@ -88,7 +94,11 @@ const ResultTable = ({ query }) => {
           ""
         )}
       </div>
-      <div className={`border rounded-xl mt-5  mx-auto ${open ? "scrollable-table-open" : "scrollable-table-closed"}`}>
+      <div
+        className={`border rounded-xl mt-5  mx-auto ${
+          open ? "scrollable-table-open" : "scrollable-table-closed"
+        }`}
+      >
         <Table>
           <TableHeader>
             <TableRow>
@@ -105,8 +115,14 @@ const ResultTable = ({ query }) => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            { !data?.data ? "" : !resultsData ? (
-              <Loader2 className="animate-spin" />
+            {isLoading ? (
+              <ResultCellSkeleton />
+            ) : !resultsData?.length > 0 ? (
+              <TableRow>
+                <TableCell colSpan={5}>
+                  <p className="text-center text-lg font-medium my-5">Not Fetched, or Matched</p>
+                </TableCell>
+              </TableRow>
             ) : (
               resultsData.map((student) => (
                 <MarksCell

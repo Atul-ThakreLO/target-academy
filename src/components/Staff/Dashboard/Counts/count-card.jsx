@@ -10,7 +10,12 @@ const CountCard = ({ icon, title, count, href }) => {
         <span className="mb-1 text-lg">{title}</span>
       </div>
       <div className="flex justify-between items-center mt-3">
-        <span className="border-l-4 pl-1 text-2xl font-bold">{count}</span>
+        {!count ? (
+          <span className="border-l-4 pl-1 text-2xl font-bold h-8 w-8 bg-muted"></span>
+        ) : (
+          <span className="border-l-4 pl-2 text-2xl font-bold">{count}</span>
+        )}
+
         {href && (
           <TransitionLink href={href}>
             <Link size={17} />

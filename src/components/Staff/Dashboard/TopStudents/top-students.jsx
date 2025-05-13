@@ -9,23 +9,39 @@ const TopStudents = ({ data }) => {
         <span className="text-2xl font-semibold">Top Students</span>
       </div>
       <div className="flex p-4 gap-3">
-        <div>
+        <div className="flex flex-col justify-center">
           <div className="flex flex-col items-center">
             <span className="text-2xl font-bold">12th</span>
-            <span className="text-lg ">{data?.topper12th.student_name}</span>
+            {!data ? (
+              <span className="inline-block w-20 h-6 bg-muted"></span>
+            ) : (
+              <span className="text-lg ">{data?.topper12th.student_name}</span>
+            )}
           </div>
-          <p className="text-center">({data?.topper12th.totalMarks})</p>
+          {!data ? (
+            <span className="inline-block w-6 h-6 bg-muted mx-auto mt-2"></span>
+          ) : (
+            <p className="text-center">({data?.topper12th.totalMarks})</p>
+          )}
         </div>
 
         <div>
           <Separator orientation="vertical" />
         </div>
-        <div>
+        <div className="flex flex-col justify-center">
           <div className="flex flex-col items-center">
             <span className="text-2xl font-bold">10th</span>
-            <span className="text-lg">{data?.topper10th.student_name}</span>
+            {!data ? (
+              <span className="inline-block w-20 h-6 bg-muted"></span>
+            ) : (
+              <span className="text-lg ">{data?.topper10th.student_name}</span>
+            )}
           </div>
-          <p className="text-center">({data?.topper10th.totalMarks})</p>
+          {!data ? (
+            <span className="inline-block w-6 h-6 bg-muted mx-auto mt-2"></span>
+          ) : (
+            <p className="text-center">({data?.topper10th.totalMarks})</p>
+          )}
         </div>
       </div>
     </div>

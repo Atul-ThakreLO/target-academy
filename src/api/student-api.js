@@ -28,7 +28,7 @@ class studentApi {
           throw new Error("Invalid method");
       }
     } catch (error) {
-      console.error(error);
+      // console.error(error);
       if (error.message === "Network Error") {
         toast.error(error.message);
       }
@@ -38,44 +38,44 @@ class studentApi {
 
   getStudent = async (url, params = null) => {
     const data = await this._httpRequest("GET", url, params);
-    console.log(data);
+    // console.log(data);
 
     return data;
   };
 
   loginStudent = async (url, params = null) => {
     const data = await this._httpRequest("POST", url, params);
-    console.log(data);
+    // console.log(data);
     return data;
   };
 
   validateStudentToken = async (url, params = null) => {
     const data = await this._httpRequest("GET", url, params);
-    console.log(data);
+    // console.log(data);
     return data;
   };
 
   logoutStudent = async (url, params = null) => {
     const data = await this._httpRequest("POST", url, params);
-    console.log(data);
+    // console.log(data);
     return data;
   };
 
   sendOTP = async (url, params = null) => {
     const data = await this._httpRequest("POST", url, params);
-    console.log(data);
+    // console.log(data);
     return data;
   };
 
   verifyOTP = async (url, params = null) => {
     const data = await this._httpRequest("POST", url, params);
-    console.log(data);
+    // console.log(data);
     return data;
   };
 
   createStudent = async (url, params = null, optional = null) => {
     const data = await this._httpRequest("POST", url, params, optional);
-    console.log(data);
+    // console.log(data);
     return data;
   };
 }

@@ -12,21 +12,6 @@ const MainPage = () => {
   const [date, setDate] = useState(new Date());
   const [greeting, setGreeting] = useState();
   const { student } = useSelector((state) => state.authStudent);
-  // const dispatch = useDispatch();
-
-  // const { data, isLoading, isError, error, isFetched, isSuccess } =
-  //   useGetStudentById();
-
-  // useEffect(() => {
-  //   if (isFetched && isSuccess) {
-  //     console.log("user", data.data);
-  //     dispatch(setStudent(data.data));
-  //   }
-  // }, [isFetched, isSuccess]);
-
-  // if (isError) {
-  //   toast.error(error?.response?.data?.message);
-  // }
 
   useEffect(() => {
     setGreeting(greetingsFn());
@@ -55,33 +40,6 @@ const MainPage = () => {
           </div>
         </div>
       </section>
-      {/* <section className="p-4 md:p-8 md:w-[calc(99vw-var(--sidebar-width))] mt-10 h-min md:min-h-[50vh]">
-        <div>
-          <h1 className="text-4xl font-semibold">Events & Tests: </h1>
-          <p className="text-sm font-normal tracking-[0.7em] leading-10">
-            Keep track of your Academics
-          </p>
-        </div>
-        <div className="grid grid-cols-10 mt-12">
-          <div className="col-span-10 md:col-span-6">
-            <Events />
-          </div>
-          <div className="col-span-10 md:col-span-4 mt-10 md:mt-0">
-            <div className="flex items-center justify-center w-full translate-x-[50px]">
-              <div className="border rounded-lg shadow-lg p-1 w-full">
-                <div className="border rounded-lg p-6">
-                  <Calendar
-                    mode="single"
-                    selected={date}
-                    onSelect={setDate}
-                    className="rounded-md border w-max"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section> */}
       <section className="mt-10 p-8">
         <div className="">
           <h1 className="text-4xl font-semibold">

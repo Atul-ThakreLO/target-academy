@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Loader, Search, Trash } from "lucide-react";
+import { Loader, Search, Table, Trash } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import FilterNotes from "../filter-notes";
 // import EditDeleteDdown from "./edit-delete-ddown";
@@ -14,6 +14,15 @@ import { setNotesFilterData } from "@/Redux/slices/secondary/notes/notes-filter-
 import { setSelectedID } from "@/Redux/slices/secondary/notes/notes-id-slice";
 import CustomTable from "./custom-table";
 import CustomTableNP from "../../Notes-Papers-Utils/custom-table-n-p";
+import NotesCellSkeleton from "@/components/Loaders/Staff/notes-cell-skeleton";
+import {
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { Checkbox } from "@/components/ui/checkbox";
 
 const NotesAll = () => {
   const [open, setOpen] = useState(false);
@@ -85,7 +94,7 @@ const NotesAll = () => {
         <div className="flex gap-4">
           {selectedIDs.length > 0 && (
             <>
-              <Button variant="Ghost" onClick={handleDeleteMany}>
+              <Button variant="outline" onClick={handleDeleteMany}>
                 {mutation.isPending ? (
                   <Loader className="animate-spin" />
                 ) : (
@@ -107,20 +116,20 @@ const NotesAll = () => {
       </div>
 
       {!notesData ? (
-        "loading"
+        <NotesCellSkeleton />
+      ) : !notesData.length > 0 ? (
+        <p className="text-center">No Notes Found</p>
       ) : (
-        // <CustomTable
-        //   columns={["Title", "Subject", "Class", "Posted-BY", "Date"]}
-        //   rows={notesData}
-        //   // keys={Object.keys(data.data[0]).slice(2)}
-        //   keys={["subject", "class", "id", "date"]}
-        //   More={EditDeleteButtons}
-        // />
         <CustomTableNP
           columns={["Title", "Subject", "Class", "Posted-BY", "Date"]}
           rows={notesData}
           // keys={Object.keys(data.data[0]).slice(2)}
-          keys={["subject.name", "class.name", "officeStaff.OfficeStaffInfo.name", "date"]}
+          keys={[
+            "subject.name",
+            "class.name",
+            "officeStaff.OfficeStaffInfo.name",
+            "date",
+          ]}
           More={EditDeleteButtons}
           selectedIDs={selectedIDs}
           setSelectedID={setSelectedID}

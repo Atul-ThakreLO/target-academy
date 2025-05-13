@@ -25,7 +25,7 @@ const TeachersGrid = () => {
     console.log(avatar.current?.offsetWidth);
   }, []);
 
-  const count = data?.data?.length + 1;
+  const count = data?.data?.length + 1 || 6;
   const width = avatar.current?.offsetWidth;
 
   const mouseOver = (e) => {
@@ -48,42 +48,39 @@ const TeachersGrid = () => {
       className={`grid transition-[grid-template-columns] duration-300 px-5 items-center`}
       style={style}
     >
-      {/* {teachers.map((teacher) => (
-        <Avatar
-          ref={avatar}
-          className="border-2 cursor-pointer hover:border-foreground"
-          key={teacher.name}
-        >
-          <AvatarFallback>{nickName(teacher.name)}</AvatarFallback>
-          <AvatarImage src={teacher.src} alt="" />
-        </Avatar>
-      ))} */}
-      {isLoading ? (
-        <Loader2 className="animate-spin" />
-      ) : (
-        data.data.map((teacher) => (
-          <Sheet>
-            <SheetTrigger asChild>
-              <Button variant="ghost" className="text-start">
-                <Avatar
-                  ref={avatar}
-                  className="border-2 cursor-pointer hover:border-foreground"
-                  key={teacher.OfficeStaffInfo.name}
-                >
-                  <AvatarFallback>
-                    {nickName(teacher.OfficeStaffInfo.name)}
-                  </AvatarFallback>
-                  <AvatarImage
-                    src={teacher.OfficeStaffInfo.avtar_url}
-                    alt={teacher.OfficeStaffInfo.name}
-                  />
-                </Avatar>
-              </Button>
-            </SheetTrigger>
-            <StaffProfileSheet data={teacher} />
-          </Sheet>
-        ))
-      )}
+      {isLoading
+        ? Array.from({ length: 5 }, (_, i) => (
+            <Avatar
+              ref={avatar}
+              className="border-2 cursor-pointer hover:border-foreground"
+              key={i}
+            >
+              <AvatarFallback>Lo</AvatarFallback>
+              <AvatarImage src={""} alt={""} />
+            </Avatar>
+          ))
+        : data.data.map((teacher) => (
+            <Sheet>
+              <SheetTrigger asChild>
+                <Button variant="ghost" className="text-start">
+                  <Avatar
+                    ref={avatar}
+                    className="border-2 cursor-pointer hover:border-foreground"
+                    key={teacher.OfficeStaffInfo.name}
+                  >
+                    <AvatarFallback>
+                      {nickName(teacher.OfficeStaffInfo.name)}
+                    </AvatarFallback>
+                    <AvatarImage
+                      src={teacher.OfficeStaffInfo.avtar_url}
+                      alt={teacher.OfficeStaffInfo.name}
+                    />
+                  </Avatar>
+                </Button>
+              </SheetTrigger>
+              <StaffProfileSheet data={teacher} />
+            </Sheet>
+          ))}
       <TransitionLink href={"/staff/staff"}>
         <Settings size={21} />
       </TransitionLink>

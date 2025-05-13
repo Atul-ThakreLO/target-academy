@@ -11,6 +11,7 @@ import { TransitionLink } from "@/components/Utils/transition-link";
 import { Link, Loader2 } from "lucide-react";
 import React from "react";
 import { useGetRecentAssignments } from "@/Hooks/use-assignment";
+import RecentAssignmentSkeleton from "@/components/Loaders/Staff/recent-assignment-skeleton";
 
 const Assignments = () => {
   const { data, isLoading, isSuccess } = useGetRecentAssignments(5);
@@ -39,24 +40,24 @@ const Assignments = () => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {isLoading ? (
-              <Loader2 className="animate-spin" />
-            ) : (
-              data?.data?.map((assi) => (
-                <TableRow>
-                  <TableCell className="text-nowrap">{assi?.title}</TableCell>
-                  <TableCell className="text-center">
-                    {assi?._count?.completedAssignment}
-                  </TableCell>
-                  <TableCell className="text-center">
-                    {assi?.batch?._count?.students}
-                  </TableCell>
-                  <TableCell>
-                    <ProgressBar prog={100} />
-                  </TableCell>
-                </TableRow>
-              ))
-            )}
+            {isLoading
+              ? Array.from({ length: 4 }, (_, i) => (
+                  <RecentAssignmentSkeleton key={i} />
+                ))
+              : data?.data?.map((assi) => (
+                  <TableRow>
+                    <TableCell className="text-nowrap">{assi?.title}</TableCell>
+                    <TableCell className="text-center">
+                      {assi?._count?.completedAssignment}
+                    </TableCell>
+                    <TableCell className="text-center">
+                      {assi?.batch?._count?.students}
+                    </TableCell>
+                    <TableCell>
+                      <ProgressBar prog={100} />
+                    </TableCell>
+                  </TableRow>
+                ))}
           </TableBody>
         </Table>
       </div>

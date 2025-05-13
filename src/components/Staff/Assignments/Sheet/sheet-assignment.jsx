@@ -30,26 +30,25 @@ const SheetAssignment = ({ data }) => {
   );
   useEffect(() => {
     if (isFetched) {
-      console.log("data", data);
-
-      console.log(students.data);
-      const total = students.data.length;
-      const completedCount = students.data[0]._count.CompletedAssignment;
+      const total = students?.data?.length;
+      const completedCount = students?.data[0]?._count?.CompletedAssignment;
+      console.log(((completedCount / total) * 100).toFixed(2));
+      
       setProgress(((completedCount / total) * 100).toFixed(2));
     }
   }, [isFetched, isLoading]);
   return (
     <Sheet open={open} onOpenChange={setOpen}>
-      <SheetTrigger className="text-nowrap">{data.title}</SheetTrigger>
+      <SheetTrigger className="text-nowrap">{data?.title}</SheetTrigger>
       {open && (
         <SheetContent className="min-w-[90vw] md:min-w-[35vw] px-3 md:px-4">
           <SheetTitle>
             <span className="hover:underline hover:text-blue-500">
-              Assignment-Name: {data.title}
+              Assignment-Name: {data?.title}
             </span>
           </SheetTitle>
           <SheetDescription>
-            <b>By:</b> {data.staff.OfficeStaffInfo.name}
+            <b>By:</b> {data?.staff?.OfficeStaffInfo?.name}
           </SheetDescription>
           <div className="flex gap-4 mt-7">
             <div className="w-1/2">
@@ -63,17 +62,17 @@ const SheetAssignment = ({ data }) => {
                 <tr>
                   <td>Class</td>
                   <td>:</td>
-                  <td>{data.class.name}</td>
+                  <td>{data?.class?.name}</td>
                 </tr>
                 <tr>
                   <td>Batch</td>
                   <td>:</td>
-                  <td>{data.batch.name}</td>
+                  <td>{data?.batch?.name}</td>
                 </tr>
                 <tr>
                   <td>Subject</td>
                   <td>:</td>
-                  <td>{data.subject.name}</td>
+                  <td>{data?.subject?.name}</td>
                 </tr>
               </table>
             </div>
@@ -91,8 +90,8 @@ const SheetAssignment = ({ data }) => {
               ) : (
                 students.data.map((student) => (
                   <div className="p-1 px-4 md:p-3 shadow-sm hover:shadow-md duration-300 hover:bg-muted/80 border rounded-xl flex justify-between items-center">
-                    <div>{student.StudentInfo.student_name}</div>
-                    {!student.CompletedAssignment.length > 0 ? (
+                    <div>{student?.StudentInfo?.student_name}</div>
+                    {!student?.CompletedAssignment?.length > 0 ? (
                       <div>Not Submited</div>
                     ) : (
                       <div className="md:mr-5">
@@ -103,11 +102,11 @@ const SheetAssignment = ({ data }) => {
                             View Submission
                           </DialogTrigger>
                           <PdfPreview
-                            url={student.CompletedAssignment[0].pdf_url}
+                            url={student?.CompletedAssignment[0]?.pdf_url}
                           />
                         </Dialog>
                         <p className="text-right text-gray-500">
-                          {formatDate(student.CompletedAssignment[0].date)}
+                          {formatDate(student?.CompletedAssignment[0]?.date)}
                         </p>
                       </div>
                     )}

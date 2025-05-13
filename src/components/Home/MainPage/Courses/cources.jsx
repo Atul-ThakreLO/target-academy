@@ -19,7 +19,7 @@ const Cources = () => {
       </div>
       <div className="md:w-1/2 flex flex-col gap-60 items-center">
         {cources.map((cource, index) => (
-          <CourseCard key={index} title={cource.title} para={cource.desc} index={index} />
+          <CourseCard key={index} data={cource} index={index} />
         ))}
       </div>
     </div>

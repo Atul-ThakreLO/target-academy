@@ -23,7 +23,7 @@ import {
 } from "@/Hooks/use-test-paper";
 
 const EditNotesPapers = ({ data, mutation, defaultValues }) => {
-  console.log(data.class_id);
+  // console.log(data.class_id);
 
   const [classID, setClassID] = useState(data.class_id);
   const [open, setOpen] = useState(false);
@@ -46,14 +46,14 @@ const EditNotesPapers = ({ data, mutation, defaultValues }) => {
     resolver: zodResolver(schema),
   });
 
-  useEffect(() => {
-    if (classID !== data.class_id) {
-      setValue("subject_id", "");
-      if (!!data.test_id) {
-        setValue("test_id", "");
-      }
-    }
-  }, [classID]);
+  // useEffect(() => {
+  //   if (classID !== data.class_id) {
+  //     setValue("subject_id", "");
+  //     if (!!data.test_id) {
+  //       setValue("test_id", "");
+  //     }
+  //   }
+  // }, [classID]);
 
   const { data: classData, isLoading: classLoading } = useGetClass(open);
   const { data: subjectData, isLoading: subjectLoading } =
