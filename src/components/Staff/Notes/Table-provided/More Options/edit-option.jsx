@@ -45,7 +45,7 @@ const EditOption = ({ name = "batch_id", data }) => {
   return (
     <Dialog>
       <DialogTrigger>
-        <Button variant="Ghost" className="p-0">
+        <Button variant="Ghost" className="p-2">
           <Edit />
         </Button>
       </DialogTrigger>

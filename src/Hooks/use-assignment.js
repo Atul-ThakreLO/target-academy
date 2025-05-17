@@ -95,7 +95,6 @@ export const useGetAssignmentsForStudent = (id, subjectID) => {
         batchID: id,
         subjectID,
       }),
-    refetchOnWindowFocus: false,
   });
 };
 

@@ -29,14 +29,12 @@ const SheetAssignment = ({ data }) => {
     open
   );
   useEffect(() => {
-    if (isFetched) {
-      const total = students?.data?.length;
-      const completedCount = students?.data[0]?._count?.CompletedAssignment;
-      console.log(((completedCount / total) * 100).toFixed(2));
-      
+    if (students?.data) {
+      const total = students?.data?.response.length;
+      const completedCount = students?.data.count;
       setProgress(((completedCount / total) * 100).toFixed(2));
     }
-  }, [isFetched, isLoading]);
+  }, [isFetched, isLoading, students?.data]);
   return (
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger className="text-nowrap">{data?.title}</SheetTrigger>
@@ -88,7 +86,7 @@ const SheetAssignment = ({ data }) => {
               {isLoading ? (
                 <Loader2 className="animate-spin" />
               ) : (
-                students.data.map((student) => (
+                students?.data?.response.map((student) => (
                   <div className="p-1 px-4 md:p-3 shadow-sm hover:shadow-md duration-300 hover:bg-muted/80 border rounded-xl flex justify-between items-center">
                     <div>{student?.StudentInfo?.student_name}</div>
                     {!student?.CompletedAssignment?.length > 0 ? (

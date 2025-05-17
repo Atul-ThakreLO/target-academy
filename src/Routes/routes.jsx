@@ -33,6 +33,7 @@ import StaffRegistration from "@/pages/Home/staff-registration";
 import StaffLogin from "@/pages/Home/staff-login";
 import Assignments from "@/pages/Student/assignments";
 import Marks from "@/pages/Student/Marks";
+import NotVerified from "@/pages/not-verified";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -46,10 +47,11 @@ const router = createBrowserRouter(
         <Route path="career" element={<Career />} />
       </Route>
       <Route
-        path="/staff-registration/:name/:job_id/:token"
+        path="/staff-registration/:email/:token"
         element={<StaffRegistration />}
       />
       <Route path="/staff/login" element={<StaffLogin />} />
+      <Route path="/staff/not-verified" element={<NotVerified />} />
 
       <Route
         path="/student"

@@ -3,19 +3,20 @@ import api_methods from "../api/secondary-api";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 
-export const useGetMarks = (id) => {
+export const useGetMarks = (data) => {
   return useQuery({
-    queryKey: ["marks", id],
-    queryFn: () => api_methods.getRequest("/staff/marks", { id }),
+    queryKey: ["marks", data.id],
+    queryFn: () => api_methods.getRequest("/staff/marks", data),
+    enabled: !!data.batchId,
   });
 };
 
-export const useAddMarksByTest = () => {
+export const useAddMarksByTest = (id) => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (data) => api_methods.postRequest("/staff/marks", data),
     onSuccess: () => {
-      queryClient.invalidateQueries(["marks"]);
+      queryClient.invalidateQueries(["marks", id]);
       toast.success("Marks Added");
     },
   });

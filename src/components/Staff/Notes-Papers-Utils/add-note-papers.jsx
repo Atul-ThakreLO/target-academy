@@ -92,7 +92,7 @@ const AddNotesPapers = ({ type, add, mutation }) => {
   }, [mutation.isSuccess]);
 
   return (
-    <form className="mt-5" onSubmit={handleSubmit(onSubmit)}>
+    <form className="my-5" onSubmit={handleSubmit(onSubmit)}>
       <div className={`flex w-full ${file ? "block" : "hidden"}`}>
         <div className="border shadow-md p-2 rounded-lg flex gap-2 max-w-96">
           <div>
@@ -116,7 +116,7 @@ const AddNotesPapers = ({ type, add, mutation }) => {
 
       <div className={`w-full ${file ? "hidden" : "block"}`}>
         <div
-          className={`w-[70%] h-48 mx-auto border-2 border-dashed ${
+          className={`w-[100%] md:w-[70%] h-48 mx-auto border-2 border-dashed ${
             dragOver ? "border-green-500 bg-green-100/50" : ""
           } ${
             errors.file ? "border-red-500 bg-red-100/50 " : ""
@@ -144,7 +144,7 @@ const AddNotesPapers = ({ type, add, mutation }) => {
       ) : (
         ""
       )}
-      <div className="mt-10 flex justify-between gap-5 items-center px-12">
+      <div className="mt-10 flex flex-col md:flex-row justify-between gap-5 items-center px-6 md:px-12">
         <div className="w-full">
           <InputField
             label={"File Title"}

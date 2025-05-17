@@ -82,7 +82,7 @@ const Dashboard = () => {
       </section>
       <section className="mt-5 grid grid-cols-5 gap-4">
         <div className="w-full col-span-5 md:col-span-5 lg:col-span-3 sm:col-span-5">
-          <Events />
+          <Tests />
         </div>
         <div className="w-full col-span-5 md:col-span-5 lg:col-span-2 sm:col-span-5">
           <Assignments />
@@ -94,7 +94,7 @@ const Dashboard = () => {
           <NoticeBoard display={"dashboard"} />
         </div>
         <div className="w-full col-span-5 md:col-span-5 lg:col-span-3 sm:col-span-5">
-          <Tests />
+          <Events />
         </div>
       </section>
     </>

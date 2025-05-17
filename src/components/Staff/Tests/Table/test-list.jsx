@@ -9,6 +9,7 @@ import { useSelector } from "react-redux";
 import { setTestsFilterData } from "@/Redux/slices/secondary/test-papers/tests-filter-data-slice";
 import { useQueryClient } from "@tanstack/react-query";
 import NotesCellSkeleton from "@/components/Loaders/Staff/notes-cell-skeleton";
+import { TableCell, TableRow } from "@/components/ui/table";
 
 const TestList = () => {
   const [searchedData, setSearchedData] = useState(null);
@@ -62,10 +63,10 @@ const TestList = () => {
           />
           <Search className="absolute top-1/2 left-0 -translate-y-1/2 translate-x-1/2" />
         </div>
-        <div>
+        <div className="flex gap-3">
           {selectedIDs.length > 0 && (
             <Button variant="outline" onClick={handleDeleteMultiple}>
-              <Trash /> Delete Selected
+              <Trash /> <span className="hidden md:block">Delete Selected</span>
             </Button>
           )}
 
@@ -81,11 +82,7 @@ const TestList = () => {
       {!searchedData ? (
         <NotesCellSkeleton />
       ) : !searchedData.length > 0 ? (
-        <TableRow>
-          <TableCell colSpan={7}>
-            <p className="text-center">No Marks Found</p>
-          </TableCell>
-        </TableRow>
+        <p className="text-center">No Tests Found</p>
       ) : (
         <TsetListTable rows={searchedData} />
       )}

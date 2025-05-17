@@ -33,6 +33,7 @@ const FormStaff = ({
       {!edit && (
         <>
           <InputField
+            readOnly
             type={"email"}
             label={"Email"}
             id={"email"}

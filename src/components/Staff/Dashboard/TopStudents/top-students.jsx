@@ -15,13 +15,13 @@ const TopStudents = ({ data }) => {
             {!data ? (
               <span className="inline-block w-20 h-6 bg-muted"></span>
             ) : (
-              <span className="text-lg ">{data?.topper12th.student_name}</span>
+              <span className="text-lg text-nowrap">{data?.topper12th?.student_name}</span>
             )}
           </div>
           {!data ? (
             <span className="inline-block w-6 h-6 bg-muted mx-auto mt-2"></span>
           ) : (
-            <p className="text-center">({data?.topper12th.totalMarks})</p>
+            <p className="text-center">({data?.topper12th?.totalMarks})</p>
           )}
         </div>
 
@@ -34,13 +34,13 @@ const TopStudents = ({ data }) => {
             {!data ? (
               <span className="inline-block w-20 h-6 bg-muted"></span>
             ) : (
-              <span className="text-lg ">{data?.topper10th.student_name}</span>
+              <span className="text-lg text-nowrap">{data?.topper10th?.student_name}</span>
             )}
           </div>
           {!data ? (
             <span className="inline-block w-6 h-6 bg-muted mx-auto mt-2"></span>
           ) : (
-            <p className="text-center">({data?.topper10th.totalMarks})</p>
+            <p className="text-center">({data?.topper10th?.totalMarks})</p>
           )}
         </div>
       </div>

@@ -146,7 +146,7 @@ const AssignmentsList = () => {
                   <TableHead className="text-center">Content</TableHead>
                   <TableHead>Subject</TableHead>
                   <TableHead>Post Date</TableHead>
-                  <TableHead>Due Date</TableHead>
+                  {/* <TableHead>Due Date</TableHead> */}
                   <TableHead className="text-center">Status</TableHead>
                 </TableRow>
               </TableHeader>
@@ -182,9 +182,9 @@ const AssignmentsList = () => {
                       </TableCell>
                       <TableCell>{assi.subject.name}</TableCell>
                       <TableCell>{formatDate(assi.date)}</TableCell>
-                      <TableCell>
+                      {/* <TableCell>
                         {dueStatus("2025-04-15T18:30:00.000Z")}
-                      </TableCell>
+                      </TableCell> */}
                       <TableCell className="flex justify-end">
                         {assi.completedAssignment.length > 0 ? (
                           <div className="flex justify-end gap-2">

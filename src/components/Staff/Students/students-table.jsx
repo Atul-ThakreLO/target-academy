@@ -27,7 +27,7 @@ const StudentsTable = ({ data }) => {
       <TableBody>
         {!data ? (
           Array.from({ length: 10 }, (_, i) => <StudentCellSkeleton key={i} />)
-        ) : !data.length > 1 ? (
+        ) : !data.length > 0 ? (
           <TableRow>
             <TableCell colSpan={6}>
               <p className="text-center">No Student Found</p>

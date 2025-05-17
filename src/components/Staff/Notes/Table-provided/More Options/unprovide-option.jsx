@@ -14,7 +14,7 @@ const UnprovideOption = ({ data }) => {
   return (
     <Button
       variant="Ghost"
-      className="p-0"
+      className="p-2"
       onClick={handleUnprovide}
       disabled={mutation.isPending}
     >

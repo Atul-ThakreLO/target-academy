@@ -9,7 +9,7 @@ import { useActiveInActive } from "@/Hooks/use-staff";
 
 const SchoolCard = ({ data, refetch, img }) => {
   const mutation = useDeleteSchool();
-  const statusMutation = useActiveInActive("school");
+  const statusMutation = useActiveInActive("school", ["school"]);
 
   const handleDelete = () => {
     mutation.mutate(data.id);

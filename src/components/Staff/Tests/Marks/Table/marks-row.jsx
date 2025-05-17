@@ -19,10 +19,9 @@ const MarksRow = ({ student, testId, totalMarks }) => {
       test_paper_id: testId,
     },
   });
-  const mutation = useAddMarksByTest();
+  const mutation = useAddMarksByTest(testId);
   const handleSaveMarks = (data) => {
     mutation.mutate(data);
-    console.log(data);
   };
 
   const editMutation = useEditMarks();

@@ -56,7 +56,7 @@ const ResultCard = ({ data }) => {
       <CardFooter>
         <div className="flex items-center w-full justify-between mt-5">
           <p className="font-semibold text-lg">Total %: </p>
-          <p className="font-semibold text-lg">{data?.total_percent}</p>
+          <p className="font-semibold text-lg">{data?.total_percent}%</p>
         </div>
       </CardFooter>
     </Card>

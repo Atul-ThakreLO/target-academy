@@ -35,10 +35,10 @@ const ProvideNotes = () => {
   };
 
   return (
-    <div className="px-12 mt-10 ">
+    <div className="px-4 md:px-12 my-10 ">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex justify-between items-center"
+        className="flex justify-between items-center flex-col md:flex-row gap-3"
       >
         <div>
           <SelectField

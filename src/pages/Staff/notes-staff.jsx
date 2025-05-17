@@ -44,7 +44,7 @@ const NotesStaff = () => {
               </>
             )}
           </Button>
-          <Button
+          {/* <Button
             variant="outline"
             type="button"
             className={`${provide ? "border-red-500 text-red-500" : ""} `}
@@ -60,24 +60,23 @@ const NotesStaff = () => {
                 <Plus /> Provide Notes
               </>
             )}
-          </Button>
+          </Button> */}
         </div>
         <div className="mt-5">
           <div
             className={`${
-              add ? "h-96 duration-500" : "h-0 duration-300"
+              add ? "duration-500" : "h-0 duration-300"
             } overflow-hidden border-b`}
           >
-            {/* <AddNotes /> */}
             <AddNotesPapers type={"notes"} add={add} mutation={mutation} />
           </div>
-          <div
+          {/* <div
             className={`${
-              provide ? "h-36 duration-500" : "h-0 duration-300"
+              provide ? "duration-500" : "h-0 duration-300"
             } overflow-hidden border-b`}
           >
             <ProvideNotes />
-          </div>
+          </div> */}
         </div>
       </div>
       <div className="mt-5">

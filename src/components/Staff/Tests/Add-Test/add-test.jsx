@@ -78,7 +78,7 @@ const AddTest = () => {
         } overflow-hidden border-b`}
       >
         <form
-          className="mt-10 grid grid-cols-[repeat(auto-fit,_minmax(200px,_1fr))] justify-between items-center px-2 md:px-12"
+          className="mb-10 gap-4 grid grid-cols-[repeat(auto-fit,_minmax(200px,_1fr))] justify-between items-center px-2 md:px-12"
           onSubmit={handleSubmit(onSubmit)}
         >
           <div className="">

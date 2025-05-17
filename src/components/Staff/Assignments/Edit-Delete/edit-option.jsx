@@ -20,9 +20,10 @@ import { Edit, Loader2 } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
-const EditOption = ({ data }) => {
-  const [classID, setClassID] = useState(data.class_id);
+const EditOption = ({ data, editMutation }) => {
+  const [classID, setClassID] = useState(data?.class_id);
   const [open, setOpen] = useState(false);
+  
 
   const {
     register,
@@ -35,7 +36,7 @@ const EditOption = ({ data }) => {
       title: data.title,
       id: data.id,
       class_id: data.class_id,
-      subjects_id: data.subjects_id,
+      subject_id: data.subject_id,
       batch_id: data.batch_id,
     },
     resolver: zodResolver(EditAssignmentSchema),
@@ -56,22 +57,21 @@ const EditOption = ({ data }) => {
   const setClassValue = (val) => {
     setClassID(val);
   };
-  const mutation = useUpdateAssignmentData();
 
   const onSubmit = (formdata) => {
     console.log(formdata);
-    mutation.mutate(formdata);
+    editMutation.mutate(formdata);
   };
 
   useEffect(() => {
-    if (mutation.isSuccess) {
+    if (editMutation.isSuccess) {
       setOpen(false);
     }
-  }, [mutation.isSuccess]);
+  }, [editMutation.isSuccess]);
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="ghost" className="p-0">
+        <Button variant="ghost" className="p-2">
           <Edit />
         </Button>
       </DialogTrigger>
@@ -112,11 +112,11 @@ const EditOption = ({ data }) => {
           <div>
             <SelectField
               control={control}
-              name={"subjects_id"}
+              name={"subject_id"}
               placeholder={"Subjects"}
               selectItems={subjectData?.data}
               label={"Subject"}
-              error={errors.subjects_id}
+              error={errors.subject_id}
               isLoading={subjectLoading}
             />
           </div>
@@ -134,8 +134,8 @@ const EditOption = ({ data }) => {
         </form>
 
         <DialogFooter>
-          <Button form={"edit-notes"} disabled={mutation.isPending}>
-            {mutation.isPending ? (
+          <Button form={"edit-notes"} disabled={editMutation.isPending}>
+            {editMutation.isPending ? (
               <Loader2 className="animate-spin" />
             ) : (
               "Apply Changes"

@@ -19,6 +19,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   isAuthenticated: false,
+  isVerified: false,
   staff: null,
   isLoading: false,
 };
@@ -30,8 +31,12 @@ const authStaffSlice = createSlice({
     setStaff: (state, action) => {
       state.staff = action.payload;
       state.isAuthenticated = !!action.payload;
+      state.isVerified = action.payload?.OfficeStaffInfo?.isVerified || false
       state.isLoading = false;
     },
+    // setStaffVerified: (state, action) => {
+    //   state.isVerified = action.payload;
+    // },
     setLoading: (state, action) => {
       state.isLoading = true;
     },

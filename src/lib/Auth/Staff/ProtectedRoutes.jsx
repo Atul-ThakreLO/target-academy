@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 
 const ProtectedRoutes = ({ children }) => {
-  const { isAuthenticated, isLoading, staff } = useSelector(
+  const { isAuthenticated, isLoading, staff, isVerified } = useSelector(
     (state) => state.authStaff
   );
 
@@ -16,6 +16,10 @@ const ProtectedRoutes = ({ children }) => {
     );
   } else if (!isAuthenticated) {
     return <Navigate to="/staff/login" replace />;
+  } else if (!isVerified) {
+    console.log(isVerified);
+    
+    return <Navigate to="/staff/not-verified" replace />;
   }
 
   return <div>{children}</div>;

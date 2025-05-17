@@ -37,7 +37,7 @@ const StaffTable = ({ data }) => {
       <TableBody>
         {!data ? (
           Array.from({ length: 10 }, (_, i) => <StaffCellSkeleton key={i} />)
-        ) : data.length >= 1 ? (
+        ) : !data.length >= 1 ? (
           <TableRow>
             <TableCell colSpan={7}>
               <p className="text-center">No staff Found</p>

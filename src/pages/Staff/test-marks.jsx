@@ -20,15 +20,13 @@ const TestMarks = () => {
   const { id } = useParams();
 
   const { data, isLoading, isFetched } = useGetTestPapersByID({ id });
-  useEffect(() => {
-    if (isFetched) {
-      console.log(data?.data);
-    }
-  }, [isLoading, isFetched]);
+  // useEffect(() => {
+  //   if (isFetched) {
+  //     console.log(data?.data);
+  //   }
+  // }, [isLoading, isFetched]);
 
   const { topper } = useSelector((state) => state.topperProfile);
-
-  console.log("topper state", !topper?.StudentInfo);
 
   return (
     <div>
@@ -47,8 +45,8 @@ const TestMarks = () => {
             <LoaderCard />
           </div>
         ) : data?.data?.papers?.url ? (
-          <div className="flex items-center gap-2">
-            <div className="border shadow-md p-2 rounded-lg flex gap-2 w-full md:max-w-96">
+          <div className="flex items-center gap-2 md:w-1/2">
+            <div className="border shadow-md p-2 rounded-lg flex gap-2 w-full md">
               <div>
                 <FileText size={50} />
               </div>
@@ -73,7 +71,7 @@ const TestMarks = () => {
         <div className="flex flex-col-reverse md:flex-row gap-5 md:gap-10 md:w-3/5">
           <div className="pt-3 col-span-5 md:col-span-3">
             <h6 className="text-xl font-semibold">Highest Marks</h6>
-            {topper?.StudentInfo ? (
+            {!topper?.StudentInfo ? (
               <HighestMarks />
             ) : (
               <div className="p-4 border rounded-lg mt-5 flex gap-6">
@@ -117,10 +115,15 @@ const TestMarks = () => {
                 <div className="flex gap-3">
                   <Avatar>
                     <AvatarFallback>
-                      {data?.data?.officeStaff?.OfficeStaffInfo?.avtar_url ||
-                        "NP"}
+                      {nickName(
+                        data?.data?.officeStaff?.OfficeStaffInfo?.name
+                      ) || "NP"}
                     </AvatarFallback>
-                    <AvatarImage src="" alt="" />
+                    <AvatarImage
+                    className="object-cover"
+                      src={data?.data?.officeStaff?.OfficeStaffInfo?.avtar_url}
+                      alt={data?.data?.officeStaff?.OfficeStaffInfo?.name}
+                    />
                   </Avatar>
                   <div>
                     <p>
@@ -137,7 +140,11 @@ const TestMarks = () => {
       </div>
       {/* list with field for marks */}
       <div>
-        <MarksListTable id={id} totalMarks={data?.data?.totalMarks} />
+        <MarksListTable
+          testData={data?.data}
+          id={id}
+          totalMarks={data?.data?.totalMarks}
+        />
       </div>
     </div>
   );

@@ -5,7 +5,7 @@ import React from "react";
 import { useParams } from "react-router-dom";
 
 const StaffRegistration = () => {
-  const { name, token, job_id  } = useParams();
+  const { email, token  } = useParams();
   return (
     <ScrollArea className="w-full h-screen">
       <main className="w-4/5 mx-auto h-full">
@@ -14,14 +14,14 @@ const StaffRegistration = () => {
             <h1 className="text-4xl">Target</h1>
             <Target size={40} className="-mt-5" />
           </div>
-          <p className="font-medium text-2xl">Staff Registraion: {name}</p>
+          <p className="font-medium text-2xl">Staff Registraion: {email}</p>
         </div>
         <div className="mt-10">
           <p className="font-medium text-center text-3xl">
             Complete Yor Registration
           </p>
           <div>
-            <RegistrationCard job_id={job_id} />
+            <RegistrationCard token={token} email={email} />
           </div>
         </div>
       </main>

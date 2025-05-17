@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
-export const useStaffRegistration = () => {
+export const useStaffRegistration = (token) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   return useMutation({
@@ -13,6 +13,7 @@ export const useStaffRegistration = () => {
       staffApi.postRequest("/admin/staff", data, {
         headers: {
           "Content-Type": "multipart/form-data",
+          'Authorization': `Bearer ${token}`,
         },
       }),
     onSuccess: (data) => {

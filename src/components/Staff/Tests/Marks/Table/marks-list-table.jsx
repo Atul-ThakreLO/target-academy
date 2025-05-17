@@ -19,20 +19,23 @@ import { useSidebar } from "@/components/ui/sidebar";
 import { useAddUpdateTotalMarks } from "@/Hooks/use-test-paper";
 import TestMarksCellSkeleton from "@/components/Loaders/Staff/test-marks-cell-skeleton";
 
-const MarksListTable = ({ id, totalMarks }) => {
+const MarksListTable = ({ testData, id, totalMarks }) => {
   const [edit, setEdit] = useState(false);
   const [totalMarksValue, setTotalMarksValue] = useState(0);
   const [searchVal, setSearchVal] = useState("");
   const [searchedData, setSearchData] = useState(null);
   // const [topper, setTopper] = useState({});
   const { open } = useSidebar();
+  // console.log(testData);
 
-  const { data, isFetched, isSuccess, isLoading } = useGetMarks(id);
+  const { data, isFetched, isSuccess, isLoading } = useGetMarks({
+    id,
+    batchId: testData?.batch_id,
+    subject_id: testData?.subject_id,
+  });
 
   const { register, handleSubmit } = useForm({
     defaultValues: {
-      // marks: "",
-      // student_id: "",
       test_paper_id: id,
     },
   });
@@ -65,20 +68,23 @@ const MarksListTable = ({ id, totalMarks }) => {
     );
     setSearchData(sData);
   };
+
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(setTopper({}));
   }, []);
+
   const getTopper = () => {
-    data?.data.forEach((s) => {
+    let max = 0;
+    data?.data.forEach((s, i) => {
       if (s.TestPaperStudents[0]?.marks) {
-        let max = 0;
-        max = Math.max(max, s.TestPaperStudents[0]?.marks);
-        if ((max = s.TestPaperStudents[0]?.marks)) {
-          dispatch(setTopper(s));
-        }
+        max = Math.max(max, parseInt(s.TestPaperStudents[0]?.marks));
       }
     });
+    const topper = data?.data?.filter((s, i) => {
+      return max === parseInt(s.TestPaperStudents[0]?.marks);
+    });
+    dispatch(setTopper(topper?.[0]));
   };
 
   useEffect(() => {
@@ -152,7 +158,9 @@ const MarksListTable = ({ id, totalMarks }) => {
           </TableHeader>
           <TableBody>
             {isLoading ? (
-              Array.from({ length: 10 }, (_, i) => <TestMarksCellSkeleton key={i} />)
+              Array.from({ length: 10 }, (_, i) => (
+                <TestMarksCellSkeleton key={i} />
+              ))
             ) : !searchedData?.length > 0 ? (
               <TableRow>
                 <TableCell colSpan={7}>

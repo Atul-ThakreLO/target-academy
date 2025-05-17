@@ -86,7 +86,7 @@ export const EditAssignmentSchema = z.object({
   title: z.string().min(1, "Title cann't be empty"),
   class_id: z.string().min(1, "Class cann't be empty"),
   id: z.string().min(1, "something is wrong"),
-  subjects_id: z
+  subject_id: z
     .string()
     .min(1, "Subject also need to reselect or change, if the class is changed"),
   batch_id: z

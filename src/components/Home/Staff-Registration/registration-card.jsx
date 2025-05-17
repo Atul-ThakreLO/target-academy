@@ -5,7 +5,7 @@ import { registrationSchema } from "@/Zod Schema/Staff/registration.-schema";
 import { useStaffRegistration } from "@/Hooks/use-staff";
 import FormStaff from "./Forms/form-staff";
 
-const RegistrationCard = ({ job_id }) => {
+const RegistrationCard = ({ token, email }) => {
   const {
     register,
     control,
@@ -13,14 +13,17 @@ const RegistrationCard = ({ job_id }) => {
     handleSubmit,
     formState: { errors },
   } = useForm({
+    defaultValues: {
+      email: email,
+    },
     resolver: zodResolver(registrationSchema),
   });
 
-  const mutation = useStaffRegistration();
+  const mutation = useStaffRegistration(token);
 
   const onSubmit = (data) => {
     console.log(data);
-    mutation.mutate({ ...data, job_id });
+    mutation.mutate(data);
   };
 
   const handleChange = (e) => {

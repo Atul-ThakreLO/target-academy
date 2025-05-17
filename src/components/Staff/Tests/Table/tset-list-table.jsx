@@ -14,11 +14,16 @@ import { TransitionLink } from "@/components/Utils/transition-link";
 import { setSelectedID } from "@/Redux/slices/secondary/test-papers/test-papers-id-slice";
 import React from "react";
 import { useSelector } from "react-redux";
+// import EditDeleteOptions from "../../Assignments/Edit-Delete/edit-delete-options";
+import { useUpdateTestPaper } from "@/Hooks/use-test-paper";
+import EditDeleteOptions from "../Edit Delete/edit-delete-options";
 
 const TsetListTable = ({ rows, more }) => {
   const columns = ["Title", "Subject", "Class", "Batch", "Posted-by", "Date"];
 
   const { open } = useSidebar();
+
+  const editMutation = useUpdateTestPaper()
 
   const { selectedIDs } = useSelector((state) => state.testPaperSelectedID);
   const { toogleAll, toogleSelect } = useTable(
@@ -53,7 +58,7 @@ const TsetListTable = ({ rows, more }) => {
         <TableBody>
           {rows.map((row) => (
             <TableRow key={row.id}>
-              <TableCell className="border-r">
+              <TableCell className="border-r  [&:has([role=checkbox])]:pr-4">
                 <Checkbox
                   checked={selectedIDs.includes(row.id)}
                   onCheckedChange={() => toogleSelect(row.id)}
@@ -84,6 +89,7 @@ const TsetListTable = ({ rows, more }) => {
               </TableCell>
               <TableCell className="text-center text-nowrap">
                 {/* <More id={note.id} /> */}
+                <EditDeleteOptions data={row} editMutation={editMutation} />
               </TableCell>
             </TableRow>
           ))}

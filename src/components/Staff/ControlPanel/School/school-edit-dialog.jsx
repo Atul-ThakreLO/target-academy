@@ -36,11 +36,11 @@ const SchoolEditDialog = ({ data }) => {
   }, [mutation.isPending, mutation.isSuccess]);
 
   useEffect(() => {
-    setValue("school_name", data.school_name);
+    setValue("name", data.name);
   }, [data]);
 
   const onSubmit = (name) => {
-    mutation.mutate({ ...name, school_id: data.school_id });
+    mutation.mutate({ ...name, id: data.id });
   };
 
   return (
@@ -61,10 +61,10 @@ const SchoolEditDialog = ({ data }) => {
           <InputField
             label={"Name"}
             type={"text"}
-            id={"school_name"}
-            name={"school_name"}
+            id={"name"}
+            name={"name"}
             register={register}
-            error={errors.school_name}
+            error={errors.name}
           />
         </form>
         <DialogFooter>

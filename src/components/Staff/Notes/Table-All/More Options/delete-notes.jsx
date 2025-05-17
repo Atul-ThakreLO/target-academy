@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { useDeleteNotes } from "@/Hooks/use-notes";
-import { Loader, Trash } from "lucide-react";
+import { Loader, Loader2, Trash } from "lucide-react";
 import React from "react";
 
 const DeleteNotes = ({ data }) => {
@@ -11,11 +11,11 @@ const DeleteNotes = ({ data }) => {
   return (
     <Button
       variant="ghost"
-      className="p-0"
+      className="p-2"
       onClick={handleDelete}
       disabled={mutation.isPending}
     >
-      {mutation.isPending ? <Loader className="animate-spin" /> : <Trash />}
+      {mutation.isPending ? <Loader2 className="animate-spin" /> : <Trash />}
     </Button>
   );
 };

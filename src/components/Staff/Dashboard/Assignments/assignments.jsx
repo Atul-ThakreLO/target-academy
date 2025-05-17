@@ -9,17 +9,18 @@ import {
 import ProgressBar from "./progress-bar";
 import { TransitionLink } from "@/components/Utils/transition-link";
 import { Link, Loader2 } from "lucide-react";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useGetRecentAssignments } from "@/Hooks/use-assignment";
 import RecentAssignmentSkeleton from "@/components/Loaders/Staff/recent-assignment-skeleton";
 
 const Assignments = () => {
-  const { data, isLoading, isSuccess } = useGetRecentAssignments(5);
+  const { data, isLoading } = useGetRecentAssignments(5);
   // useEffect(() => {
   //   if (isSuccess) {
   //     console.log(data.data);
   //   }
   // }, [data, isLoading, isSuccess]);
+  // useEffect(() =)
 
   return (
     <div className="border rounded-xl p-4">
@@ -54,7 +55,13 @@ const Assignments = () => {
                       {assi?.batch?._count?.students}
                     </TableCell>
                     <TableCell>
-                      <ProgressBar prog={100} />
+                      <ProgressBar
+                        prog={
+                          ((assi?._count?.completedAssignment /
+                            assi?.batch?._count?.students) *
+                          100).toFixed(0)
+                        }
+                      />
                     </TableCell>
                   </TableRow>
                 ))}

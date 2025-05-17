@@ -15,6 +15,29 @@ export const useAddTestPaper = () => {
   });
 };
 
+export const useUpdateTestPaper = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (data) => api_methods.putRequest("/staff/test-paper", data),
+    onSuccess: (data) => {
+      toast.success("Update test Papers");
+      queryClient.invalidateQueries(["test-paper"]);
+    },
+  });
+};
+
+export const useDeleteTestPaper = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (data) =>
+      api_methods.deleteRequest(`/staff/test-paper/${data}`),
+    onSuccess: (data) => {
+      toast.success("Test and Paper Deleted");
+      queryClient.invalidateQueries(["test-paper"]);
+    },
+  });
+};
+
 export const useAddUpdateTotalMarks = () => {
   const queryClient = useQueryClient();
   return useMutation({
@@ -35,7 +58,7 @@ export const useGetTestPapers = () => {
   });
 };
 
-export const useDeleteManyNotes = () => {
+export const useDeleteManyTests = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (data) =>
@@ -47,7 +70,7 @@ export const useDeleteManyNotes = () => {
   });
 };
 
-export const useGetRecentTestPapers = (limit = 5) => {
+export const useGetRecentTestPapers = (limit = 8) => {
   return useQuery({
     queryKey: ["test-paper", limit],
     queryFn: () =>

@@ -65,7 +65,7 @@ const FilterNotes = ({ open, setOpen, isRefetching, provided, setFilterData }) =
       <DialogTrigger asChild>
         <Button variant="outline" type="button">
           <Filter size={18} />
-          <span className="">Filter Notes</span>
+          <span className="hidden md:block">Filter Notes</span>
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">

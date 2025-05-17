@@ -67,7 +67,7 @@ const Results = () => {
     if (isFetched) {
       // const [topper1, ...others] = resultData.data;
       // console.log(topper1);
-      setToppers(resultData.data.slice(0, 1));
+      setToppers(resultData.data.slice(0, 3));
       setOthers(resultData.data.slice(1));
     }
   }, [resultLoading, isFetched, classVal, resultData?.data]);

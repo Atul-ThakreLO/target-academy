@@ -57,7 +57,7 @@ const CustomTableNP = ({
 
   return (
     <div
-      className={`border rounded-xl mx-auto ${
+      className={`border rounded-xl ${
         open ? "scrollable-table-open" : "scrollable-table-closed"
       }`}
     >
@@ -81,7 +81,7 @@ const CustomTableNP = ({
         <TableBody>
           {rows?.map((row) => (
             <TableRow key={row.id}>
-              <TableCell className="border-r">
+              <TableCell className="border-r  [&:has([role=checkbox])]:pr-4">
                 <Checkbox
                   checked={selectedIDs.includes(row.id)}
                   onCheckedChange={() => toogleSelect(row.id)}

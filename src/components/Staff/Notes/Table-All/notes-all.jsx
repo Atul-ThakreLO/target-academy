@@ -81,7 +81,7 @@ const NotesAll = () => {
 
   return (
     <>
-      <div className="mt-5 mb-5 flex justify-between items-center px-2">
+      <div className="mt-5 mb-5 flex justify-between items-center px-2 gap-2">
         <div className="relative">
           <Input
             type="search"
@@ -91,7 +91,7 @@ const NotesAll = () => {
           />
           <Search className="absolute top-1/2 left-0 -translate-y-1/2 translate-x-1/2" />
         </div>
-        <div className="flex gap-4">
+        <div className="flex gap-2">
           {selectedIDs.length > 0 && (
             <>
               <Button variant="outline" onClick={handleDeleteMany}>
@@ -99,7 +99,8 @@ const NotesAll = () => {
                   <Loader className="animate-spin" />
                 ) : (
                   <>
-                    <Trash /> Delete Selected
+                    <Trash />{" "}
+                    <span className="hidden md:block">Delete Selected</span>
                   </>
                 )}
               </Button>

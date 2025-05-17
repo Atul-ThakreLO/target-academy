@@ -17,7 +17,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { setSelectedID } from "@/Redux/slices/secondary/assignment/assignment-id-slice";
 import FilterNotes from "../../Notes/filter-notes";
 import { setAssignmentData } from "@/Redux/slices/secondary/assignment/assignment-data-slice";
-import { useGetAssignments } from "@/Hooks/use-assignment";
+import {
+  useDeleteAssignment,
+  useGetAssignments,
+  useUpdateAssignmentData,
+} from "@/Hooks/use-assignment";
 import { setAssignmentFilterData } from "@/Redux/slices/secondary/assignment/assignment-filter-data-slice";
 import { useQueryClient } from "@tanstack/react-query";
 import EditDeleteOptions from "../Edit-Delete/edit-delete-options";
@@ -26,6 +30,7 @@ import NotesCellSkeleton from "@/components/Loaders/Staff/notes-cell-skeleton";
 import AssignmentCellSkeleton from "@/components/Loaders/Staff/assignment-cell-skeleton";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import PdfPreview from "@/components/Utils/PDF/pdf-preview";
+import { formatDate } from "@/components/Utils/Date Formater/formatDate";
 
 const AssignmentTable = () => {
   const [searchedData, setSearchedData] = useState(null);
@@ -53,6 +58,9 @@ const AssignmentTable = () => {
     isFetched,
     isRefetching,
   } = useGetAssignments();
+
+  const deleteMutation = useDeleteAssignment();
+  const editMutation = useUpdateAssignmentData();
 
   const queryClient = useQueryClient();
   useEffect(() => {
@@ -102,10 +110,11 @@ const AssignmentTable = () => {
           />
           <Search className="absolute top-1/2 left-0 -translate-y-1/2 translate-x-1/2" />
         </div>
-        <div>
+        <div className="flex gap-3">
           {deleteButton && (
-            <Button variant="destructive">
-              <Trash /> Delete Selected
+            <Button variant="outline">
+              <Trash />{" "}
+              <span className="hidden md:block w-min">Delete Selected</span>
             </Button>
           )}
           <FilterNotes
@@ -125,7 +134,7 @@ const AssignmentTable = () => {
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead className="border-r">
+              <TableHead className="border-r pr-2">
                 <Checkbox
                   checked={selectedIDs.length === data?.length}
                   onCheckedChange={() => toogleAll()}
@@ -155,7 +164,7 @@ const AssignmentTable = () => {
             ) : (
               searchedData?.map((assi) => (
                 <TableRow>
-                  <TableCell className="border-r">
+                  <TableCell className="border-r [&:has([role=checkbox])]:pr-4">
                     <Checkbox
                       checked={selectedIDs.includes(assi.id)}
                       onCheckedChange={() => toogleSelect(assi.id)}
@@ -189,10 +198,14 @@ const AssignmentTable = () => {
                     {assi.staff.OfficeStaffInfo.name}
                   </TableCell>
                   <TableCell className="text-center text-nowrap">
-                    {assi.date}
+                    {formatDate(assi.date)}
                   </TableCell>
                   <TableCell className="text-center text-nowrap">
-                    <EditDeleteOptions data={assi} />
+                    <EditDeleteOptions
+                      data={assi}
+                      deleteMutation={deleteMutation}
+                      editMutation={editMutation}
+                    />
                   </TableCell>
                 </TableRow>
               ))

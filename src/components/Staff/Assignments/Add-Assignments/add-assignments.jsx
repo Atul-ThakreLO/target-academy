@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Loader2, Upload, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useCreateAssignment } from "@/Hooks/use-assignment";
@@ -20,20 +20,35 @@ const AddAssignments = () => {
     register,
     handleSubmit,
     control,
+    reset,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    defaultValues: {
+      title: "",
+      class_id: "",
+      file: "",
+      subject_id: "",
+      batch_id: "",
+    },
+  });
+
   const mutation = useCreateAssignment();
 
   const onSubmit = (data) => {
     const { file, ...odata } = data;
-    console.log(file[0], odata);
     mutation.mutate({ file: file[0], ...odata });
   };
+
+  useEffect(() => {
+    if (mutation.isSuccess) {
+      reset();
+    }
+  }, [mutation.isSuccess, mutation.isPending]);
 
   return (
     <div className="mt-3">
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="grid grid-cols-[repeat(auto-fit,_minmax(200px,_1fr))] justify-between items-center px-2 md:px-12">
+        <div className="grid my-5 grid-cols-[repeat(auto-fit,_minmax(200px,_1fr))] gap-4 justify-between items-center px-2 md:px-12">
           <div className="">
             <InputField
               label={"Title"}
@@ -70,11 +85,11 @@ const AddAssignments = () => {
           <div>
             <SelectField
               control={control}
-              name={"subjects_id"}
+              name={"subject_id"}
               placeholder={"Subject"}
               selectItems={subjectData?.data}
               label={"Subject"}
-              error={errors.subjects_id}
+              error={errors.subject_id}
               isLoading={subjectLoading}
             />
           </div>

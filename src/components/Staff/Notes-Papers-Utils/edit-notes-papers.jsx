@@ -59,10 +59,10 @@ const EditNotesPapers = ({ data, mutation, defaultValues }) => {
   const { data: subjectData, isLoading: subjectLoading } =
     useGetSubjectsByClass(classID, open);
 
-  const { data: testsData, isLoading: testLoading } = useGetTestPaperByClass(
-    { id: classID },
-    !!data.test_id && open
-  );
+  // const { data: testsData, isLoading: testLoading } = useGetTestPaperByClass(
+  //   { id: classID },
+  //   !!data.test_id && open
+  // );
 
   const setClassValue = (val) => {
     setClassID(val);
@@ -82,7 +82,7 @@ const EditNotesPapers = ({ data, mutation, defaultValues }) => {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="ghost" className="p-0">
+        <Button variant="ghost" className="p-2">
           <Edit />
         </Button>
       </DialogTrigger>
@@ -131,7 +131,7 @@ const EditNotesPapers = ({ data, mutation, defaultValues }) => {
               isLoading={subjectLoading}
             />
           </div>
-          {!!data.test_id && (
+          {/* {!!data.test_id && (
             <div>
               <SelectField
                 control={control}
@@ -143,7 +143,7 @@ const EditNotesPapers = ({ data, mutation, defaultValues }) => {
                 isLoading={testLoading}
               />
             </div>
-          )}
+          )} */}
         </form>
 
         <DialogFooter>

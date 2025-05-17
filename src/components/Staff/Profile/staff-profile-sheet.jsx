@@ -5,7 +5,9 @@ import { SheetContent, SheetFooter } from "@/components/ui/sheet";
 import nickName from "@/components/Utils/nick-name";
 import {
   CircleArrowDown,
+  CircleArrowUp,
   GraduationCap,
+  Loader2,
   Mail,
   Phone,
   Trash,
@@ -14,9 +16,17 @@ import React from "react";
 import EditDialog from "./Edit Profile/edit-dialog";
 import EditDpDialog from "./Edit Profile/edit-dp-dialog";
 import { useSelector } from "react-redux";
+import { useActiveInActive } from "@/Hooks/use-staff";
 
 const StaffProfileSheet = ({ data }) => {
   const { staff } = useSelector((state) => state.authStaff);
+  const mutation = useActiveInActive("staff", ["staff", "all"]);
+
+  const handleStatus = (e) => {
+    e.preventDefault();
+    mutation.mutate({ id: data.id, status: !data.OfficeStaffInfo.isVerified });
+  };
+
   return (
     <SheetContent className="overflow-hidden">
       {/* <SheetHeader>
@@ -27,7 +37,13 @@ const StaffProfileSheet = ({ data }) => {
         <div className="bg-gradient-to-tr from-[#F3EFEC] via-[#F3EFEA] to-[#D598A1] w-full h-28 scale-x-[1.2] md:scale-x-[1.15] rounded-b-3xl relative -top-6"></div>
         <div className="-mt-14 flex justify-between items-center">
           <div className="relative group">
-            <Avatar className="h-20 w-20">
+            <Avatar
+              className={`h-20 w-20 border-2 ${
+                data?.OfficeStaffInfo.isVerified
+                  ? "border-green-500"
+                  : "border-red-500"
+              } `}
+            >
               <AvatarImage
                 src={data?.OfficeStaffInfo?.avtar_url}
                 alt={data?.OfficeStaffInfo?.name}
@@ -59,8 +75,17 @@ const StaffProfileSheet = ({ data }) => {
             {!staff.OfficeStaffInfo.isAdmin ? (
               ""
             ) : (
-              <Button variant="ghost" className="py-1 px-4 h-6">
-                <CircleArrowDown />
+              <Button
+                type="button"
+                variant="ghost"
+                className="py-1 px-4 h-6"
+                onClick={handleStatus}
+              >
+                {mutation.isPending ? <Loader2 className="animate-spin" /> : data?.OfficeStaffInfo?.isVerified ? (
+                  <CircleArrowDown />
+                ) : (
+                  <CircleArrowUp />
+                )}
               </Button>
             )}
             {!staff.OfficeStaffInfo.isAdmin ? (
