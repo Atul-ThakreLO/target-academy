@@ -6,12 +6,10 @@ import {
 import Home from "@/layouts/Home";
 import Student from "@/layouts/Student";
 import ST_MainPage from "@/pages/Student/main-page";
-import Notes from "@/pages/Student/notes";
-import Papers from "@/pages/Student/papers";
-import Profile from "@/pages/Student/profile";
+import Profile from "@/pages/Student/Profile";
 import MainPage from "@/pages/Home/main-page";
-import About from "@/pages/Home/about";
-import Login from "@/pages/Home/login";
+import About from "@/pages/Home/About";
+import Login from "@/pages/Home/Login";
 import Registration from "@/pages/Home/registration";
 import Results from "@/pages/Home/results";
 import Career from "@/pages/Home/career";
@@ -33,6 +31,8 @@ import StaffLogin from "@/pages/Home/staff-login";
 import Assignments from "@/pages/Student/assignments";
 import NotVerified from "@/pages/not-verified";
 import Marks from "@/pages/Student/Marks";
+import Notes from "@/pages/Student/Notes";
+import Papers from "@/pages/Student/Papers";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
