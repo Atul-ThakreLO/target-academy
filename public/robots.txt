@@ -1,0 +1,14 @@
+User-agent: *
+Allow: /
+# Disallow admin or protected routes
+Disallow: /student/
+Disallow: /staff/
+Disallow: /login/
+Disallow: /admin/
+Disallow: /dashboard/
+
+# Allow search engines to access your sitemap
+Sitemap: https://target-academy-phi.vercel.app/sitemap.xml
+
+# Set crawl rate limits (optional)
+# Crawl-delay: 10

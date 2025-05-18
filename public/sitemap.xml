@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- Home page -->
+  <url>
+    <loc>https://target-academy-phi.vercel.app/</loc>
+    <lastmod>2025-05-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <!-- Common educational institution pages - update with your actual URLs -->
+  <url>
+    <loc>https://target-academy-phi.vercel.app/about</loc>
+    <lastmod>2025-05-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>https://target-academy-phi.vercel.app/courses</loc>
+    <lastmod>2025-05-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  
+  <url>
+    <loc>https://target-academy-phi.vercel.app/faculty</loc>
+    <lastmod>2025-05-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>https://target-academy-phi.vercel.app/testimonials</loc>
+    <lastmod>2025-05-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>https://target-academy-phi.vercel.app/gallery</loc>
+    <lastmod>2025-05-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://target-academy-phi.vercel.app/results</loc>
+    <lastmod>2025-05-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>https://target-academy-phi.vercel.app/contact</loc>
+    <lastmod>2025-05-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Grade-specific pages -->
+  <url>
+    <loc>https://target-academy-phi.vercel.app/courses/8th-grade</loc>
+    <lastmod>2025-05-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>https://target-academy-phi.vercel.app/courses/9th-grade</loc>
+    <lastmod>2025-05-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>https://target-academy-phi.vercel.app/courses/10th-grade</loc>
+    <lastmod>2025-05-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>https://target-academy-phi.vercel.app/courses/11th-grade</loc>
+    <lastmod>2025-05-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>https://target-academy-phi.vercel.app/courses/12th-grade</loc>
+    <lastmod>2025-05-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <!-- Admission page -->
+  <url>
+    <loc>https://target-academy-phi.vercel.app/admissions</loc>
+    <lastmod>2025-05-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  
+  <!-- NOTE: Replace with actual pages from your site -->
+  <!-- Do NOT include student/staff protected pages -->
+</urlset>
