@@ -24,7 +24,7 @@ const Results = () => {
   const [others, setOthers] = useState([]);
   const [sessions, setSesssions] = useState([]);
   const [session, setSession] = useState(
-    new Date().getFullYear().toString().slice(2)
+    new Date().getFullYear().toString()
   );
   const [classVal, setClass] = useState(undefined);
   const {
@@ -37,7 +37,7 @@ const Results = () => {
   });
 
   function getFiveYears() {
-    const currentYear = new Date().getFullYear().toString().slice(2);
+    const currentYear = new Date().getFullYear().toString();
     for (let i = 0; i < 5; i++) {
       setSesssions((prev) => [...prev, currentYear - i]);
     }
@@ -68,7 +68,7 @@ const Results = () => {
       // const [topper1, ...others] = resultData.data;
       // console.log(topper1);
       setToppers(resultData.data.slice(0, 3));
-      setOthers(resultData.data.slice(1));
+      setOthers(resultData.data.slice(3));
     }
   }, [resultLoading, isFetched, classVal, resultData?.data]);
 
@@ -96,14 +96,14 @@ const Results = () => {
         <div className="w-full md:w-1/2">
           <Select onValueChange={setSession}>
             <SelectTrigger>
-              <SelectValue placeholder={"20" + session} />
+              <SelectValue placeholder={session} />
             </SelectTrigger>
             <SelectContent>
               <SelectGroup>
                 <SelectLabel>Year</SelectLabel>
                 {sessions.map((session) => (
                   <SelectItem key={session} value={session}>
-                    {"20" + session}
+                    {session}
                   </SelectItem>
                 ))}
               </SelectGroup>

@@ -8,11 +8,8 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import InputField from "@/components/Utils/input-field";
-import {
-  useAddBatch,
-  useGetBatchByClass,
-} from "@/Hooks/use-batch";
-import {  Edit, Loader } from "lucide-react";
+import { useAddBatch, useGetBatchByClass } from "@/Hooks/use-batch";
+import { Edit, Loader } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import BatchNameCard from "./batch-name-card";
@@ -23,6 +20,7 @@ const EditBatches = ({ id }) => {
     handleSubmit,
     register,
     setValue,
+    reset,
     formState: { errors },
   } = useForm();
 
@@ -35,14 +33,8 @@ const EditBatches = ({ id }) => {
   };
 
   useEffect(() => {
-    if (isFetched) {
-      console.log(data?.data);
-    }
-  }, [isFetched, isLoading]);
-
-  useEffect(() => {
     if (addMutation.isSuccess) {
-      setValue("name", "");
+      reset();
       //   setOpen(false)
     }
   }, [addMutation.isSuccess]);
@@ -66,15 +58,23 @@ const EditBatches = ({ id }) => {
         <div>
           <form
             onSubmit={handleSubmit(onSubmit)}
-            className="flex items-end justify-between"
+            className="flex items-end justify-between gap-2"
           >
             <InputField
               type={"text"}
-              label={"Add New Batches"}
+              label={"Name"}
               name={"name"}
               register={register}
               id={"name"}
               error={errors.name}
+            />
+            <InputField
+              type={"text"}
+              label={"Session"}
+              name={"session"}
+              register={register}
+              id={"session"}
+              error={errors.session}
             />
             <Button disabled={addMutation.isPending}>
               {addMutation.isPending ? (

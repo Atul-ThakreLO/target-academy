@@ -6,8 +6,6 @@ import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 
 const EditForm = ({ data, setEdit }) => {
-    console.log(data);
-    
   const {
     register,
     handleSubmit,
@@ -17,6 +15,7 @@ const EditForm = ({ data, setEdit }) => {
     defaultValues: {
       id: data.id,
       name: data.name,
+      session: data.session,
     },
   });
 
@@ -28,14 +27,14 @@ const EditForm = ({ data, setEdit }) => {
 
   useEffect(() => {
     if (mutation.isSuccess) {
-      setEdit(false)
+      setEdit(false);
     }
   }, [mutation.isSuccess]);
 
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="flex justify-between items-center w-full"
+      className="flex justify-between items-center w-full gap-2"
     >
       <InputField
         type={"text"}
@@ -44,7 +43,14 @@ const EditForm = ({ data, setEdit }) => {
         register={register}
         error={errors.name}
       />
-      <div>
+      <InputField
+        type={"text"}
+        name={"session"}
+        register={register}
+        id={"session"}
+        error={errors.session}
+      />
+      <div className="flex gap-1">
         <Button>
           {mutation.isPending ? (
             <Loader className="animate-spin" />
@@ -54,7 +60,7 @@ const EditForm = ({ data, setEdit }) => {
             </>
           )}
         </Button>
-        <Button variant="Ghost" type="button" onClick={() => setEdit(false)}>
+        <Button variant="Ghost" type="button" onClick={() => setEdit(null)}>
           <X />
         </Button>
       </div>

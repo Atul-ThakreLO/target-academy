@@ -2,11 +2,18 @@ import { useBatchDelete, useBatchUpdate } from "@/Hooks/use-batch";
 import React, { useState } from "react";
 import EditForm from "./edit-form";
 import { Button } from "@/components/ui/button";
-import { CircleCheckBig, CircleOff, Edit, Loader, Loader2, Trash } from "lucide-react";
+import {
+  CircleCheckBig,
+  CircleOff,
+  Edit,
+  Loader,
+  Loader2,
+  Trash,
+} from "lucide-react";
 import { useActiveInActive } from "@/Hooks/use-staff";
 
 const BatchNameCard = ({ data, classID }) => {
-  const [edit, setEdit] = useState(false);
+  const [edit, setEdit] = useState(null);
 
   const removeMutation = useBatchDelete();
   // const updateStatus = useBatchUpdate();
@@ -14,15 +21,14 @@ const BatchNameCard = ({ data, classID }) => {
 
   const handleDelete = (id) => {
     removeMutation.mutate(id);
-    console.log(id);
   };
 
   const handleStatus = (batch) => {
     statusMutation.mutate({ id: batch.id, status: !batch.isActive });
   };
   return (
-    <div>
-      {data?.map((batch) => (
+    <>
+      {data?.map((batch, i) => (
         <li>
           {statusMutation.isPending || removeMutation.isPending ? (
             <div className="absolute h-full w-full top-0 left-0 grid place-items-center bg-muted/30">
@@ -32,13 +38,13 @@ const BatchNameCard = ({ data, classID }) => {
             ""
           )}
           <div className="border pl-4 pr-2 py-2 flex justify-between items-center rounded-lg mt-3">
-            {edit ? (
+            {edit === batch.id ? (
               <EditForm data={batch} setEdit={setEdit} />
             ) : (
               <>
                 <span>{batch.name}</span>
                 <div>
-                  <Button variant="outline" onClick={() => setEdit(true)}>
+                  <Button variant="outline" onClick={() => setEdit(batch.id)}>
                     <Edit />
                   </Button>
                   <Button
@@ -62,7 +68,7 @@ const BatchNameCard = ({ data, classID }) => {
           </div>
         </li>
       ))}
-    </div>
+    </>
   );
 };
 

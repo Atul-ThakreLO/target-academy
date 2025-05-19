@@ -3,17 +3,33 @@ import { Button } from "@/components/ui/button";
 import SelectField from "@/components/Utils/Form-Fields/select-field";
 import { useGetClass } from "@/Hooks/use-class";
 import { useGetResult } from "@/Hooks/use-result";
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 
 const Result = () => {
   const { data, isLoading } = useGetClass();
   const [query, setQuery] = useState(null);
+  const [sessions, setSesssions] = useState([]);
   // const {
   //   data: resultData,
   //   isLoading: resultLoading,
   //   isSuccess: resultSuccess,
   // } = useGetResult();
+
+  function getFiveYears() {
+    const currentYear = new Date().getFullYear().toString();
+    for (let i = 0; i < 5; i++) {
+      setSesssions((prev) => [
+        ...prev,
+        { id: currentYear - i, name: currentYear - i },
+      ]);
+    }
+  }
+
+  useMemo(() => {
+    getFiveYears();
+  }, [new Date().getFullYear()]);
+
   const {
     handleSubmit,
     formState: { errors },
@@ -57,11 +73,7 @@ const Result = () => {
               error={errors.session}
               label={"Session"}
               placeholder={"Session"}
-              selectItems={[
-                { id: "25", name: "Session 25" },
-                { id: "24", name: "Session 24" },
-                { id: "23", name: "Session 23" },
-              ]}
+              selectItems={sessions}
             />
           </div>
           <div>
