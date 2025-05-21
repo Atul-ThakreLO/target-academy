@@ -17,8 +17,8 @@ const Career = () => {
     }
   }, [isError]);
 
-  if(isError && error) {
-    return <ErrorOccured text={error?.response?.data?.message} />
+  if (isError && error) {
+    return <ErrorOccured text={error?.response?.data?.message} />;
   }
 
   return (
